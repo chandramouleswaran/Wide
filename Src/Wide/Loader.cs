@@ -51,23 +51,23 @@ namespace WideTestApp
 
             vm.Add(new MenuItemViewModel("_File", 1));
 
-            vm.Get("_File").Add((new MenuItemViewModel("_Open", 4, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\OpenFileDialog_692.png")), manager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
-            vm.Get("_File").Add(new MenuItemViewModel("_Save", 5, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Save_6530.png")), manager.GetCommand("SAVE"), new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl + S")));
+			vm.Get("_File").Add((new MenuItemViewModel("_Open", 4, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/OpenFileDialog_692.png")), manager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
+			vm.Get("_File").Add(new MenuItemViewModel("_Save", 5, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Save_6530.png")), manager.GetCommand("SAVE"), new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl + S")));
             vm.Get("_File").Add(new MenuItemViewModel("Close", 8, null, manager.GetCommand("CLOSE"), new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4")));
 
 
             vm.Add(new MenuItemViewModel("_Edit", 2));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Undo", 1, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Undo_16x.png")), ApplicationCommands.Undo));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Redo", 2, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Redo_16x.png")), ApplicationCommands.Redo));
+			vm.Get("_Edit").Add(new MenuItemViewModel("_Undo", 1, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Undo_16x.png")), ApplicationCommands.Undo));
+			vm.Get("_Edit").Add(new MenuItemViewModel("_Redo", 2, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Redo_16x.png")), ApplicationCommands.Redo));
             vm.Get("_Edit").Add(MenuItemViewModel.Separator(15));
-            vm.Get("_Edit").Add(new MenuItemViewModel("Cut", 20, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Cut_6523.png")), ApplicationCommands.Cut));
-            vm.Get("_Edit").Add(new MenuItemViewModel("Copy", 21, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Copy_6524.png")), ApplicationCommands.Copy));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Paste", 22, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Paste_6520.png")), ApplicationCommands.Paste));
+			vm.Get("_Edit").Add(new MenuItemViewModel("Cut", 20, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Cut_6523.png")), ApplicationCommands.Cut));
+			vm.Get("_Edit").Add(new MenuItemViewModel("Copy", 21, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Copy_6524.png")), ApplicationCommands.Copy));
+			vm.Get("_Edit").Add(new MenuItemViewModel("_Paste", 22, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Paste_6520.png")), ApplicationCommands.Paste));
 
             vm.Add(new MenuItemViewModel("_View", 3));
             
             if(logger != null)
-                vm.Get("_View").Add(new MenuItemViewModel("_Logger", 1, new BitmapImage(new Uri(@"E:\VS2012 Modern Image Library\Actions\png\Undo_16x.png")), manager.GetCommand("LOGSHOW")) {IsCheckable = true, IsChecked = logger.IsVisible});
+				vm.Get("_View").Add(new MenuItemViewModel("_Logger", 1, new BitmapImage(new Uri(@"pack://application:,,,/WideTestApp;component/Icons/Undo_16x.png")), manager.GetCommand("LOGSHOW")) { IsCheckable = true, IsChecked = logger.IsVisible });
         }
 
         private void LoadToolbar()

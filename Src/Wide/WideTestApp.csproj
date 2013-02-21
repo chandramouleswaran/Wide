@@ -144,6 +144,15 @@
   <ItemGroup>
     <Resource Include="Icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Copy_6524.png" />
+    <Resource Include="Icons\Cut_6523.png" />
+    <Resource Include="Icons\OpenFileDialog_692.png" />
+    <Resource Include="Icons\Paste_6520.png" />
+    <Resource Include="Icons\Redo_16x.png" />
+    <Resource Include="Icons\Save_6530.png" />
+    <Resource Include="Icons\Undo_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(SolutionDir)Libs"  "$(TargetDir)External" /E /Y /I /R</PostBuildEvent>

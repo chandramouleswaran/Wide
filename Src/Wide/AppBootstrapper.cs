@@ -18,7 +18,7 @@ namespace WideTestApp
         protected override void InitializeModules()
         {
             //Register your splash view or else the default splash will load
-            //Container.RegisterType<ISplashView, AppSplash>();
+            Container.RegisterType<ISplashView, AppSplash>();
 
             //Register your workspace here - if you have any
             Container.RegisterType<AbstractWorkspace, IconWorkspace>(new ContainerControlledLifetimeManager());
