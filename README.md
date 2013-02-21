@@ -27,6 +27,10 @@ For full details, look at the [demo program](https://tobelinkedsoon).
 Wide comes with two modules:
 
 * Core module (Required)
+ * Used for customizable splash screen
+ * Used for Menus (supports regular menus with icon, checkable menus)
+ * Used for Toolbar (menu view model can be reused for toolbars)
+ * Used for Statusbar (in development)
 * Logger module (For the logging tool)
 
 ### What projects use Wide?
@@ -35,3 +39,9 @@ I am planning on using Wide for my own projects:
 
 * [Hypertest](https://github.com/chandramouleswaran/Hypertest)
 * coming soon...
+
+### Plans ahead
+* Settings manager for the application
+* Status bar service
+* Dark theme
+* more on request from users
