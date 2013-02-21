@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Toolbar.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    <!--Menu Item Binding with Icon-->
+    <Image x:Key="imgCTX" x:Shared="false" Source="{Binding Path=Icon}" Height="16px" Width="16px"/>
+    <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+        <Setter Property="Icon" Value="{StaticResource imgCTX}" />
+        <Setter Property="Header" Value="{Binding Path=Header}"/>
+        <Setter Property="IsCheckable" Value="{Binding Path=IsCheckable}"/>
+        <Setter Property="IsChecked" Value="{Binding Path=IsChecked}"/>
+        <Setter Property="Command" Value="{Binding Path=Command}"/>
+        <Setter Property="CommandParameter" Value="{Binding Path=CommandParameter}"/>
+        <Setter Property="ItemsSource" Value="{Binding Children}"/>
+        <Setter Property="InputGestureText" Value="{Binding InputGestureText}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSeparator}" Value="true">
+                <Setter Property="Template" >
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Separator />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Icon}" Value="{x:Null}">
+                <Setter Property="Icon" Value="{x:Null}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

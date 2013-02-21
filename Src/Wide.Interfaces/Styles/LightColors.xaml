@@ -1,0 +1,26 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--Colors-->
+    <Color x:Key="AccentColor">#007ACC</Color>
+    <Color x:Key="GlowColor">#007ACC</Color>
+    <Color x:Key="ControlHighlightedColor">#FEFEFE</Color>
+    <Color x:Key="ControlOpenColor">#E7E8EC</Color>
+    <Color x:Key="SeparatorColor">#CCCEDB</Color>
+
+
+    <!--Brush-->
+    <SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource AccentColor}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="Black" />
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="#FFEFEFF2" />
+    <SolidColorBrush x:Key="ControlHighlightedColorBrush" Color="{DynamicResource ControlHighlightedColor}"/>
+    <SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource ControlHighlightedColor}"/>
+    <SolidColorBrush x:Key="ControlOpenColorBrush" Color="{DynamicResource ControlOpenColor}"/>
+    <SolidColorBrush x:Key="SeparatorColorBrush" Color="{DynamicResource SeparatorColor}"/>
+
+    <!--Fonts-->
+    <FontFamily x:Key="HeaderFontFamily">Segoe UI, Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
+
+    <!--Shadow-->
+    <DropShadowEffect x:Key="StandardDropShadow" ShadowDepth="3" Opacity="0.6" Direction="305" />
+</ResourceDictionary>
