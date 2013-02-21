@@ -8,7 +8,7 @@ Wide is a participatory open IDE framework built using WPF for building IDE-like
 * [Prism](http://compositewpf.codeplex.com/)
 * [MahApps Metro](https://github.com/MahApps/MahApps.Metro)
 * [AvalonEdit](https://github.com/icsharpcode/SharpDevelop/wiki/AvalonEdit)
-* [Unity Container](http://msdn.microsoft.com/en-us/library/ff660899(v=pandp.20).aspx)
+* [Unity Container](http://msdn.microsoft.com/en-us/library/ff660899\(v=pandp.20\).aspx)
 
 In this process of building Wide, I was able to look at various open source projects, learn and most importantly contribute back to the project.
 
