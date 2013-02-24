@@ -9,7 +9,7 @@ using System.Windows;
 using Wide.Shell;
 
 
-namespace VS2010TestApp
+namespace VS2012TestApp
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -21,7 +21,7 @@ namespace VS2010TestApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            b = new AppBootstrapper(false);
+            b = new AppBootstrapper();
             b.Run();
         }
     }

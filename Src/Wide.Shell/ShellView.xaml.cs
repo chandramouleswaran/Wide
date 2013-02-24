@@ -32,20 +32,30 @@ namespace Wide.Shell
         public ShellView(IUnityContainer container)
         {
             InitializeComponent();
-            this._container = container;
+            _container = container;
+            this.Loaded += new RoutedEventHandler(MainWindow_Loaded);
+            this.Unloaded += new RoutedEventHandler(MainWindow_Unloaded);
+        }
+
+        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SaveLayout();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadLayout();
         }
 
         private void Window_Closing_1(object sender, System.ComponentModel.CancelEventArgs e)
         {
             IWorkspace workspace = this.DataContext as IWorkspace;
-            if(!workspace.Closing())
+            if (!workspace.Closing())
             {
                 e.Cancel = true;
                 return;
             }
-            SaveLayout();
         }
-
 
         public void LoadLayout()
         {
@@ -69,9 +79,8 @@ namespace Wide.Shell
                 }
                 if (document != null)
                 {
-                    IContentHandlerRegistry registry = _container.Resolve<IContentHandlerRegistry>();
-                    ContentViewModel model = registry.GetViewModelFromContentId(e.Model.ContentId);
-                    workspace.Documents.Add(model);
+                    IOpenFileService fileService = _container.Resolve<IOpenFileService>();
+                    ContentViewModel model = fileService.OpenFromID(e.Model.ContentId);
                     if (model != null)
                     {
                         e.Content = model;
@@ -86,7 +95,7 @@ namespace Wide.Shell
             }
             catch (Exception)
             {
-                
+
             }
         }
 
