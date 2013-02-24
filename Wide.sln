@@ -1,13 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WideTestApp", "Src\Wide\WideTestApp.csproj", "{7121ACBA-A770-43A5-BE0A-3195A2182F11}"
-	ProjectSection(ProjectDependencies) = postProject
-		{2155B852-E4EC-4BD1-9255-21CFAEADF268} = {2155B852-E4EC-4BD1-9255-21CFAEADF268}
-		{982D3282-82A0-4586-99ED-F60D2FD67517} = {982D3282-82A0-4586-99ED-F60D2FD67517}
-		{EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81} = {EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wide.Interfaces", "Src\Wide.Interfaces\Wide.Interfaces.csproj", "{9F20F5EF-4F7E-4AE2-A462-4CD2256FB3FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wide.Core", "Src\Wide.Core\Wide.Core.csproj", "{2155B852-E4EC-4BD1-9255-21CFAEADF268}"
@@ -26,16 +19,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wide.Shell", "Src\Wide.Shel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wide.Settings", "Src\Wide.Settings\Wide.Settings.csproj", "{EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VS2010TestApp", "Src\Test\VS2010\VS2010TestApp.csproj", "{7121ACBA-A770-43A5-BE0A-3195A2182F11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9F20F5EF-4F7E-4AE2-A462-4CD2256FB3FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9F20F5EF-4F7E-4AE2-A462-4CD2256FB3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F20F5EF-4F7E-4AE2-A462-4CD2256FB3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -60,6 +51,10 @@ Global
 		{EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC4B20C3-DF90-40F1-8547-ADCFCEBE5B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7121ACBA-A770-43A5-BE0A-3195A2182F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

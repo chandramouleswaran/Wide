@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 
-namespace WideTestApp
+namespace VS2010TestApp
 {
     public class IconWorkspace : AbstractWorkspace
     {
@@ -20,7 +20,7 @@ namespace WideTestApp
         { 
             get
             {
-                ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/WideTestApp;component/Icon.png"));
+                ImageSource imageSource = new BitmapImage(new Uri("pack://application:,,,/VS2010TestApp;component/Icon.png"));
                 return imageSource;
             }
         }

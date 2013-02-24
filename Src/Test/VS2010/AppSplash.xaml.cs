@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wide.Splash;
 
-namespace WideTestApp
+namespace VS2010TestApp
 {
     /// <summary>
     /// Interaction logic for AppSplash.xaml

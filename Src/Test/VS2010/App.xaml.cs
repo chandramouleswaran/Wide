@@ -9,7 +9,7 @@ using System.Windows;
 using Wide.Shell;
 
 
-namespace WideTestApp
+namespace VS2010TestApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

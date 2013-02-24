@@ -7,7 +7,7 @@ using Wide.Shell;
 using Microsoft.Practices.Unity;
 using Wide.Splash;
 
-namespace WideTestApp
+namespace VS2010TestApp
 {
     class AppBootstrapper : WideBootstrapper
     {

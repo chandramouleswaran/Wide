@@ -7,8 +7,8 @@
     <ProjectGuid>{7121ACBA-A770-43A5-BE0A-3195A2182F11}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WideTestApp</RootNamespace>
-    <AssemblyName>WideTestApp</AssemblyName>
+    <RootNamespace>VS2010TestApp</RootNamespace>
+    <AssemblyName>VS2010TestApp</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Build\</OutputPath>
+    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -37,24 +37,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock">
-      <HintPath>..\..\Libs\AvalonDock.dll</HintPath>
+      <HintPath>..\..\..\Libs\AvalonDock.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\Libs\Microsoft.Practices.Prism.dll</HintPath>
+      <HintPath>..\..\..\Libs\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Prism.UnityExtensions">
-      <HintPath>..\..\Libs\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
+      <HintPath>..\..\..\Libs\Microsoft.Practices.Prism.UnityExtensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\..\Libs\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\Libs\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\..\..\Libs\Microsoft.Practices.Unity.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -71,7 +71,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WPF.Themes">
-      <HintPath>..\..\Libs\WPF.Themes.dll</HintPath>
+      <HintPath>..\..\..\Libs\WPF.Themes.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
@@ -119,17 +119,17 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wide.Interfaces\Wide.Interfaces.csproj">
+    <ProjectReference Include="..\..\Wide.Interfaces\Wide.Interfaces.csproj">
       <Project>{9f20f5ef-4f7e-4ae2-a462-4cd2256fb3ff}</Project>
       <Name>Wide.Interfaces</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Wide.Shell\Wide.Shell.csproj">
+    <ProjectReference Include="..\..\Wide.Shell\Wide.Shell.csproj">
       <Project>{117809de-4800-479b-bca7-1d5aa6dbe30f}</Project>
       <Name>Wide.Shell</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\Wide.Splash\Wide.Splash.csproj">
+    <ProjectReference Include="..\..\Wide.Splash\Wide.Splash.csproj">
       <Project>{f5bfb5bd-08a3-46cf-a967-7d45772d9877}</Project>
       <Name>Wide.Splash</Name>
       <Private>False</Private>
