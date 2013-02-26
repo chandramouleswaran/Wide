@@ -29,10 +29,6 @@
         <SolidColorBrush Color="{DynamicResource GlowColor}" />
     </Controls:MetroWindow.GlowBrush>
 
-    <Controls:MetroWindow.WindowCommands>
-        <Controls:WindowCommands Foreground="Black"  />
-    </Controls:MetroWindow.WindowCommands>
-
     <Border>
         <DockPanel>
             <!--Menu-->
@@ -40,7 +36,7 @@
             <!--Toolbar (can we improve this?)-->
             <ContentControl Content="{Binding ToolBarTray}" DockPanel.Dock="Top" />
             <!--Status bar-->
-            <StatusBar DockPanel.Dock="Bottom">
+            <StatusBar DockPanel.Dock="Bottom" Background="{DynamicResource WindowTitleColorBrush}">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
@@ -56,10 +52,10 @@
                     </ItemsPanelTemplate>
                 </StatusBar.ItemsPanel>
                 <StatusBarItem>
-                    <TextBlock x:Name="StatusBarText">Ready</TextBlock>
+                    <TextBlock x:Name="StatusBarText" Foreground="{DynamicResource BlackBrush}">Ready</TextBlock>
                 </StatusBarItem>
                 <StatusBarItem Grid.Column="2">
-                    <TextBlock>Testing</TextBlock>
+                    <TextBlock Foreground="{DynamicResource BlackBrush}">Testing</TextBlock>
                 </StatusBarItem>
             </StatusBar>
             

@@ -7,10 +7,10 @@
     <Color x:Key="AccentDoubleHighlightColor">#52B0EF</Color>
     <Color x:Key="AccentTripleHighlightColor">#1C97EA</Color>
     <Color x:Key="GlowColor">#007ACC</Color>
-    <Color x:Key="ControlHighlightedColor">#FEFEFE</Color>
-    <Color x:Key="ControlOpenColor">#E7E8EC</Color>
-    <Color x:Key="SeparatorColor">#CCCEDB</Color>
-    <Color x:Key="SplitterColor">#D0D1D7</Color>
+    <Color x:Key="ControlHighlightedColor">#3E3E40</Color>
+    <Color x:Key="ControlOpenColor">#1B1B1C</Color>
+    <Color x:Key="SeparatorColor">#333337</Color>
+    <Color x:Key="SplitterColor">#3F3F46</Color>
 
     <Color x:Key="DragUnselected">#FF999999</Color>
     <Color x:Key="DragSelected">#FF59A8DE</Color>
@@ -21,10 +21,10 @@
     <SolidColorBrush x:Key="AccentHighlightColorBrush" Color="{DynamicResource AccentHighlightColor}" />
     <SolidColorBrush x:Key="AccentDoubleHighlightColorBrush" Color="{DynamicResource AccentDoubleHighlightColor}" />
     <SolidColorBrush x:Key="AccentTripleHighlightColorBrush" Color="{DynamicResource AccentTripleHighlightColor}" />
-    <SolidColorBrush x:Key="BlackBrush" Color="Black" />
-    <SolidColorBrush x:Key="WhiteBrush" Color="White" />
-    <SolidColorBrush x:Key="TabBrush" Color="Black" />
-    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="#FFEFEFF2" />
+    <SolidColorBrush x:Key="BlackBrush" Color="White" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="Black" />
+    <SolidColorBrush x:Key="TabBrush" Color="White" />
+    <SolidColorBrush x:Key="WindowTitleColorBrush" Color="#2D2D30" />
     <SolidColorBrush x:Key="ControlHighlightedColorBrush" Color="{DynamicResource ControlHighlightedColor}"/>
     <SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource ControlHighlightedColor}"/>
     <SolidColorBrush x:Key="ControlOpenColorBrush" Color="{DynamicResource ControlOpenColor}"/>

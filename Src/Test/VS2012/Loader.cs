@@ -38,8 +38,10 @@ namespace VS2012TestApp
             IThemeManager manager = _container.Resolve<IThemeManager>();
             //manager.AddTheme(new VS2010());
             //manager.SetCurrent("VS2010");
-            manager.AddTheme(new LightTheme());
-            manager.SetCurrent("Light");
+            //manager.AddTheme(new LightTheme());
+            //manager.SetCurrent("Light");
+            manager.AddTheme(new DarkTheme());
+            manager.SetCurrent("Dark");
         }
 
         private void LoadMenus()
