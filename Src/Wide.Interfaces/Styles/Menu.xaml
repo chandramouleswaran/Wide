@@ -67,7 +67,7 @@
                         <Border Name="SubmenuBorder" SnapsToDevicePixels="True" Background="{DynamicResource ControlOpenColorBrush}" BorderBrush="{DynamicResource SeparatorColorBrush}" BorderThickness="1" Margin="0 0 8 8" Effect="{DynamicResource StandardDropShadow}">
                             <StackPanel>
                                 <!--The illusion-->
-                                <Line Stroke="{DynamicResource WhiteColorBrush}" X2="{Binding ActualWidth, ElementName=InnerBorder}" Y1="-1" Y2="-1"/>
+                                <Line Stroke="{DynamicResource WhiteBrush}" X2="{Binding ActualWidth, ElementName=InnerBorder}" Y1="-1" Y2="-1"/>
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                             </StackPanel>
                         </Border>
