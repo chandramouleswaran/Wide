@@ -4,6 +4,7 @@
 
 #Visual Studio files
 *.[Oo]bj
+*.DotSettings
 *.user
 *.aps
 *.pch

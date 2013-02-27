@@ -1,0 +1,224 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AvalonEdit="clr-namespace:ICSharpCode.AvalonEdit;assembly=ICSharpCode.AvalonEdit"
+    xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing;assembly=ICSharpCode.AvalonEdit"
+    xmlns:Converters="clr-namespace:Wide.Interfaces.Converters">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/Brushes.xaml" />
+        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/StatusBar.xaml" />
+        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/Toolbar.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+  <Style TargetType="{x:Type AvalonEdit:TextEditor}">
+    <Style.Resources>
+        <Converters:PercentToFontSizeConverter x:Key="PToFSizeConverter"/>
+    </Style.Resources>
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+    <Setter Property="LineNumbersForeground" Value="#ff2b91af" />
+    <Setter Property="FlowDirection" Value="LeftToRight"/><!-- AvalonEdit does not support RTL, so ensure we use LTR by default -->
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type AvalonEdit:TextEditor}">
+          <ScrollViewer Focusable="False"
+						            Name="PART_ScrollViewer"
+						            CanContentScroll="True"
+						            VerticalScrollBarVisibility="{TemplateBinding VerticalScrollBarVisibility}"
+						            HorizontalScrollBarVisibility="{TemplateBinding HorizontalScrollBarVisibility}"
+						            Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextArea}"
+						            VerticalContentAlignment="Top"
+						            HorizontalContentAlignment="Left"
+						            Background="{TemplateBinding Background}"
+						            Padding="{TemplateBinding Padding}"
+						            BorderBrush="{TemplateBinding BorderBrush}"
+					              BorderThickness="{TemplateBinding BorderThickness}">
+            <ScrollViewer.Template>
+              <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                <Border BorderBrush="{TemplateBinding BorderBrush}"
+					              BorderThickness="{TemplateBinding BorderThickness}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                  <Grid Background="{TemplateBinding Background}"
+                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                        VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*"/>
+                      <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="*"/>
+                      <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Display TextEditor content in upper left corner -->
+                    <ScrollContentPresenter Grid.Column="0" Grid.Row="0"
+                                            KeyboardNavigation.DirectionalNavigation="Local"
+                                            CanContentScroll="True"
+                                            CanHorizontallyScroll="True"
+                                            CanVerticallyScroll="True" />
+
+                    <!-- Display Vertical Scrollbar to the right -->
+                    <ScrollBar Name="PART_VerticalScrollBar"
+                               Grid.Column="1"
+                               Value="{TemplateBinding VerticalOffset}"
+                               Maximum="{TemplateBinding ScrollableHeight}"
+                               ViewportSize="{TemplateBinding ViewportHeight}"
+                               Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+
+                    <!-- Display mini-toolbar and Horizontal scrollbar at the bottom of the view -->
+                    <Grid Grid.Column="0" Grid.Row="1" Background="{TemplateBinding Background}">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+
+                                <ComboBox Grid.Column="0" MinWidth="50" Margin="3" Padding="3" FontSize="10" SelectedValuePath="Content"
+                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=FontSize, Mode=TwoWay, Converter={StaticResource PToFSizeConverter}}" IsEditable="True">
+                                                <ComboBoxItem Content="20 %"/>
+                                                <ComboBoxItem Content="50 %"/>
+                                                <ComboBoxItem Content="70 %"/>
+                                                <ComboBoxItem Content="100 %"/>
+                                                <ComboBoxItem Content="150 %"/>
+                                                <ComboBoxItem Content="200 %"/>
+                                                <ComboBoxItem Content="400 %"/>
+                                            </ComboBox>
+
+                                            <ScrollBar Name="PART_HorizontalScrollBar"
+                                 Orientation="Horizontal"
+                                 Grid.Column="1"
+                                 Value="{TemplateBinding HorizontalOffset}"
+                                 Maximum="{TemplateBinding ScrollableWidth}"
+                                 ViewportSize="{TemplateBinding ViewportWidth}"
+                                 Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
+                    </Grid>
+                  </Grid>
+                </Border>
+              </ControlTemplate>
+            </ScrollViewer.Template>
+          </ScrollViewer>
+          <ControlTemplate.Triggers>
+            <Trigger Property="WordWrap" Value="True">
+              <Setter TargetName="PART_ScrollViewer" Property="HorizontalScrollBarVisibility" Value="Disabled" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
+  <Style TargetType="{x:Type editing:TextArea}">
+    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+    <Setter Property="SelectionBrush">
+      <Setter.Value>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" Opacity=".5">
+          <!-- GradientStop Color="#FFFCF2" Offset="0" / -->
+          <GradientStop Color="#ffc41c" Offset=".05" />
+        </LinearGradientBrush>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="SelectionBorder">
+      <Setter.Value>
+        <Pen Brush="#A0ffc41c" Thickness="1"/>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="SelectionForeground" Value="#FF000000"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type editing:TextArea}">
+          <DockPanel Focusable="False">
+            <ItemsControl DockPanel.Dock="Left"
+						              Focusable="False"
+						              ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftMargins}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <StackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <ContentPresenter
+							Panel.ZIndex="-1"
+							Focusable="False"
+							Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextView}"/>
+          </DockPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+    
+  <Style TargetType="{x:Type ContextMenu}"><!--  BasedOn="{StaticResource {x:Type ContextMenu}} -->
+    <Setter Property="Background" Value="{StaticResource ContextMenuBackground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource ContextMenuBorderBrush}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+
+
+  <Style TargetType="{x:Type Menu}"><!--  BasedOn="{StaticResource {x:Type Menu}" -->
+    <Setter Property="Background" Value="{StaticResource MenuBackground}" />
+  </Style>
+
+  <Style x:Key="{x:Static MenuItem.SeparatorStyleKey}" TargetType="{x:Type Separator}">
+    <Setter Property="Height" Value="1"/>
+    <Setter Property="Margin" Value="0,4,0,4"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Separator}">
+          <Border BorderBrush="{StaticResource SeperatorBorderBrush}" BorderThickness="1"/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <ControlTemplate x:Key="{x:Static MenuItem.TopLevelHeaderTemplateKey}" TargetType="{x:Type MenuItem}">
+    <Border Name="Border" >
+      <Grid>
+        <ContentPresenter Margin="6,3,6,3"
+                          ContentSource="Header"
+                          RecognizesAccessKey="True" />
+        <Popup Name="Popup"
+              Placement="Bottom"
+              IsOpen="{TemplateBinding IsSubmenuOpen}"
+              AllowsTransparency="True" 
+              Focusable="False"
+              PopupAnimation="Fade">
+          <Border Name="SubmenuBorder"
+                  SnapsToDevicePixels="True"
+                  Background="{StaticResource ContextMenuBackground}"
+                  BorderBrush="{StaticResource SubMenuBorderBrush}"
+                  BorderThickness="1" >
+            <StackPanel IsItemsHost="True" 
+                        KeyboardNavigation.DirectionalNavigation="Cycle" />
+          </Border>
+        </Popup>
+      </Grid>
+    </Border>
+    <ControlTemplate.Triggers>
+      <Trigger Property="IsSuspendingPopupAnimation" Value="true">
+        <Setter TargetName="Popup" Property="PopupAnimation" Value="None"/>
+      </Trigger>
+      <Trigger Property="IsHighlighted" Value="true">
+        <Setter TargetName="Border" Property="Background" Value="{StaticResource HighlightMenuItemGradient}"/>
+        <Setter TargetName="Border" Property="BorderBrush" Value="Transparent"/>
+      </Trigger>
+      <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="True">
+        <Setter TargetName="SubmenuBorder" Property="CornerRadius" Value="0,0,4,4"/>
+        <Setter TargetName="SubmenuBorder" Property="Padding" Value="0,0,0,3"/>
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundDisabled}"/>
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource MenuItemForegroundEnabled}"/>
+      </Trigger>
+      <Trigger SourceName="Popup" Property="Popup.IsOpen" Value="True">
+        <Setter TargetName="Border" Property="Background" Value="#d0d7e2"/>
+      </Trigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
+  <Style TargetType="{x:Type Separator}"><!--  BasedOn="{StaticResource {x:Type Separator}}" -->
+    <Setter Property="Foreground" Value="{StaticResource SeperatorForeground}" />
+  </Style>
+
+</ResourceDictionary>

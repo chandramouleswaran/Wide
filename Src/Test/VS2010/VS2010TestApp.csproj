@@ -30,7 +30,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Build\</OutputPath>
+    <OutputPath>..\..\..\Build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -119,19 +119,9 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Wide.Interfaces\Wide.Interfaces.csproj">
+    <ProjectReference Include="..\..\Wide\Wide.csproj">
       <Project>{9f20f5ef-4f7e-4ae2-a462-4cd2256fb3ff}</Project>
-      <Name>Wide.Interfaces</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Wide.Shell\Wide.Shell.csproj">
-      <Project>{117809de-4800-479b-bca7-1d5aa6dbe30f}</Project>
-      <Name>Wide.Shell</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Wide.Splash\Wide.Splash.csproj">
-      <Project>{f5bfb5bd-08a3-46cf-a967-7d45772d9877}</Project>
-      <Name>Wide.Splash</Name>
+      <Name>Wide</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
@@ -155,7 +145,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(SolutionDir)Libs"  "$(TargetDir)External" /E /Y /I /R</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

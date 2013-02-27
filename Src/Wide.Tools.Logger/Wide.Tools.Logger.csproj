@@ -106,9 +106,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Wide.Interfaces\Wide.Interfaces.csproj">
+    <ProjectReference Include="..\Wide\Wide.csproj">
       <Project>{9f20f5ef-4f7e-4ae2-a462-4cd2256fb3ff}</Project>
-      <Name>Wide.Interfaces</Name>
+      <Name>Wide</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
