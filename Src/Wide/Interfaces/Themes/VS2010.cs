@@ -17,7 +17,7 @@ namespace Wide.Interfaces.Themes
             UriList = new List<Uri>();
             Name = "VS2010";
             UriList.Add(new Uri("pack://application:,,,/AvalonDock.Themes.VS2010;component/Theme.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/Wide;component/Interfaces/Themes/VS2010/Theme.xaml"));
+            UriList.Add(new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2010/Theme.xaml"));
         }
 
         #region ITheme Members

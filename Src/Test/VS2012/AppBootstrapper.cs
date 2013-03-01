@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Practices.Prism.Modularity;
 using Wide.Interfaces;
 using Wide.Shell;
 using Microsoft.Practices.Unity;
@@ -39,6 +40,12 @@ namespace VS2012TestApp
             //Load the required stuff
             //NOTE: this should probably be done from other modules. This is used only for demo purpose.
             Loader loader = new Loader(Container);
+        }
+
+        protected override IModuleCatalog CreateModuleCatalog()
+        {
+            var catalog = new DirectoryModuleCatalog { ModulePath = @".\Internal" };
+            return catalog;
         }
     }
 }

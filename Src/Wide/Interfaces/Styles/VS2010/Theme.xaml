@@ -6,9 +6,9 @@
     xmlns:Converters="clr-namespace:Wide.Interfaces.Converters">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/Brushes.xaml" />
-        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/StatusBar.xaml" />
-        <ResourceDictionary Source="/Wide;component/Interfaces/Themes/VS2010/Toolbar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2010/Brushes.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2010/StatusBar.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2010/Toolbar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
   <Style TargetType="{x:Type AvalonEdit:TextEditor}">

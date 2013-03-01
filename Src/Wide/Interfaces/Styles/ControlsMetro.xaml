@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Toolbar.xaml"/>
-        <ResourceDictionary Source="Menu.xaml" />
+        <ResourceDictionary Source="VS2012/Toolbar.xaml"/>
+        <ResourceDictionary Source="VS2012/Menu.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <!--Menu Item Binding with Icon-->

@@ -179,7 +179,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Styles\Button.xaml">
+    <Page Include="Interfaces\Styles\VS2012\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -191,39 +191,43 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaces\Styles\DarkColors.xaml">
+    <Page Include="Interfaces\Styles\VS2012\DarkColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Styles\DarkTheme.xaml">
+    <Page Include="Interfaces\Styles\VS2012\DarkTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Styles\LightColors.xaml">
+    <Page Include="Interfaces\Styles\VS2012\LightColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Styles\LightTheme.xaml">
+    <Page Include="Interfaces\Styles\VS2012\LightTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Styles\Menu.xaml">
+    <Page Include="Interfaces\Styles\VS2012\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaces\Styles\Toolbar.xaml">
+    <Page Include="Interfaces\Styles\VS2012\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaces\Styles\WindowCommands.xaml">
+    <Page Include="Interfaces\Styles\ToolbarBinding.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Interfaces\Styles\VS2012\WindowCommands.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Themes\VS2010\Brushes.xaml">
+    <Page Include="Interfaces\Styles\VS2010\Brushes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Interfaces\Themes\VS2010\Toolbar.xaml">
+    <Page Include="Interfaces\Styles\VS2010\Toolbar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -241,13 +245,13 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Interfaces\Themes\VS2010\StatusBar.xaml">
+    <Page Include="Interfaces\Styles\VS2010\StatusBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Interfaces\Themes\VS2010\Theme.xaml">
+    <Page Include="Interfaces\Styles\VS2010\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

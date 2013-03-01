@@ -24,6 +24,7 @@
 *.sbr
 *.sdf
 *.opensdf
+*.nupkg
 *.unsuccessfulbuild
 ipch/
 obj/

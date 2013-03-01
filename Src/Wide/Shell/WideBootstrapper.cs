@@ -42,12 +42,6 @@ namespace Wide.Shell
             Application.Current.MainWindow.DataContext = Container.Resolve<AbstractWorkspace>();
         }
 
-        protected override IModuleCatalog CreateModuleCatalog()
-        {
-            var catalog = new DirectoryModuleCatalog {ModulePath = @".\Internal"};
-            return catalog;
-        }
-
         protected override void ConfigureContainer()
         {
             //Create an instance of the workspace

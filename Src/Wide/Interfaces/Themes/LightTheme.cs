@@ -20,7 +20,7 @@ namespace Wide.Interfaces.Themes
             UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"));
             UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
             UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/LightTheme.xaml"));
+            UriList.Add(new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightTheme.xaml"));
             UriList.Add(new Uri("pack://application:,,,/AvalonDock.Themes.VS2012;component/LightTheme.xaml"));
         }
 
