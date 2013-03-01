@@ -25,23 +25,26 @@
     <SolidColorBrush x:Key="WhiteBrush" Color="Black" />
     <SolidColorBrush x:Key="TabBrush" Color="White" />
     <SolidColorBrush x:Key="WindowTitleColorBrush" Color="#2D2D30" />
-    <SolidColorBrush x:Key="ControlHighlightedColorBrush" Color="{DynamicResource ControlHighlightedColor}"/>
-    <SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource ControlHighlightedColor}"/>
-    <SolidColorBrush x:Key="ControlOpenColorBrush" Color="{DynamicResource ControlOpenColor}"/>
-    <SolidColorBrush x:Key="SeparatorColorBrush" Color="{DynamicResource SeparatorColor}"/>
-    <SolidColorBrush x:Key="SplitterColorBrush" Color="{DynamicResource SplitterColor}"/>
+    <SolidColorBrush x:Key="ControlHighlightedColorBrush" Color="{DynamicResource ControlHighlightedColor}" />
+    <SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource ControlHighlightedColor}" />
+    <SolidColorBrush x:Key="ControlOpenColorBrush" Color="{DynamicResource ControlOpenColor}" />
+    <SolidColorBrush x:Key="SeparatorColorBrush" Color="{DynamicResource SeparatorColor}" />
+    <SolidColorBrush x:Key="SplitterColorBrush" Color="{DynamicResource SplitterColor}" />
 
-    <SolidColorBrush x:Key="DragUnselectedBrush" Color="{DynamicResource DragUnselected}"/>
-    <SolidColorBrush x:Key="DragSelectedBrush" Color="{DynamicResource DragSelected}"/>
+    <SolidColorBrush x:Key="DragUnselectedBrush" Color="{DynamicResource DragUnselected}" />
+    <SolidColorBrush x:Key="DragSelectedBrush" Color="{DynamicResource DragSelected}" />
 
     <!--Fonts-->
-    <FontFamily x:Key="HeaderFontFamily">Segoe UI, Segoe UI Light, Lucida Sans Unicode, Verdana</FontFamily>
+    <FontFamily x:Key="HeaderFontFamily">
+        Segoe UI, Segoe UI Light, Lucida Sans Unicode, Verdana
+    </FontFamily>
 
     <!--Shadow-->
     <DropShadowEffect x:Key="StandardDropShadow" ShadowDepth="3" Opacity="0.6" Direction="305" />
 
     <!--Pattern-->
-    <DrawingBrush x:Key="DragSelectedPattern" ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,4,5" Viewbox="0,0,4,5" TileMode="Tile">
+    <DrawingBrush x:Key="DragSelectedPattern" ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,4,5"
+                  Viewbox="0,0,4,5" TileMode="Tile">
         <DrawingBrush.Drawing>
             <GeometryDrawing Brush="{DynamicResource DragSelectedBrush}">
                 <GeometryDrawing.Geometry>
@@ -56,7 +59,8 @@
             </GeometryDrawing>
         </DrawingBrush.Drawing>
     </DrawingBrush>
-    <DrawingBrush x:Key="DragUnselectedPattern" ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,4,5" Viewbox="0,0,4,5" TileMode="Tile">
+    <DrawingBrush x:Key="DragUnselectedPattern" ViewportUnits="Absolute" ViewboxUnits="Absolute" Viewport="0,0,4,5"
+                  Viewbox="0,0,4,5" TileMode="Tile">
         <DrawingBrush.Drawing>
             <GeometryDrawing Brush="{DynamicResource DragUnselectedBrush}">
                 <GeometryDrawing.Geometry>

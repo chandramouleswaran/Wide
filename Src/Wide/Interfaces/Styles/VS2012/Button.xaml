@@ -12,20 +12,19 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid" Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          RecognizesAccessKey="True" Opacity="1" />
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="1" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}"/>
-                            <Setter TargetName="grid" Property="Background" Value="{DynamicResource ControlHighlightedColorBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentColorBrush}" />
+                            <Setter TargetName="grid" Property="Background"
+                                    Value="{DynamicResource ControlHighlightedColorBrush}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="grid" Property="Background" Value="{DynamicResource AccentColorBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TabBrush}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource TabBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="#ADADAD" />

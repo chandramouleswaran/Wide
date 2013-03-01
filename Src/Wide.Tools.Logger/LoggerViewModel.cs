@@ -5,41 +5,37 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Wide.Interfaces;
-using Wide.Interfaces.Events;
+
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using Wide.Interfaces;
+using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 
 namespace Wide.Tools.Logger
 {
-    class LoggerViewModel : ToolViewModel
+    internal class LoggerViewModel : ToolViewModel
     {
-        private LoggerModel _model;
-        private LoggerView _view;
+        private readonly IEventAggregator _aggregator;
+        private readonly IUnityContainer _container;
+        private readonly LoggerModel _model;
+        private readonly LoggerView _view;
         private IWorkspace _workspace;
-        private IUnityContainer _container;
-        private IEventAggregator _aggregator;
 
         public LoggerViewModel(IUnityContainer container, AbstractWorkspace workspace)
         {
             _workspace = workspace;
             _container = container;
-            this.Name = "Logger";
-            this.Title = "Logger";
-            this.ContentId = "Logger";
+            Name = "Logger";
+            Title = "Logger";
+            ContentId = "Logger";
             _model = new LoggerModel();
-            this.Model = _model;
-            this.IsVisible = false;
+            Model = _model;
+            IsVisible = false;
 
             _view = new LoggerView();
             _view.DataContext = _model;
-            this.View = _view;
+            View = _view;
 
             _aggregator = _container.Resolve<IEventAggregator>();
             _aggregator.GetEvent<LogEvent>().Subscribe(AddLog);

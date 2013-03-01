@@ -5,19 +5,16 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Shell;
-using Microsoft.Practices.Unity;
 using Wide.Splash;
 
 namespace VS2010TestApp
 {
-    class AppBootstrapper : WideBootstrapper
+    internal class AppBootstrapper : WideBootstrapper
     {
         public AppBootstrapper(bool isMetro = true) : base(isMetro)
         {
@@ -39,12 +36,12 @@ namespace VS2010TestApp
 
             //Load the required stuff
             //NOTE: this should probably be done from other modules. This is used only for demo purpose.
-            Loader loader = new Loader(Container);
+            var loader = new Loader(Container);
         }
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
-            var catalog = new DirectoryModuleCatalog { ModulePath = @".\Internal" };
+            var catalog = new DirectoryModuleCatalog {ModulePath = @".\Internal"};
             return catalog;
         }
     }
