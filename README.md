@@ -1,5 +1,4 @@
 # Wide 
-See branch [v0.1-alpha](https://github.com/chandramouleswaran/Wide/tree/v0.1-alpha)
 
 ### What is this?
 
