@@ -4,6 +4,7 @@
 
 #Visual Studio files
 *.[Oo]bj
+*.DotSettings
 *.user
 *.aps
 *.pch
@@ -23,9 +24,11 @@
 *.sbr
 *.sdf
 *.opensdf
+*.nupkg
 *.unsuccessfulbuild
 ipch/
 obj/
+Build/
 [Bb]in
 [Dd]ebug*/
 [Rr]elease*/

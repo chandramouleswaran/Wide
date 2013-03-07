@@ -1,0 +1,45 @@
+﻿<Window x:Class="VS2010TestApp.AppSplash" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Behaviours="clr-namespace:Wide.Splash.Behaviours;assembly=Wide" Behaviours:SplashBehaviour.Enabled="True"
+        mc:Ignorable="d" Width="540" Height="360" SnapsToDevicePixels="True" d:DesignHeight="300" d:DesignWidth="300"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False" WindowStyle="None"
+        AllowsTransparency="True" Background="Transparent">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Grid.RowSpan="5" Grid.Column="0" Grid.ColumnSpan="2" Background="#FF1C1C1C"
+                CornerRadius="5" Margin="5">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.7" ShadowDepth="4" />
+            </Border.Effect>
+        </Border>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="30"
+                   FontWeight="Bold" Margin="0,30,0,0" Text="My application title" Foreground="#FF007ACC">
+            <TextBlock.Effect>
+                <DropShadowEffect Opacity="0.7" ShadowDepth="4" />
+            </TextBlock.Effect>
+        </TextBlock>
+
+        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Status}" Foreground="White">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="1" Color="#99ffffff" />
+            </TextBlock.Effect>
+        </TextBlock>
+
+        <ProgressBar IsIndeterminate="True" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="6" />
+    </Grid>
+</Window>
