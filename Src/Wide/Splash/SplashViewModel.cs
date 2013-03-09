@@ -9,11 +9,12 @@
 using System;
 using System.ComponentModel;
 using Microsoft.Practices.Prism.Events;
+using Wide.Interfaces;
 using Wide.Interfaces.Events;
 
 namespace Wide.Splash
 {
-    public class SplashViewModel : INotifyPropertyChanged
+    public class SplashViewModel : ViewModelBase
     {
         #region Declarations
 
@@ -38,7 +39,7 @@ namespace Wide.Splash
             set
             {
                 _status = value;
-                NotifyPropertyChanged("Status");
+                RaisePropertyChanged("Status");
             }
         }
 
@@ -58,19 +59,5 @@ namespace Wide.Splash
 
         #endregion
 
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        public void NotifyPropertyChanged(string propertyName_)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName_));
-            }
-        }
     }
 }

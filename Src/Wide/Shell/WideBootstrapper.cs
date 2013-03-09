@@ -41,6 +41,11 @@ namespace Wide.Shell
 
             base.InitializeModules();
             Application.Current.MainWindow.DataContext = Container.Resolve<AbstractWorkspace>();
+
+            if(HideSplashWindow)
+            {
+                (Shell as Window).Show();
+            }
         }
 
         protected override void ConfigureContainer()
