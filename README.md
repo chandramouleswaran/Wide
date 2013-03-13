@@ -60,7 +60,7 @@ I am planning on using Wide for my own projects:
 * Settings manager for the application
 * Status bar service
 * Dark, Expression themes
-* more on request from users (if any)
+* See milestones and open issues for more details.
 
 ### Credits
 Some open source projects had certain parts built nicely of which a few were used in my project:
