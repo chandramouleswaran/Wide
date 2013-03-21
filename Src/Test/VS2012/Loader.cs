@@ -44,8 +44,7 @@ namespace VS2012TestApp
             var manager = _container.Resolve<IThemeManager>();
             //manager.AddTheme(new VS2010());
             //manager.SetCurrent("VS2010");
-            //manager.AddTheme(new LightTheme());
-            //manager.SetCurrent("Light");
+            manager.AddTheme(new LightTheme());
             manager.AddTheme(new DarkTheme());
             manager.SetCurrent("Dark");
         }
@@ -113,6 +112,10 @@ namespace VS2012TestApp
                                                                   @"pack://application:,,,/VS2012TestApp;component/Icons/Undo_16x.png")),
                                                           manager.GetCommand("LOGSHOW"))
                                         {IsCheckable = true, IsChecked = logger.IsVisible});
+
+            vm.Get("_View").Add(new MenuItemViewModel("Themes", 1));
+            vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Dark", 1, null, manager.GetCommand("THEMECHANGE")) { IsCheckable = true, IsChecked = true, CommandParameter = "Dark" });
+            vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Light", 2, null, manager.GetCommand("THEMECHANGE")) { IsCheckable = true, IsChecked = false, CommandParameter = "Light"});
         }
 
         private void LoadToolbar()
@@ -131,6 +134,7 @@ namespace VS2012TestApp
             mainToolbar.Add(vm.Get("_Edit").Get("Cut"));
             mainToolbar.Add(vm.Get("_Edit").Get("Copy"));
             mainToolbar.Add(vm.Get("_Edit").Get("_Paste"));
+            //mainToolbar.Add(vm.Get("_Edit"));
             mainToolbar.Band = 0;
             mainToolbar.BandIndex = 2;
             service.Add(mainToolbar);
@@ -145,11 +149,23 @@ namespace VS2012TestApp
             var openCommand = new DelegateCommand(OpenModule);
             var saveCommand = new DelegateCommand(SaveDocument, CanExecuteSaveDocument);
             var loggerCommand = new DelegateCommand(ToggleLogger);
+            var themeCommand = new DelegateCommand<string>(ThemeChangeCommand);
 
 
             manager.RegisterCommand("OPEN", openCommand);
             manager.RegisterCommand("SAVE", saveCommand);
             manager.RegisterCommand("LOGSHOW", loggerCommand);
+            manager.RegisterCommand("THEMECHANGE", themeCommand);
+        }
+
+        private void ThemeChangeCommand(string s)
+        {
+            var vm = _container.Resolve<AbstractMenuItem>();
+            var manager = _container.Resolve<IThemeManager>();
+
+            MenuItemViewModel mvm = vm.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
+            mvm.IsChecked = false;
+            manager.SetCurrent(s);
         }
 
         private void ToggleLogger()

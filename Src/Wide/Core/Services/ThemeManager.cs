@@ -77,7 +77,6 @@ namespace Wide.Core.Services
         {
             if (!ThemeDictionary.ContainsKey(theme.Name))
             {
-                //theme.UriList.Add(new Uri("pack://application:,,,/Wide.Core;component/Styles/MenuResource.xaml"));
                 ThemeDictionary.Add(theme.Name, theme);
                 Themes.Add(theme);
                 return true;

@@ -30,5 +30,10 @@ namespace Wide.Interfaces.Services
         /// <param name="name">The name of the theme</param>
         /// <returns>true, if successful</returns>
         bool SetCurrent(string name);
+
+        /// <summary>
+        /// Returns the current theme set in the theme manager
+        /// </summary>
+        ITheme CurrentTheme { get; }
     }
 }
