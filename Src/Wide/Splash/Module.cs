@@ -63,7 +63,7 @@ namespace Wide.Splash
                             (Action) (() =>
                                           {
                                               Container.RegisterType<SplashViewModel, SplashViewModel>();
-                                              ISplashView iSplashView = null;
+                                              ISplashView iSplashView;
                                               try
                                               {
                                                   //The end user might have set a splash view - try to use that

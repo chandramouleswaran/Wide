@@ -11,22 +11,21 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.Unity;
+using Wide.Core.TextDocument;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 
-namespace Wide.Core
+namespace Wide.Core.Services
 {
     internal class AllFileHandler : IContentHandler
     {
         private readonly IUnityContainer _container;
         private readonly ILoggerService _loggerService;
-        private IOpenFileService _fileService;
 
         public AllFileHandler(IUnityContainer container, ILoggerService loggerService, IOpenFileService openFileService)
         {
             _container = container;
             _loggerService = loggerService;
-            _fileService = openFileService;
         }
 
         #region IContentHandler Members

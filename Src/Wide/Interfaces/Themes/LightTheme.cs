@@ -15,14 +15,16 @@ namespace Wide.Interfaces.Themes
     {
         public LightTheme()
         {
-            UriList = new List<Uri>();
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightTheme.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/AvalonDock.Themes.VS2012;component/LightTheme.xaml"));
+            UriList = new List<Uri>
+                          {
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"),
+                              new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightTheme.xaml"),
+                              new Uri("pack://application:,,,/AvalonDock.Themes.VS2012;component/LightTheme.xaml")
+                          };
         }
 
         #region ITheme Members

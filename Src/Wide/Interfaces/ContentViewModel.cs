@@ -54,7 +54,7 @@ namespace Wide.Interfaces
 
         #region Property
 
-        public virtual ICommand CloseCommand { get; set; }
+        public virtual ICommand CloseCommand { get; protected set; }
 
         /// <summary>
         /// The content model
@@ -175,12 +175,11 @@ namespace Wide.Interfaces
         //Needed for content handlers to restore the layout
         public bool CloseDocument(bool remove)
         {
-            var res = MessageBoxResult.Cancel;
             if (Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                res = MessageBox.Show(string.Format("Save changes for document '{0}'?", Title), "Are you sure?",
-                                      MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", Title), "Are you sure?",
+                                          MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
                     Handler.SaveContent(this);

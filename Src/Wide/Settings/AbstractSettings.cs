@@ -32,9 +32,7 @@ namespace Wide.Settings
             get
             {
                 var c = new ContentControl();
-                var propertyGrid = new PropertyGrid();
-                propertyGrid.ShowSearchBox = false;
-                propertyGrid.SelectedObject = this;
+                var propertyGrid = new PropertyGrid {ShowSearchBox = false, SelectedObject = this};
                 c.Content = propertyGrid;
                 return c;
             }

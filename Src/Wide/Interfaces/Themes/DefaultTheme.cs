@@ -15,13 +15,15 @@ namespace Wide.Interfaces.Themes
     {
         public DefaultTheme()
         {
-            UriList = new List<Uri>();
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
-            UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"));
+            UriList = new List<Uri>
+                          {
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro.Resources;component/Icons.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml")
+                          };
         }
 
         #region ITheme Members

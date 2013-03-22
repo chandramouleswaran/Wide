@@ -12,7 +12,6 @@ using System.Linq;
 using System.Windows;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
-using MahApps.Metro.Controls;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
@@ -22,7 +21,7 @@ namespace Wide.Shell
     /// <summary>
     /// Interaction logic for Shell.xaml
     /// </summary>
-    public partial class ShellViewMetro : MetroWindow, IShell
+    public partial class ShellViewMetro : IShell
     {
         private readonly IUnityContainer _container;
 
@@ -106,7 +105,6 @@ namespace Wide.Shell
             if (!workspace.Closing())
             {
                 e.Cancel = true;
-                return;
             }
         }
     }

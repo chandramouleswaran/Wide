@@ -35,7 +35,7 @@ namespace Wide.Core.Services
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
 
             var dialog = new OpenFileDialog();
-            bool? result = false;
+            bool? result;
 
             if (location == null)
             {
@@ -123,11 +123,8 @@ namespace Wide.Core.Services
 
                 return openValue;
             }
-            else
-            {
-                _logger.Log("Unable to find a IContentHandler to open content with ID = " + contentID, LogCategory.Error,
-                            LogPriority.High);
-            }
+
+            _logger.Log("Unable to find a IContentHandler to open content with ID = " + contentID, LogCategory.Error, LogPriority.High);
             return null;
         }
 

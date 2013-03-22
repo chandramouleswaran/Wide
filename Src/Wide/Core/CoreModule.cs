@@ -17,8 +17,8 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
-using Wide.Core.Logging;
 using Wide.Core.Services;
+using Wide.Core.TextDocument;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
@@ -85,15 +85,11 @@ namespace Wide.Core
             registry.Register(_container.Resolve<AllFileHandler>());
 
             AppCommands();
-            AppTheme();
-            //AppMenu();
-            //AppToolbar();
 
             //Try resolving a workspace
-            IWorkspace workspace;
             try
             {
-                workspace = _container.Resolve<AbstractWorkspace>();
+                _container.Resolve<AbstractWorkspace>();
             }
             catch
             {
@@ -112,13 +108,6 @@ namespace Wide.Core
             manager.RegisterCommand("CLOSE", closeCommand);
         }
 
-        private void AppTheme()
-        {
-            var manager = _container.Resolve<IThemeManager>();
-            //manager.AddTheme(new DefaultTheme());
-            //manager.AddTheme(new DarkTheme());
-        }
-
         #region Commands
 
         private bool CanExecuteCloseDocument()
@@ -130,11 +119,10 @@ namespace Wide.Core
         private void CloseDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
-            var res = MessageBoxResult.Cancel;
             if (workspace.ActiveDocument.Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                res = MessageBox.Show(
+                var res = MessageBox.Show(
                     string.Format("Save changes for document '{0}'?", workspace.ActiveDocument.Title), "Are you sure?",
                     MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)

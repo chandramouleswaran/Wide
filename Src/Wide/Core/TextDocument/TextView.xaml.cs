@@ -9,12 +9,12 @@
 using System.Windows.Controls;
 using Wide.Interfaces;
 
-namespace Wide.Core
+namespace Wide.Core.TextDocument
 {
     /// <summary>
     /// Interaction logic for TextView.xaml
     /// </summary>
-    public partial class TextView : UserControl, IContentView
+    public partial class TextView : IContentView
     {
         public TextView()
         {

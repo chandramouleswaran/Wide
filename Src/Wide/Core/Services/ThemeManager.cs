@@ -62,7 +62,7 @@ namespace Wide.Core.Services
                 foreach (Uri uri in newTheme.UriList)
                 {
                     theme.MergedDictionaries.Add(new ResourceDictionary {Source = uri});
-                    if (uri.ToString().Contains("AvalonDock") && appTheme != null)
+                    if (uri.ToString().Contains("AvalonDock"))
                     {
                         appTheme.MergedDictionaries.Add(new ResourceDictionary {Source = uri});
                     }

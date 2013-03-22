@@ -6,30 +6,20 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
-using AvalonDock.Layout;
 using Wide.Interfaces;
 
 namespace Wide.Shell
 {
     public class PanesTemplateSelector : DataTemplateSelector
     {
-        public PanesTemplateSelector()
-        {
-            Console.WriteLine("I come here");
-        }
-
-
         public DataTemplate ContentViewTemplate { get; set; }
 
         public DataTemplate ToolViewTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var itemAsLayoutContent = item as LayoutContent;
-
             if (item is ContentViewModel)
                 return ContentViewTemplate;
 

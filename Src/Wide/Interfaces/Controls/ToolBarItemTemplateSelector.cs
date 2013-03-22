@@ -15,14 +15,17 @@ namespace Wide.Interfaces
     public class ToolBarItemTemplateSelector : DataTemplateSelector
     {
         public DataTemplate ButtonTemplate { get; set; }
+        public DataTemplate ComboBoxTemplate { get; set; }
         public DataTemplate SeparatorTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var toolBarItem = (MenuItemViewModel) item;
-            Debug.Assert(toolBarItem != null);
-            if (!toolBarItem.IsSeparator)
+            var toolBarItem = item as MenuItemViewModel;
+            if (toolBarItem != null && !toolBarItem.IsSeparator)
             {
+                if (toolBarItem.Children.Count > 0)
+                    return ComboBoxTemplate;
+
                 return ButtonTemplate;
             }
             return SeparatorTemplate;

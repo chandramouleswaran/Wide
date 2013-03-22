@@ -16,12 +16,10 @@ namespace Wide.Core.Services
     internal sealed class ContentHandlerRegistry : IContentHandlerRegistry
     {
         private readonly List<IContentHandler> _contentHandlers;
-        private IUnityContainer _container;
 
         public ContentHandlerRegistry(IUnityContainer container)
         {
             _contentHandlers = new List<IContentHandler>();
-            _container = container;
         }
 
         #region IContentHandlerRegistry Members

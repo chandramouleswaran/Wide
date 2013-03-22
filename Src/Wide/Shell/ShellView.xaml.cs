@@ -21,7 +21,7 @@ namespace Wide.Shell
     /// <summary>
     /// Interaction logic for Shell.xaml
     /// </summary>
-    public partial class ShellView : Window, IShell
+    public partial class ShellView : IShell
     {
         private readonly IUnityContainer _container;
 
@@ -76,7 +76,7 @@ namespace Wide.Shell
             {
                 layoutSerializer.Deserialize(@".\AvalonDock.Layout.config");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
             }
         }
@@ -105,7 +105,6 @@ namespace Wide.Shell
             if (!workspace.Closing())
             {
                 e.Cancel = true;
-                return;
             }
         }
     }

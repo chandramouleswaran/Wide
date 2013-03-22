@@ -19,7 +19,6 @@ namespace Wide.Shell
         public bool BeforeInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableToShow,
                                            ILayoutContainer destinationContainer)
         {
-            var destPane = destinationContainer as LayoutAnchorablePane;
             if (destinationContainer != null &&
                 destinationContainer.FindParent<LayoutFloatingWindow>() != null)
                 return false;
