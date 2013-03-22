@@ -10,7 +10,7 @@ using System;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 
-namespace Wide.Core
+namespace Wide.Core.TextDocument
 {
     public class TextViewModel : ContentViewModel
     {

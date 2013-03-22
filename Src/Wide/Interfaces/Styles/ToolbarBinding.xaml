@@ -22,9 +22,14 @@
     <DataTemplate x:Key="separatorTemplate">
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
     </DataTemplate>
+    
+    <DataTemplate x:Key="comboboxTemplate">
+        <ComboBox ItemsSource="{Binding Children}" Style="{DynamicResource ToolbarComboStyle}" SelectedIndex="0" />
+    </DataTemplate>
 
     <Interfaces:ToolBarItemTemplateSelector ButtonTemplate="{StaticResource buttonTemplate}"
-                                            SeparatorTemplate="{StaticResource separatorTemplate}" x:Key="toolBarItemTemplateSelector" />
+                                            SeparatorTemplate="{StaticResource separatorTemplate}" 
+                                            ComboBoxTemplate="{StaticResource comboboxTemplate}" x:Key="toolBarItemTemplateSelector" />
 
 
 </ResourceDictionary>

@@ -87,7 +87,7 @@ namespace Wide.Interfaces
 
         #region CTOR
 
-        public AbstractMenuItem(string header, int priority, ImageSource icon = null, ICommand command = null,
+        protected AbstractMenuItem(string header, int priority, ImageSource icon = null, ICommand command = null,
                                 KeyGesture gesture = null, bool isCheckable = false)
         {
             Priority = priority;

@@ -18,7 +18,7 @@ namespace Wide.Interfaces
     {
         protected ObservableCollection<T> _children;
 
-        public AbstractPrioritizedTree()
+        protected AbstractPrioritizedTree()
         {
             _children = new ObservableCollection<T>();
         }

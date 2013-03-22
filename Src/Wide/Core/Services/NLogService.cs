@@ -13,11 +13,11 @@ using NLog;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 
-namespace Wide.Core.Logging
+namespace Wide.Core.Services
 {
     internal class NLogService : ILoggerService
     {
-        private static readonly Logger logger = LogManager.GetLogger("Wide");
+        private static readonly Logger Logger = LogManager.GetLogger("Wide");
         private readonly IEventAggregator _aggregator;
 
         private NLogService()
@@ -41,7 +41,7 @@ namespace Wide.Core.Logging
             StackFrame frame = trace.GetFrame(1); // 0 will be the inner-most method
             MethodBase method = frame.GetMethod();
 
-            logger.Log(LogLevel.Error, method.DeclaringType + ": " + message);
+            Logger.Log(LogLevel.Error, method.DeclaringType + ": " + message);
 
             _aggregator.GetEvent<LogEvent>().Publish(new NLogService
                                                          {Message = Message, Category = Category, Priority = Priority});

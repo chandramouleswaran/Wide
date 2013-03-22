@@ -41,7 +41,6 @@ namespace Wide.Interfaces.Converters
                 else
                 {
                     rValue = 12.0;
-                    value = "100 %";
                 }
             }
             return rValue;

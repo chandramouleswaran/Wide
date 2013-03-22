@@ -27,7 +27,7 @@ namespace Wide.Interfaces
         protected IToolbarService _toolbarService;
         protected ObservableCollection<ToolViewModel> _tools = new ObservableCollection<ToolViewModel>();
 
-        public AbstractWorkspace(IUnityContainer container)
+        protected AbstractWorkspace(IUnityContainer container)
         {
             _container = container;
             _docs = new ObservableCollection<ContentViewModel>();

@@ -8,24 +8,23 @@
 
 using System;
 using System.ComponentModel;
-using ICSharpCode.AvalonEdit.Document;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 
-namespace Wide.Core
+namespace Wide.Core.TextDocument
 {
     public class TextModel : ContentModel
     {
         private readonly ICommandManager _commandManager;
-        protected string _oldText;
+        protected string OldText;
 
         public TextModel(ICommandManager commandManager)
         {
-            Document = new TextDocument();
+            Document = new ICSharpCode.AvalonEdit.Document.TextDocument();
             _commandManager = commandManager;
-            Document.PropertyChanged += Document_PropertyChanged;
+            Document.PropertyChanged += DocumentPropertyChanged;
             Document.TextChanged += DocumentOnTextChanged;
-            _oldText = "";
+            OldText = "";
         }
 
         public override bool IsDirty
@@ -36,7 +35,7 @@ namespace Wide.Core
                 base.IsDirty = value;
                 if (value == false)
                 {
-                    _oldText = Document.Text;
+                    OldText = Document.Text;
                 }
                 else
                 {
@@ -45,14 +44,14 @@ namespace Wide.Core
             }
         }
 
-        public TextDocument Document { get; protected set; }
+        public ICSharpCode.AvalonEdit.Document.TextDocument Document { get; protected set; }
 
         private void DocumentOnTextChanged(object sender, EventArgs eventArgs)
         {
-            IsDirty = (_oldText != Document.Text);
+            IsDirty = (OldText != Document.Text);
         }
 
-        private void Document_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged("Document");
         }

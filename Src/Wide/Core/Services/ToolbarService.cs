@@ -18,14 +18,10 @@ namespace Wide.Core.Services
 {
     internal sealed class ToolbarService : IToolbarService
     {
-        private static readonly Dictionary<string, ToolbarViewModel> ToolbarDictionary =
-            new Dictionary<string, ToolbarViewModel>();
-
-        private IUnityContainer _container;
+        private static readonly Dictionary<string, ToolbarViewModel> ToolbarDictionary = new Dictionary<string, ToolbarViewModel>();
 
         public ToolbarService(IUnityContainer container)
         {
-            _container = container;
         }
 
         #region IToolbarService Members

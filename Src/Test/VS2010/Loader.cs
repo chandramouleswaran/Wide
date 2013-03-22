@@ -129,6 +129,7 @@ namespace VS2010TestApp
             mainToolbar.Add(vm.Get("_Edit").Get("Cut"));
             mainToolbar.Add(vm.Get("_Edit").Get("Copy"));
             mainToolbar.Add(vm.Get("_Edit").Get("_Paste"));
+            mainToolbar.Add(vm.Get("_Edit"));
             mainToolbar.Band = 0;
             mainToolbar.BandIndex = 2;
             service.Add(mainToolbar);
