@@ -10,10 +10,13 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using AvalonDock;
 using AvalonDock.Layout;
 using AvalonDock.Layout.Serialization;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
+using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 
 namespace Wide.Shell
@@ -24,11 +27,14 @@ namespace Wide.Shell
     public partial class ShellViewMetro : IShell
     {
         private readonly IUnityContainer _container;
+        private IEventAggregator _eventAggregator;
+        private ILoggerService _logger;
 
-        public ShellViewMetro(IUnityContainer container)
+        public ShellViewMetro(IUnityContainer container, IEventAggregator eventAggregator)
         {
             InitializeComponent();
             _container = container;
+            _eventAggregator = eventAggregator;
             Loaded += MainWindow_Loaded;
             Unloaded += MainWindow_Unloaded;
         }
@@ -105,6 +111,25 @@ namespace Wide.Shell
             if (!workspace.Closing())
             {
                 e.Cancel = true;
+            }
+        }
+
+        private void dockManager_ActiveContentChanged(object sender, EventArgs e)
+        {
+            DockingManager manager = sender as DockingManager;
+            ContentViewModel cvm = manager.ActiveContent as ContentViewModel;
+            _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(cvm);
+            if(cvm != null) Logger.Log("Active document changed to " + cvm.Title, LogCategory.Info, LogPriority.None);
+        }
+
+        private ILoggerService Logger
+        {
+            get
+            {
+                if(_logger == null)
+                    _logger = _container.Resolve<ILoggerService>();
+
+                return _logger;
             }
         }
     }
