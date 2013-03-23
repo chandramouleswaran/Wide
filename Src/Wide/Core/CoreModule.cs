@@ -26,6 +26,13 @@ using CommandManager = Wide.Core.Services.CommandManager;
 
 namespace Wide.Core
 {
+    /// <summary>
+    /// The Wide Core module - this module does the folthatlowing things:
+    ///     1. Registers <see cref="IOpenFileService"/> - The file service can be used to open a file from a location or from a content ID
+    ///     2. Registers <see cref="ICommandManager"/> - The command manager can be used to register commands and reuse the commands in different locations
+    ///     3. Registers <see cref="IContentHandlerRegistry"/> - A registry to maintain different content handlers. Each content handler should be able to open a different kind of file/object.
+    ///     4. Registers <see cref="IThemeManager.cs"/>
+    /// </summary>
     internal class CoreModule : IModule
     {
         private readonly IUnityContainer _container;

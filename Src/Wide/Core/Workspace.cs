@@ -11,8 +11,12 @@ using Wide.Interfaces;
 
 namespace Wide.Core
 {
-    public class Workspace : AbstractWorkspace
+    internal class Workspace : AbstractWorkspace
     {
+        /// <summary>
+        /// The generic workspace that will be used if the application does not have its workspace
+        /// </summary>
+        /// <param name="container">The injected container - can be used by custom flavors of workspace</param>
         public Workspace(IUnityContainer container) : base(container)
         {
         }
