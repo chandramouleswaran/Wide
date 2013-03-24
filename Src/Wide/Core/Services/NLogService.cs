@@ -15,22 +15,37 @@ using Wide.Interfaces.Services;
 
 namespace Wide.Core.Services
 {
+    /// <summary>
+    /// The NLogService for logging purposes
+    /// </summary>
     internal class NLogService : ILoggerService
     {
         private static readonly Logger Logger = LogManager.GetLogger("Wide");
         private readonly IEventAggregator _aggregator;
 
+        /// <summary>
+        /// Private constructor of NLogService
+        /// </summary>
         private NLogService()
         {
         }
 
+        /// <summary>
+        /// The NLogService constructor
+        /// </summary>
+        /// <param name="aggregator">The injected event aggregator</param>
         public NLogService(IEventAggregator aggregator)
         {
             _aggregator = aggregator;
         }
 
         #region ILoggerService Members
-
+        /// <summary>
+        /// The logging function
+        /// </summary>
+        /// <param name="message">A message to log</param>
+        /// <param name="category">The category of logging</param>
+        /// <param name="priority">The priority of logging</param>
         public void Log(string message, LogCategory category, LogPriority priority)
         {
             Message = message;
@@ -47,8 +62,19 @@ namespace Wide.Core.Services
                                                          {Message = Message, Category = Category, Priority = Priority});
         }
 
+        /// <summary>
+        /// The message which was last logged using the service
+        /// </summary>
         public string Message { get; internal set; }
+
+        /// <summary>
+        /// The log message's category
+        /// </summary>
         public LogCategory Category { get; internal set; }
+
+        /// <summary>
+        /// The log message's priority
+        /// </summary>
         public LogPriority Priority { get; internal set; }
 
         #endregion

@@ -10,6 +10,7 @@
 
 #endregion
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,24 +32,47 @@ namespace Wide.Core
     ///     1. Registers <see cref="IOpenFileService"/> - The file service can be used to open a file from a location or from a content ID
     ///     2. Registers <see cref="ICommandManager"/> - The command manager can be used to register commands and reuse the commands in different locations
     ///     3. Registers <see cref="IContentHandlerRegistry"/> - A registry to maintain different content handlers. Each content handler should be able to open a different kind of file/object.
-    ///     4. Registers <see cref="IThemeManager.cs"/>
+    ///     4. Registers <see cref="IThemeManager"/> - A registry for themes
+    ///     5. Registers <see cref="ILoggerService"/> - If not registered already, registers the NLogService which can be used anywhere in the application
+    ///     6. Registers <see cref="IToolbarService"/> - The toolbar service used to register multiple toolbars
+    ///     7. Registers <see cref="AbstractMenuItem"/> - This acts as the menu service for the application - menus can be added/removed.
+    ///     8. Adds an AllFileHandler which can open any file from the system - to override this handler, participating modules can add more handlers to the <see cref="IContentHandlerRegistry"/>
     /// </summary>
     internal class CoreModule : IModule
     {
+        /// <summary>
+        /// The container used in the application
+        /// </summary>
         private readonly IUnityContainer _container;
+        /// <summary>
+        /// The event aggregator
+        /// </summary>
+        private IEventAggregator _eventAggregator;
 
-        public CoreModule(IUnityContainer container)
+        /// <summary>
+        /// The constructor of the CoreModule
+        /// </summary>
+        /// <param name="container">The injected container used in the application</param>
+        /// <param name="eventAggregator">The injected event aggregator</param>
+        public CoreModule(IUnityContainer container, IEventAggregator eventAggregator)
         {
             _container = container;
+            _eventAggregator = eventAggregator;
         }
 
+        /// <summary>
+        /// The event aggregator pattern
+        /// </summary>
         private IEventAggregator EventAggregator
         {
-            get { return _container.Resolve<IEventAggregator>(); }
+            get { return _eventAggregator; }
         }
 
         #region IModule Members
-
+        /// <summary>
+        /// The intialize call of the module - this gets called when the container is trying to load the modules.
+        /// Register your <see cref="Type"/>s and Commands here
+        /// </summary>
         public void Initialize()
         {
             EventAggregator.GetEvent<SplashMessageUpdateEvent>().Publish(new SplashMessageUpdateEvent
@@ -63,7 +87,6 @@ namespace Wide.Core
             _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(
                 new ContainerControlledLifetimeManager());
             _container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<ILoggerService, NLogService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IToolbarService, ToolbarService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<AbstractMenuItem, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
                                                                          new InjectionConstructor(
@@ -87,10 +110,6 @@ namespace Wide.Core
                                          new InjectionParameter(typeof (bool), false),
                                          new InjectionParameter(typeof (IUnityContainer), _container)));
 
-            //Register a default file opener
-            var registry = _container.Resolve<IContentHandlerRegistry>();
-            registry.Register(_container.Resolve<AllFileHandler>());
-
             AppCommands();
 
             //Try resolving a workspace
@@ -102,10 +121,26 @@ namespace Wide.Core
             {
                 _container.RegisterType<AbstractWorkspace, Workspace>(new ContainerControlledLifetimeManager());
             }
+            
+            // Try resolving a logger service - if not found, then register the NLog service
+            try
+            {
+                _container.Resolve<ILoggerService>();
+            }
+            catch
+            {
+                _container.RegisterType<ILoggerService, NLogService>(new ContainerControlledLifetimeManager());
+            }
+
+            //Register a default file opener
+            var registry = _container.Resolve<IContentHandlerRegistry>();
+            registry.Register(_container.Resolve<AllFileHandler>());
         }
 
         #endregion
-
+        /// <summary>
+        /// The AppCommands registered by the Core Module
+        /// </summary>
         private void AppCommands()
         {
             var manager = _container.Resolve<ICommandManager>();
@@ -116,13 +151,18 @@ namespace Wide.Core
         }
 
         #region Commands
-
+        /// <summary>
+        /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
+        /// </summary>
+        /// <returns>true if possible, false otherwise</returns>
         private bool CanExecuteCloseDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             return workspace.ActiveDocument != null;
         }
-
+        /// <summary>
+        /// CloseDocument method that gets called when the Close command gets executed.
+        /// </summary>
         private void CloseDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();

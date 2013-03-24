@@ -16,16 +16,22 @@ using Wide.Interfaces.Services;
 
 namespace Wide.Core.Services
 {
+    /// <summary>
+    /// The Wide tool bar service
+    /// </summary>
     internal sealed class ToolbarService : IToolbarService
     {
+        /// <summary>
+        /// The dictionary of toolbars
+        /// </summary>
         private static readonly Dictionary<string, ToolbarViewModel> ToolbarDictionary = new Dictionary<string, ToolbarViewModel>();
 
-        public ToolbarService(IUnityContainer container)
-        {
-        }
-
         #region IToolbarService Members
-
+        /// <summary>
+        /// Adds a new toolbar to the application
+        /// </summary>
+        /// <param name="item">The toolbar to add</param>
+        /// <returns>true, if successful - false, otherwise</returns>
         public bool Add(ToolbarViewModel item)
         {
             if (!ToolbarDictionary.ContainsKey(item.Key))
@@ -35,7 +41,12 @@ namespace Wide.Core.Services
             }
             return false;
         }
-
+        
+        /// <summary>
+        /// Removes a toolbar from the application
+        /// </summary>
+        /// <param name="key">The key of the toolbar to remove</param>
+        /// <returns>true, if successful - false, otherwise</returns>
         public bool Remove(string key)
         {
             if (ToolbarDictionary.ContainsKey(key))
@@ -46,6 +57,11 @@ namespace Wide.Core.Services
             return false;
         }
 
+        /// <summary>
+        /// Gets the toolbar with this key
+        /// </summary>
+        /// <param name="key">The key of the toolbar</param>
+        /// <returns>A ToolbarViewModel or null if not found</returns>
         public ToolbarViewModel Get(string key)
         {
             if (ToolbarDictionary.ContainsKey(key))
@@ -55,6 +71,9 @@ namespace Wide.Core.Services
             return null;
         }
 
+        /// <summary>
+        /// The toolbar tray which will be used in the application
+        /// </summary>
         public ToolBarTray ToolBarTray
         {
             get

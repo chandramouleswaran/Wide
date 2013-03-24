@@ -17,19 +17,37 @@ using Wide.Interfaces.Services;
 
 namespace Wide.Core.Services
 {
+    /// <summary>
+    /// AllFileHandler class that supports opening of any file on the computer
+    /// </summary>
     internal class AllFileHandler : IContentHandler
     {
+        /// <summary>
+        /// The injected container
+        /// </summary>
         private readonly IUnityContainer _container;
+        /// <summary>
+        /// The injected logger service
+        /// </summary>
         private readonly ILoggerService _loggerService;
 
-        public AllFileHandler(IUnityContainer container, ILoggerService loggerService, IOpenFileService openFileService)
+        /// <summary>
+        /// Constructor of AllFileHandler - all parameters are injected
+        /// </summary>
+        /// <param name="container">The injected container of the application</param>
+        /// <param name="loggerService">The injected logger service of the application</param>
+        public AllFileHandler(IUnityContainer container, ILoggerService loggerService)
         {
             _container = container;
             _loggerService = loggerService;
         }
 
         #region IContentHandler Members
-
+        /// <summary>
+        /// Validates the content by checking if a file exists for the specified location
+        /// </summary>
+        /// <param name="info">The string containing the file location</param>
+        /// <returns>True, if the file exists - false otherwise</returns>
         public bool ValidateContentType(object info)
         {
             var location = info as string;
@@ -40,7 +58,11 @@ namespace Wide.Core.Services
             return false;
         }
 
-
+        /// <summary>
+        /// Validates the content from an ID - the ContentID from the ContentViewModel
+        /// </summary>
+        /// <param name="contentId">The content ID which needs to be validated</param>
+        /// <returns>True, if valid from content ID - false, otherwise</returns>
         public bool ValidateContentFromId(string contentId)
         {
             string[] split = Regex.Split(contentId, ":##:");
@@ -56,6 +78,11 @@ namespace Wide.Core.Services
             return false;
         }
 
+        /// <summary>
+        /// Opens a file and returns the corresponding ContentViewModel
+        /// </summary>
+        /// <param name="info">The string location of the file</param>
+        /// <returns>The <see cref="TextViewModel"/> for the file.</returns>
         public ContentViewModel OpenContent(object info)
         {
             var location = info as string;
@@ -109,6 +136,12 @@ namespace Wide.Core.Services
             return null;
         }
 
+        /// <summary>
+        /// Saves the content of the TextViewModel
+        /// </summary>
+        /// <param name="contentViewModel">This needs to be a TextViewModel that needs to be saved</param>
+        /// <param name="saveAs">Pass in true if you need to Save As?</param>
+        /// <returns>true, if successful - false, otherwise</returns>
         public bool SaveContent(ContentViewModel contentViewModel, bool saveAs = false)
         {
             var textViewModel = contentViewModel as TextViewModel;
