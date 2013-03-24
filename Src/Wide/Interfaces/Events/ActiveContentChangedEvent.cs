@@ -6,19 +6,11 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using Microsoft.Practices.Unity;
-using Wide.Interfaces;
+using Microsoft.Practices.Prism.Events;
 
-namespace Wide.Core
+namespace Wide.Interfaces.Events
 {
-    internal class Workspace : AbstractWorkspace
+    public class ActiveContentChangedEvent : CompositePresentationEvent<ContentViewModel>
     {
-        /// <summary>
-        /// The generic workspace that will be used if the application does not have its workspace
-        /// </summary>
-        /// <param name="container">The injected container - can be used by custom flavors of workspace</param>
-        public Workspace(IUnityContainer container) : base(container)
-        {
-        }
     }
 }
