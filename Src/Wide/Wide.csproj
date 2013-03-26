@@ -119,6 +119,7 @@
     <Compile Include="Interfaces\Services\IOpenFileService.cs" />
     <Compile Include="Interfaces\IShell.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
+    <Compile Include="Interfaces\ToolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

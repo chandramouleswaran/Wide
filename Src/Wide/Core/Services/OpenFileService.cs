@@ -1,11 +1,12 @@
-﻿// Copyright (c) 2013 Chandramouleswaran Ravichandran
+﻿#region License
+// Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 // 
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+#endregion
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.Win32;
@@ -15,12 +16,30 @@ using Wide.Interfaces.Services;
 
 namespace Wide.Core.Services
 {
+    /// <summary>
+    /// The open file service
+    /// </summary>
     internal sealed class OpenFileService : IOpenFileService
     {
+        /// <summary>
+        /// The injected container
+        /// </summary>
         private readonly IUnityContainer _container;
+        /// <summary>
+        /// The injected event aggregator
+        /// </summary>
         private readonly IEventAggregator _eventAggregator;
+        /// <summary>
+        /// The injected logger
+        /// </summary>
         private readonly ILoggerService _logger;
 
+        /// <summary>
+        /// Constructor for Open file service
+        /// </summary>
+        /// <param name="container">The injected container</param>
+        /// <param name="eventAggregator">The injected event aggregator</param>
+        /// <param name="logger">The injected logger</param>
         public OpenFileService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
         {
             _container = container;
@@ -29,7 +48,11 @@ namespace Wide.Core.Services
         }
 
         #region IOpenFileService Members
-
+        /// <summary>
+        /// Opens the object - if object is null, show a open file dialog to select a file to open
+        /// </summary>
+        /// <param name="location">The optional object to open</param>
+        /// <returns>A document which was added to the workspace as a content view model</returns>
         public ContentViewModel Open(object location = null)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
@@ -93,6 +116,11 @@ namespace Wide.Core.Services
             return null;
         }
 
+        /// <summary>
+        /// Opens the contentID
+        /// </summary>
+        /// <param name="contentID">The contentID to open</param>
+        /// <returns>A document which was added to the workspace as a content view model</returns>
         public ContentViewModel OpenFromID(string contentID)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
