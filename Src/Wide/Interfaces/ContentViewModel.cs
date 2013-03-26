@@ -1,3 +1,4 @@
+#region License
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -5,7 +6,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+#endregion
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,26 +23,54 @@ namespace Wide.Interfaces
     public abstract class ContentViewModel : ViewModelBase
     {
         #region Members
-
         /// <summary>
         /// The static count value for "Untitled" number.
         /// </summary>
         protected static int Count = 1;
 
+        /// <summary>
+        /// The command manager
+        /// </summary>
         protected ICommandManager _commandManager;
 
+        /// <summary>
+        /// The content id of the document
+        /// </summary>
         protected string _contentId = null;
+        /// <summary>
+        /// Is the document active
+        /// </summary>
         protected bool _isActive = false;
+        /// <summary>
+        /// Is the document selected
+        /// </summary>
         protected bool _isSelected = false;
+        /// <summary>
+        /// The logger instance
+        /// </summary>
         protected ILoggerService _logger;
+        /// <summary>
+        /// The title of the document
+        /// </summary>
         protected string _title = null;
+        /// <summary>
+        /// The tool tip to display on the document
+        /// </summary>
         protected string _tooltip = null;
+        /// <summary>
+        /// The workspace instance
+        /// </summary>
         protected IWorkspace _workspace;
 
         #endregion
 
         #region CTOR
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentViewModel"/> class.
+        /// </summary>
+        /// <param name="workspace">The injected workspace.</param>
+        /// <param name="commandManager">The injected command manager.</param>
+        /// <param name="logger">The injected logger.</param>
         protected ContentViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger)
         {
             _workspace = workspace;
@@ -49,26 +78,31 @@ namespace Wide.Interfaces
             _logger = logger;
             CloseCommand = new DelegateCommand(CloseDocument);
         }
-
         #endregion
 
         #region Property
-
+        /// <summary>
+        /// Gets or sets the close command.
+        /// </summary>
+        /// <value>The close command.</value>
         public virtual ICommand CloseCommand { get; protected set; }
 
         /// <summary>
         /// The content model
         /// </summary>
+        /// <value>The model.</value>
         public virtual ContentModel Model { get; internal set; }
 
         /// <summary>
         /// The content view
         /// </summary>
+        /// <value>The view.</value>
         public virtual UserControl View { get; internal set; }
 
         /// <summary>
         /// The title of the document
         /// </summary>
+        /// <value>The title.</value>
         public virtual string Title
         {
             get
@@ -90,8 +124,9 @@ namespace Wide.Interfaces
         }
 
         /// <summary>
-        /// The title of the document
+        /// The tool tip of the document
         /// </summary>
+        /// <value>The tool tip.</value>
         public virtual string Tooltip
         {
             get { return _tooltip; }
@@ -106,13 +141,15 @@ namespace Wide.Interfaces
         }
 
         /// <summary>
-        /// The image souce that can be used as an icon in the tab
+        /// The image source that can be used as an icon in the tab
         /// </summary>
+        /// <value>The icon source.</value>
         public virtual ImageSource IconSource { get; protected set; }
 
         /// <summary>
         /// The content ID - unique value for each document
         /// </summary>
+        /// <value>The content id.</value>
         public virtual string ContentId
         {
             get { return _contentId; }
@@ -129,6 +166,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// Is the document selected
         /// </summary>
+        /// <value><c>true</c> if this document is selected; otherwise, <c>false</c>.</value>
         public virtual bool IsSelected
         {
             get { return _isSelected; }
@@ -145,6 +183,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// Is the document active
         /// </summary>
+        /// <value><c>true</c> if this document is active; otherwise, <c>false</c>.</value>
         public virtual bool IsActive
         {
             get { return _isActive; }
@@ -161,8 +200,14 @@ namespace Wide.Interfaces
         /// <summary>
         /// The content handler which does save and load of the file
         /// </summary>
+        /// <value>The handler.</value>
         public IContentHandler Handler { get; internal set; }
 
+        /// <summary>
+        /// The property changed event of the Model.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="propertyChangedEventArgs">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         internal virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             RaisePropertyChanged("Title");
@@ -171,8 +216,11 @@ namespace Wide.Interfaces
         #endregion
 
         #region Methods
-
-        //Needed for content handlers to restore the layout
+        /// <summary>
+        /// Closes the document.
+        /// </summary>
+        /// <param name="remove">if set to <c>true</c> [remove]s the document from workspace.</param>
+        /// <returns><c>true</c> if able to remove the document from workspace, <c>false</c> otherwise</returns>
         public bool CloseDocument(bool remove)
         {
             if (Model.IsDirty)
@@ -205,6 +253,9 @@ namespace Wide.Interfaces
             return false;
         }
 
+        /// <summary>
+        /// Closes this document.
+        /// </summary>
         internal void CloseDocument()
         {
             CloseDocument(true);

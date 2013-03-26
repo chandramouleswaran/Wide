@@ -1,5 +1,4 @@
 ﻿#region License
-
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -7,9 +6,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
 #endregion
-
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -29,14 +26,14 @@ namespace Wide.Core
 {
     /// <summary>
     /// The Wide Core module - this module does the folthatlowing things:
-    ///     1. Registers <see cref="IOpenFileService"/> - The file service can be used to open a file from a location or from a content ID
-    ///     2. Registers <see cref="ICommandManager"/> - The command manager can be used to register commands and reuse the commands in different locations
-    ///     3. Registers <see cref="IContentHandlerRegistry"/> - A registry to maintain different content handlers. Each content handler should be able to open a different kind of file/object.
-    ///     4. Registers <see cref="IThemeManager"/> - A registry for themes
-    ///     5. Registers <see cref="ILoggerService"/> - If not registered already, registers the NLogService which can be used anywhere in the application
-    ///     6. Registers <see cref="IToolbarService"/> - The toolbar service used to register multiple toolbars
-    ///     7. Registers <see cref="AbstractMenuItem"/> - This acts as the menu service for the application - menus can be added/removed.
-    ///     8. Adds an AllFileHandler which can open any file from the system - to override this handler, participating modules can add more handlers to the <see cref="IContentHandlerRegistry"/>
+    /// 1. Registers <see cref="IOpenFileService" /> - The file service can be used to open a file from a location or from a content ID
+    /// 2. Registers <see cref="ICommandManager" /> - The command manager can be used to register commands and reuse the commands in different locations
+    /// 3. Registers <see cref="IContentHandlerRegistry" /> - A registry to maintain different content handlers. Each content handler should be able to open a different kind of file/object.
+    /// 4. Registers <see cref="IThemeManager" /> - A registry for themes
+    /// 5. Registers <see cref="ILoggerService" /> - If not registered already, registers the NLogService which can be used anywhere in the application
+    /// 6. Registers <see cref="IToolbarService" /> - The toolbar service used to register multiple toolbars
+    /// 7. Registers <see cref="AbstractMenuItem" /> - This acts as the menu service for the application - menus can be added/removed.
+    /// 8. Adds an AllFileHandler which can open any file from the system - to override this handler, participating modules can add more handlers to the <see cref="IContentHandlerRegistry" />
     /// </summary>
     internal class CoreModule : IModule
     {
@@ -154,7 +151,7 @@ namespace Wide.Core
         /// <summary>
         /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
         /// </summary>
-        /// <returns>true if possible, false otherwise</returns>
+        /// <returns><c>true</c> if this instance can execute close document; otherwise, <c>false</c>.</returns>
         private bool CanExecuteCloseDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
