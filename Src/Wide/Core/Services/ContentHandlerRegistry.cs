@@ -66,8 +66,9 @@ namespace Wide.Core.Services
         /// <returns>The content view model for the given info</returns>
         public ContentViewModel GetViewModel(object info)
         {
-            foreach (IContentHandler opener in _contentHandlers)
+            for (int i = _contentHandlers.Count - 1; i >= 0; i--)
             {
+                var opener = _contentHandlers[i];
                 if (opener.ValidateContentType(info))
                 {
                     ContentViewModel vm = opener.OpenContent(info);
@@ -86,8 +87,9 @@ namespace Wide.Core.Services
         /// <returns>The content view model for the given info</returns>
         public ContentViewModel GetViewModelFromContentId(string contentId)
         {
-            foreach (IContentHandler opener in _contentHandlers)
+            for (int i = _contentHandlers.Count - 1; i >= 0; i--)
             {
+                var opener = _contentHandlers[i];
                 if (opener.ValidateContentFromId(contentId))
                 {
                     ContentViewModel vm = opener.OpenContentFromId(contentId);

@@ -19,6 +19,7 @@ using Wide.Interfaces.Events;
 
 namespace Wide.Splash
 {
+    [Module(ModuleName = "Wide.Splash")]
     internal class SplashModule : IModule
     {
         #region ctors
