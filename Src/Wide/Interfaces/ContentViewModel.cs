@@ -85,19 +85,19 @@ namespace Wide.Interfaces
         /// Gets or sets the close command.
         /// </summary>
         /// <value>The close command.</value>
-        public virtual ICommand CloseCommand { get; protected set; }
+        public virtual ICommand CloseCommand { get; protected internal set; }
 
         /// <summary>
         /// The content model
         /// </summary>
         /// <value>The model.</value>
-        public virtual ContentModel Model { get; internal set; }
+        public virtual ContentModel Model { get; protected internal set; }
 
         /// <summary>
         /// The content view
         /// </summary>
         /// <value>The view.</value>
-        public virtual UserControl View { get; internal set; }
+        public virtual UserControl View { get; protected internal set; }
 
         /// <summary>
         /// The title of the document
@@ -144,7 +144,7 @@ namespace Wide.Interfaces
         /// The image source that can be used as an icon in the tab
         /// </summary>
         /// <value>The icon source.</value>
-        public virtual ImageSource IconSource { get; protected set; }
+        public virtual ImageSource IconSource { get; protected internal set; }
 
         /// <summary>
         /// The content ID - unique value for each document
@@ -201,14 +201,14 @@ namespace Wide.Interfaces
         /// The content handler which does save and load of the file
         /// </summary>
         /// <value>The handler.</value>
-        public IContentHandler Handler { get; internal set; }
+        public IContentHandler Handler { get; protected internal set; }
 
         /// <summary>
         /// The property changed event of the Model.
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="propertyChangedEventArgs">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-        internal virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        public virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             RaisePropertyChanged("Title");
         }
