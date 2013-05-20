@@ -80,6 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Attributes\FileContentAttribute.cs" />
     <Compile Include="Core\CoreModule.cs" />
     <Compile Include="Core\Services\CommandManager.cs" />
     <Compile Include="Core\Services\ContentHandlerRegistry.cs" />
@@ -258,6 +259,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

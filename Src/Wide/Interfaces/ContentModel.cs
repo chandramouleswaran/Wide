@@ -16,7 +16,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// The document location - could be a file location/server object etc.
         /// </summary>
-        public virtual object Location { get; set; }
+        public virtual object Location { get; protected set; }
 
         /// <summary>
         /// Is the document dirty - does it need to be saved?
@@ -24,7 +24,7 @@ namespace Wide.Interfaces
         public virtual bool IsDirty
         {
             get { return _isDirty; }
-            set
+            internal set
             {
                 _isDirty = value;
                 RaisePropertyChanged("IsDirty");

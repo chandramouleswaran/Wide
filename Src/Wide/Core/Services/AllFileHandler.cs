@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.Unity;
+using Wide.Core.Attributes;
 using Wide.Core.TextDocument;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
@@ -21,6 +22,8 @@ namespace Wide.Core.Services
     /// <summary>
     /// AllFileHandler class that supports opening of any file on the computer
     /// </summary>
+    [FileContent("All files", "*.*", 1000)]
+    [FileContent("Text or CS files", "*.txt; *.cs", 999)]
     internal class AllFileHandler : IContentHandler
     {
         /// <summary>
@@ -44,6 +47,31 @@ namespace Wide.Core.Services
         }
 
         #region IContentHandler Members
+
+        public ContentViewModel NewContent(object parameter)
+        {
+            var vm = _container.Resolve<TextViewModel>();
+            var model = _container.Resolve<TextModel>();
+            var view = _container.Resolve<TextView>();
+
+            //Model details
+            model.PropertyChanged += vm.ModelOnPropertyChanged;
+            _loggerService.Log("Creating a new simple file using AllFileHandler", LogCategory.Info, LogPriority.Low);
+
+            //Clear the undo stack
+            model.Document.UndoStack.ClearAll();
+
+            //Set the model and view
+            vm.Model = model;
+            vm.View = view;
+            vm.Title = "untitled";
+            vm.View.DataContext = model;
+            vm.Handler = this;
+            vm.Model.IsDirty = true;
+
+            return vm;
+        }
+
         /// <summary>
         /// Validates the content by checking if a file exists for the specified location
         /// </summary>
@@ -95,7 +123,7 @@ namespace Wide.Core.Services
 
                 //Model details
                 model.PropertyChanged += vm.ModelOnPropertyChanged;
-                model.Location = info;
+                model.SetLocation(info);
                 try
                 {
                     model.Document.Text = File.ReadAllText(location);
@@ -158,19 +186,25 @@ namespace Wide.Core.Services
 
             if (textModel == null)
             {
-                _loggerService.Log("TextViewModel does not have a TextModel which should have the text",
-                                   LogCategory.Exception, LogPriority.High);
+                _loggerService.Log("TextViewModel does not have a TextModel which should have the text", LogCategory.Exception, LogPriority.High);
                 throw new ArgumentException("TextViewModel does not have a TextModel which should have the text");
+            }
+
+            var location = textModel.Location as string;
+            
+            if(location == null)
+            {
+                //If there is no location, just prompt for Save As..
+                saveAs = true;
             }
 
             if (saveAs)
             {
                 //TODO: Save as...?
+                //contentViewModel.Model.Location = "tesT";
             }
             else
             {
-                //Regular save
-                var location = textModel.Location as string;
                 try
                 {
                     File.WriteAllText(location, textModel.Document.Text);

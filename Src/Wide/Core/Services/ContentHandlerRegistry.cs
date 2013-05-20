@@ -33,6 +33,14 @@ namespace Wide.Core.Services
             _contentHandlers = new List<IContentHandler>();
         }
 
+        /// <summary>
+        /// List of content handlers
+        /// </summary>
+        public List<IContentHandler> ContentHandlers
+        {
+            get { return _contentHandlers; }
+        }
+
         #region IContentHandlerRegistry Members
         /// <summary>
         /// Register a content handler with the registry
@@ -41,7 +49,7 @@ namespace Wide.Core.Services
         /// <returns>true, if successful - false, otherwise</returns>
         public bool Register(IContentHandler handler)
         {
-            _contentHandlers.Add(handler);
+            ContentHandlers.Add(handler);
             return true;
         }
 
@@ -52,7 +60,7 @@ namespace Wide.Core.Services
         /// <returns></returns>
         public bool Unregister(IContentHandler handler)
         {
-            return _contentHandlers.Remove(handler);
+            return ContentHandlers.Remove(handler);
         }
 
         #endregion
@@ -66,9 +74,9 @@ namespace Wide.Core.Services
         /// <returns>The content view model for the given info</returns>
         public ContentViewModel GetViewModel(object info)
         {
-            for (int i = _contentHandlers.Count - 1; i >= 0; i--)
+            for (int i = ContentHandlers.Count - 1; i >= 0; i--)
             {
-                var opener = _contentHandlers[i];
+                var opener = ContentHandlers[i];
                 if (opener.ValidateContentType(info))
                 {
                     ContentViewModel vm = opener.OpenContent(info);
@@ -87,9 +95,9 @@ namespace Wide.Core.Services
         /// <returns>The content view model for the given info</returns>
         public ContentViewModel GetViewModelFromContentId(string contentId)
         {
-            for (int i = _contentHandlers.Count - 1; i >= 0; i--)
+            for (int i = ContentHandlers.Count - 1; i >= 0; i--)
             {
-                var opener = _contentHandlers[i];
+                var opener = ContentHandlers[i];
                 if (opener.ValidateContentFromId(contentId))
                 {
                     ContentViewModel vm = opener.OpenContentFromId(contentId);

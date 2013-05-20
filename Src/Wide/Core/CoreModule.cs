@@ -146,6 +146,9 @@ namespace Wide.Core
             //TODO: Check if you can hook up to the Workspace.ActiveDocument.CloseCommand
             var closeCommand = new DelegateCommand(CloseDocument, CanExecuteCloseDocument);
             manager.RegisterCommand("CLOSE", closeCommand);
+
+            var newCommand = new DelegateCommand(NewDocument,CanExecuteNewCommand);
+            manager.RegisterCommand("NEW", newCommand);
         }
 
         #region Commands
@@ -182,6 +185,36 @@ namespace Wide.Core
             else
             {
                 workspace.Documents.Remove(workspace.ActiveDocument);
+            }
+        }
+
+        private bool CanExecuteNewCommand()
+        {
+            return true;
+        }
+
+        private void NewDocument()
+        {
+            //TODO: This is the place where we want to show a window and make the end user select a type of file
+            var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
+            if(contentHandler != null)
+            {
+                if(contentHandler.ContentHandlers.Count != 1)
+                {
+                    foreach (var handler in contentHandler.ContentHandlers)
+                    {
+                        handler.NewContent(null);
+                    }
+                }
+                else
+                {
+                    var openValue = contentHandler.ContentHandlers[0].NewContent(null);
+                    var workspace = _container.Resolve<AbstractWorkspace>();
+                    workspace.Documents.Add(openValue);
+
+                    //Make it the active document
+                    workspace.ActiveDocument = openValue;
+                }
             }
         }
 

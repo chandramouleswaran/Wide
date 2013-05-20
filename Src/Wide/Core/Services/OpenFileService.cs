@@ -7,9 +7,14 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.Win32;
+using Wide.Core.Attributes;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
@@ -56,12 +61,23 @@ namespace Wide.Core.Services
         public ContentViewModel Open(object location = null)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            var contentHandlerRegistry = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
 
             var dialog = new OpenFileDialog();
             bool? result;
 
             if (location == null)
             {
+                dialog.Filter = "";
+                string sep = "";
+                var attributes = contentHandlerRegistry.ContentHandlers.SelectMany(handler => (FileContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (FileContentAttribute), true)).ToList();
+                attributes.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
+                foreach (var contentAttribute in attributes)
+                {
+                    dialog.Filter = String.Format("{0}{1}{2} ({3})|{3}", dialog.Filter, sep, contentAttribute.Display, contentAttribute.Extension);
+                    sep = "|";
+                }
+
                 result = dialog.ShowDialog();
                 location = dialog.FileName;
             }
@@ -72,10 +88,8 @@ namespace Wide.Core.Services
 
             if (result == true && !string.IsNullOrWhiteSpace(location.ToString()))
             {
-                var handler = _container.Resolve<IContentHandlerRegistry>();
-
                 //Let the handler figure out which view model to return
-                ContentViewModel openValue = handler.GetViewModel(location);
+                ContentViewModel openValue = contentHandlerRegistry.GetViewModel(location);
 
                 if (openValue != null)
                 {
