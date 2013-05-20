@@ -89,38 +89,41 @@ namespace Wide.Core.Services
             if (result == true && !string.IsNullOrWhiteSpace(location.ToString()))
             {
                 //Let the handler figure out which view model to return
-                ContentViewModel openValue = contentHandlerRegistry.GetViewModel(location);
-
-                if (openValue != null)
+                if (contentHandlerRegistry != null)
                 {
-                    //Check if the document is already open
-                    foreach (ContentViewModel contentViewModel in workspace.Documents)
+                    ContentViewModel openValue = contentHandlerRegistry.GetViewModel(location);
+
+                    if (openValue != null)
                     {
-                        if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
+                        //Check if the document is already open
+                        foreach (ContentViewModel contentViewModel in workspace.Documents)
                         {
-                            _logger.Log(
-                                "Document " + contentViewModel.Model.Location + "already open - making it active",
-                                LogCategory.Info, LogPriority.Low);
-                            workspace.ActiveDocument = contentViewModel;
-                            return contentViewModel;
+                            if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
+                            {
+                                _logger.Log(
+                                    "Document " + contentViewModel.Model.Location + "already open - making it active",
+                                    LogCategory.Info, LogPriority.Low);
+                                workspace.ActiveDocument = contentViewModel;
+                                return contentViewModel;
+                            }
                         }
+
+                        _logger.Log("Opening file" + location + " !!", LogCategory.Info, LogPriority.Low);
+
+                        // Publish the event to the Application - subscribers can use this object
+                        _eventAggregator.GetEvent<OpenContentEvent>().Publish(openValue);
+
+                        //Add it to the actual workspace
+                        workspace.Documents.Add(openValue);
+
+                        //Make it the active document
+                        workspace.ActiveDocument = openValue;
                     }
-
-                    _logger.Log("Opening file" + location + " !!", LogCategory.Info, LogPriority.Low);
-
-                    // Publish the event to the Application - subscribers can use this object
-                    _eventAggregator.GetEvent<OpenContentEvent>().Publish(openValue);
-
-                    //Add it to the actual workspace
-                    workspace.Documents.Add(openValue);
-
-                    //Make it the active document
-                    workspace.ActiveDocument = openValue;
-                }
-                else
-                {
-                    _logger.Log("Unable to find a IContentHandler to open " + location, LogCategory.Error,
-                                LogPriority.High);
+                    else
+                    {
+                        _logger.Log("Unable to find a IContentHandler to open " + location, LogCategory.Error,
+                                    LogPriority.High);
+                    }
                 }
             }
             else

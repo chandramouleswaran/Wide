@@ -23,7 +23,6 @@ namespace Wide.Core.Services
     /// AllFileHandler class that supports opening of any file on the computer
     /// </summary>
     [FileContent("All files", "*.*", 1000)]
-    [FileContent("Text or CS files", "*.txt; *.cs", 999)]
     internal class AllFileHandler : IContentHandler
     {
         /// <summary>
