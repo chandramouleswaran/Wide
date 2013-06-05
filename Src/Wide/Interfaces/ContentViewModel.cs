@@ -230,7 +230,11 @@ namespace Wide.Interfaces
                                           MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
-                    Handler.SaveContent(this);
+                    // If the save is cancelled by the user, set the result as cancel
+                    if(!Handler.SaveContent(this))
+                    {
+                        res = MessageBoxResult.Cancel;
+                    }
                 }
                 if (res != MessageBoxResult.Cancel)
                 {

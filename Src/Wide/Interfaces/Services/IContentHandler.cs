@@ -14,6 +14,14 @@ namespace Wide.Interfaces.Services
     /// </summary>
     public interface IContentHandler
     {
+
+        /// <summary>
+        /// Creates a new content.
+        /// </summary>
+        /// <param name="parameter">The parameter needed to create a new content.</param>
+        /// <returns>ContentViewModel.</returns>
+        ContentViewModel NewContent(object parameter);
+
         /// <summary>
         /// Validates the type of the content.
         /// </summary>

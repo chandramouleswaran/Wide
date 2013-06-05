@@ -11,14 +11,14 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using AvalonDock;
-using AvalonDock.Layout;
-using AvalonDock.Layout.Serialization;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
+using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 namespace Wide.Shell
 {
@@ -30,6 +30,7 @@ namespace Wide.Shell
         private readonly IUnityContainer _container;
         private IEventAggregator _eventAggregator;
         private ILoggerService _logger;
+        private IWorkspace _workspace;
 
         public ShellViewMetro(IUnityContainer container, IEventAggregator eventAggregator)
         {
@@ -49,13 +50,13 @@ namespace Wide.Shell
                                                                 {
                                                                     var anchorable = e.Model as LayoutAnchorable;
                                                                     var document = e.Model as LayoutDocument;
-                                                                    IWorkspace workspace =
+                                                                    _workspace =
                                                                         _container.Resolve<AbstractWorkspace>();
 
                                                                     if (anchorable != null)
                                                                     {
                                                                         ToolViewModel model =
-                                                                            workspace.Tools.First(
+                                                                            _workspace.Tools.FirstOrDefault(
                                                                                 f => f.ContentId == e.Model.ContentId);
                                                                         if (model != null)
                                                                         {

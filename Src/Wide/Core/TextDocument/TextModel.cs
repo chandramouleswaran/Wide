@@ -49,7 +49,7 @@ namespace Wide.Core.TextDocument
         public override bool IsDirty
         {
             get { return base.IsDirty; }
-            set
+            internal set
             {
                 base.IsDirty = value;
                 if (value == false)
@@ -87,6 +87,12 @@ namespace Wide.Core.TextDocument
         private void DocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged("Document");
+        }
+
+        internal void SetLocation(object location)
+        {
+            this.Location = location;
+            RaisePropertyChanged("Location");
         }
     }
 }
