@@ -158,7 +158,7 @@ namespace Wide.Interfaces
                 if (vm.Model.IsDirty)
                 {
                     ActiveDocument = vm;
-                    if (!vm.CloseDocument(false))
+                    if (!vm.CloseDocument())
                     {
                         return false;
                     }

@@ -76,7 +76,7 @@ namespace Wide.Interfaces
             _workspace = workspace;
             _commandManager = commandManager;
             _logger = logger;
-            CloseCommand = new DelegateCommand(CloseDocument);
+            CloseCommand = new DelegateCommand(ActualCloseDocument);
         }
         #endregion
 
@@ -219,14 +219,13 @@ namespace Wide.Interfaces
         /// <summary>
         /// Closes the document.
         /// </summary>
-        /// <param name="remove">if set to <c>true</c> [remove]s the document from workspace.</param>
         /// <returns><c>true</c> if able to remove the document from workspace, <c>false</c> otherwise</returns>
-        public bool CloseDocument(bool remove)
+        public bool CloseDocument()
         {
             if (Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", Title), "Are you sure?",
+                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", Title.Substring(0,Title.Length - 1)), "Are you sure?",
                                           MessageBoxButton.YesNoCancel);
                 if (res == MessageBoxResult.Yes)
                 {
@@ -238,7 +237,9 @@ namespace Wide.Interfaces
                 }
                 if (res != MessageBoxResult.Cancel)
                 {
-                    if (remove)
+                    // If the location is not there - then we can remove it.
+                    // This can happen when on clicking "No" in the popup
+                    if(this.Model.Location == null)
                     {
                         _workspace.Documents.Remove(this);
                     }
@@ -247,12 +248,9 @@ namespace Wide.Interfaces
             }
             else
             {
-                if (remove)
-                {
-                    _logger.Log("Closing document " + Model.Location, LogCategory.Info, LogPriority.None);
-                    _workspace.Documents.Remove(this);
-                    return true;
-                }
+                _logger.Log("Closing document " + Model.Location, LogCategory.Info, LogPriority.None);
+                _workspace.Documents.Remove(this);
+                return true;
             }
             return false;
         }
@@ -260,9 +258,9 @@ namespace Wide.Interfaces
         /// <summary>
         /// Closes this document.
         /// </summary>
-        internal void CloseDocument()
+        internal void ActualCloseDocument()
         {
-            CloseDocument(true);
+            CloseDocument();
         }
 
         #endregion
