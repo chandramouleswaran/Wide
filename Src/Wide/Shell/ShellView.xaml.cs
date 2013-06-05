@@ -11,11 +11,11 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using AvalonDock.Layout;
-using AvalonDock.Layout.Serialization;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
+using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
 namespace Wide.Shell
 {
