@@ -14,20 +14,12 @@ namespace Wide.Interfaces.Services
     /// </summary>
     public interface IContentHandler
     {
-
         /// <summary>
         /// Creates a new content.
         /// </summary>
         /// <param name="parameter">The parameter needed to create a new content.</param>
         /// <returns>ContentViewModel.</returns>
         ContentViewModel NewContent(object parameter);
-
-        /// <summary>
-        /// Validates the type of the content.
-        /// </summary>
-        /// <param name="info">The info.</param>
-        /// <returns><c>true</c> if this handler is able to open info, <c>false</c> otherwise</returns>
-        bool ValidateContentType(object info);
 
         /// <summary>
         /// Opens the content.
@@ -57,5 +49,12 @@ namespace Wide.Interfaces.Services
         /// <param name="contentId">The content id.</param>
         /// <returns><c>true</c> if this handler is able to open the contentID, <c>false</c> otherwise</returns>
         bool ValidateContentFromId(string contentId);
+
+        /// <summary>
+        /// Validates the type of the content.
+        /// </summary>
+        /// <param name="info">The info.</param>
+        /// <returns><c>true</c> if this handler is able to open info, <c>false</c> otherwise</returns>
+        bool ValidateContentType(object info);
     }
 }
