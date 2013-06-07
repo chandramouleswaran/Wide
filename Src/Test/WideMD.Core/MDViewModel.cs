@@ -36,5 +36,10 @@ namespace WideMD.Core
         {
             base.View = view;
         }
+
+        internal void SetHandler(IContentHandler handler)
+        {
+            base.Handler = handler;
+        }
     }
 }

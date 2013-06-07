@@ -98,6 +98,14 @@ namespace WideMD.Core
             vm.Add(new MenuItemViewModel("_File", 1));
 
             vm.Get("_File").Add(
+                (new MenuItemViewModel("_New", 3,
+                                       new BitmapImage(
+                                           new Uri(
+                                               @"pack://application:,,,/WideMD.Core;component/Icons/OpenFileDialog_692.png")),
+                                       manager.GetCommand("NEW"),
+                                       new KeyGesture(Key.N, ModifierKeys.Control, "Ctrl + N"))));
+
+            vm.Get("_File").Add(
                 (new MenuItemViewModel("_Open", 4,
                                        new BitmapImage(
                                            new Uri(

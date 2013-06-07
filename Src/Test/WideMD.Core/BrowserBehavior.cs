@@ -10,41 +10,35 @@
 
 #endregion
 
-using Wide.Core.TextDocument;
-using Wide.Interfaces.Services;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace WideMD.Core
 {
-    /// <summary>
-    /// Class TextModel which contains the text of the document
-    /// </summary>
-    public class MDModel : TextModel
+    public class BrowserBehavior
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MDModel"/> class.
-        /// </summary>
-        /// <param name="commandManager">The injected command manager.</param>
-        public MDModel(ICommandManager commandManager) : base(commandManager)
+        public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached(
+            "Html",
+            typeof (string),
+            typeof (BrowserBehavior),
+            new FrameworkPropertyMetadata(OnHtmlChanged));
+
+        [AttachedPropertyBrowsableForType(typeof (WebBrowser))]
+        public static string GetHtml(WebBrowser d)
         {
+            return (string) d.GetValue(HtmlProperty);
         }
 
-        internal void SetLocation(object location)
+        public static void SetHtml(WebBrowser d, string value)
         {
-            this.Location = location;
-            RaisePropertyChanged("Location");
+            d.SetValue(HtmlProperty, value);
         }
 
-        internal void SetDirty(bool value)
+        private static void OnHtmlChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
-            this.IsDirty = value;
-        }
-
-        public string HTMLResult { get; set; }
-
-        public void SetHtml(string transform)
-        {
-            this.HTMLResult = transform;
-            RaisePropertyChanged("HTMLResult");
+            WebBrowser webBrowser = dependencyObject as WebBrowser;
+            if (webBrowser != null && e.NewValue != "")
+                webBrowser.NavigateToString(e.NewValue as string);
         }
     }
 }

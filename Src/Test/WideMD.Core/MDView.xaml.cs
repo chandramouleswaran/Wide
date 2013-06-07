@@ -24,6 +24,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MarkdownSharp;
 using Wide.Interfaces;
 
 namespace WideMD.Core
@@ -33,9 +34,21 @@ namespace WideMD.Core
     /// </summary>
     public partial class MDView : IContentView
     {
+        private Markdown md;
+
         public MDView()
         {
             InitializeComponent();
+            md = new Markdown();
+        }
+
+        private void textEditor_TextChanged(object sender, EventArgs e)
+        {
+            var model = this.DataContext as MDModel;
+            if(model != null)
+            {
+                model.SetHtml(md.Transform(textEditor.Text));
+            }
         }
     }
 }

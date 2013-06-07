@@ -78,6 +78,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserBehavior.cs" />
     <Compile Include="CoreModule.cs" />
     <Compile Include="MDHandler.cs" />
     <Compile Include="MDModel.cs" />
