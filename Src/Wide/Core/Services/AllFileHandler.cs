@@ -47,7 +47,7 @@ namespace Wide.Core.Services
 
         #region IContentHandler Members
 
-        public ContentViewModel NewContent(object parameter)
+        public virtual ContentViewModel NewContent(object parameter)
         {
             var vm = _container.Resolve<TextViewModel>();
             var model = _container.Resolve<TextModel>();
@@ -76,7 +76,7 @@ namespace Wide.Core.Services
         /// </summary>
         /// <param name="info">The string containing the file location</param>
         /// <returns>True, if the file exists - false otherwise</returns>
-        public bool ValidateContentType(object info)
+        public virtual bool ValidateContentType(object info)
         {
             var location = info as string;
             if (location != null)
@@ -91,7 +91,7 @@ namespace Wide.Core.Services
         /// </summary>
         /// <param name="contentId">The content ID which needs to be validated</param>
         /// <returns>True, if valid from content ID - false, otherwise</returns>
-        public bool ValidateContentFromId(string contentId)
+        public virtual bool ValidateContentFromId(string contentId)
         {
             string[] split = Regex.Split(contentId, ":##:");
             if (split.Count() == 2)
@@ -111,7 +111,7 @@ namespace Wide.Core.Services
         /// </summary>
         /// <param name="info">The string location of the file</param>
         /// <returns>The <see cref="TextViewModel"/> for the file.</returns>
-        public ContentViewModel OpenContent(object info)
+        public virtual ContentViewModel OpenContent(object info)
         {
             var location = info as string;
             if (location != null)
@@ -149,7 +149,7 @@ namespace Wide.Core.Services
             return null;
         }
 
-        public ContentViewModel OpenContentFromId(string contentId)
+        public virtual ContentViewModel OpenContentFromId(string contentId)
         {
             string[] split = Regex.Split(contentId, ":##:");
             if (split.Count() == 2)
@@ -170,7 +170,7 @@ namespace Wide.Core.Services
         /// <param name="contentViewModel">This needs to be a TextViewModel that needs to be saved</param>
         /// <param name="saveAs">Pass in true if you need to Save As?</param>
         /// <returns>true, if successful - false, otherwise</returns>
-        public bool SaveContent(ContentViewModel contentViewModel, bool saveAs = false)
+        public virtual bool SaveContent(ContentViewModel contentViewModel, bool saveAs = false)
         {
             var textViewModel = contentViewModel as TextViewModel;
 
