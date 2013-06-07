@@ -239,7 +239,7 @@ namespace Wide.Interfaces
                 {
                     // If the location is not there - then we can remove it.
                     // This can happen when on clicking "No" in the popup
-                    if(this.Model.Location == null)
+                    if (this.Model.Location == null || res == MessageBoxResult.No)
                     {
                         _workspace.Documents.Remove(this);
                     }

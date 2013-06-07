@@ -1,4 +1,6 @@
-﻿// Copyright (c) 2013 Chandramouleswaran Ravichandran
+﻿#region License
+
+// Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 // 
@@ -6,28 +8,33 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Practices.Unity;
-using Wide.Interfaces;
+#endregion
 
-namespace VS2012TestApp
+using System.Windows.Controls;
+using Wide.Core.TextDocument;
+using Wide.Interfaces;
+using Wide.Interfaces.Services;
+
+namespace WideMD.Core
 {
-    public class IconWorkspace : AbstractWorkspace
+    internal class MDViewModel : TextViewModel
     {
-        public IconWorkspace(IUnityContainer container) : base(container)
+        private ContentModel _model;
+        private UserControl _view;
+
+        public MDViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger)
+            : base(workspace, commandManager, logger)
         {
         }
 
-        public override ImageSource Icon
+        internal void SetModel(ContentModel model)
         {
-            get
-            {
-                ImageSource imageSource =
-                    new BitmapImage(new Uri("pack://application:,,,/VS2012TestApp;component/Icon.png"));
-                return imageSource;
-            }
+            base.Model = model;
+        }
+
+        internal void SetView(UserControl view)
+        {
+            base.View = view;
         }
     }
 }

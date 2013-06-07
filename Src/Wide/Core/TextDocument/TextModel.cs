@@ -23,7 +23,7 @@ namespace Wide.Core.TextDocument
         /// <summary>
         /// The command manager
         /// </summary>
-        private readonly ICommandManager _commandManager;
+        protected readonly ICommandManager _commandManager;
         /// <summary>
         /// The old text which was last saved
         /// </summary>
@@ -49,7 +49,7 @@ namespace Wide.Core.TextDocument
         public override bool IsDirty
         {
             get { return base.IsDirty; }
-            internal set
+            protected internal set
             {
                 base.IsDirty = value;
                 if (value == false)

@@ -76,6 +76,7 @@
     </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock">
       <HintPath>..\..\Libs\Xceed.Wpf.AvalonDock.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
