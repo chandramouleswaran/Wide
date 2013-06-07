@@ -162,6 +162,11 @@ namespace Wide.Interfaces
                     {
                         return false;
                     }
+                    else
+                    {
+                        //Closed the document - now reduce the count as Documents.Count would have decreased.
+                        i--;
+                    }
                 }
             }
             return true;

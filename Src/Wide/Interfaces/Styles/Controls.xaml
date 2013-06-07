@@ -15,6 +15,11 @@
         <Setter Property="CommandParameter" Value="{Binding Path=CommandParameter}" />
         <Setter Property="ItemsSource" Value="{Binding Children}" />
         <Setter Property="InputGestureText" Value="{Binding InputGestureText}" />
+        <Setter Property="Visibility">
+            <Setter.Value>
+                <Binding Path="Command" Converter="{StaticResource ResourceKey=cvc}" />
+            </Setter.Value>
+        </Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsSeparator}" Value="true">
                 <Setter Property="Template">
