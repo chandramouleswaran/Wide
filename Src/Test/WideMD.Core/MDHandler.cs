@@ -15,11 +15,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.Unity;
+using Wide.Core.Attributes;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 
 namespace WideMD.Core
 {
+    [FileContent("Markdown files", "*.md", 1)]
     internal class MDHandler : IContentHandler
     {
         /// <summary>
@@ -32,6 +34,11 @@ namespace WideMD.Core
         /// </summary>
         private readonly ILoggerService _loggerService;
 
+        /// <summary>
+        /// Constructor of MDHandler - all parameters are injected
+        /// </summary>
+        /// <param name="container">The injected container of the application</param>
+        /// <param name="loggerService">The injected logger service of the application</param>
         public MDHandler(IUnityContainer container, ILoggerService loggerService)
         {
             _container = container;
@@ -42,9 +49,33 @@ namespace WideMD.Core
 
         public ContentViewModel NewContent(object parameter)
         {
-            throw new NotImplementedException();
+            var vm = _container.Resolve<MDViewModel>();
+            var model = _container.Resolve<MDModel>();
+            var view = _container.Resolve<MDView>();
+
+            //Model details
+            model.PropertyChanged += vm.ModelOnPropertyChanged;
+            _loggerService.Log("Creating a new simple file using MDHandler", LogCategory.Info, LogPriority.Low);
+
+            //Clear the undo stack
+            model.Document.UndoStack.ClearAll();
+
+            //Set the model and view
+            vm.SetModel(model);
+            vm.SetView(view);
+            vm.Title = "untitled-MD";
+            vm.View.DataContext = model;
+            vm.SetHandler(this);
+            model.SetDirty(true);
+
+            return vm;
         }
 
+        /// <summary>
+        /// Validates the content by checking if a file exists for the specified location
+        /// </summary>
+        /// <param name="info">The string containing the file location</param>
+        /// <returns>True, if the file exists and has a .md extension - false otherwise</returns>
         public bool ValidateContentType(object info)
         {
             string location = info as string;
@@ -59,6 +90,11 @@ namespace WideMD.Core
             return File.Exists(location) && extension == ".md";
         }
 
+        /// <summary>
+        /// Opens a file and returns the corresponding MDViewModel
+        /// </summary>
+        /// <param name="info">The string location of the file</param>
+        /// <returns>The <see cref="MDViewModel"/> for the file.</returns>
         public ContentViewModel OpenContent(object info)
         {
             var location = info as string;
@@ -67,7 +103,6 @@ namespace WideMD.Core
                 MDViewModel vm = _container.Resolve<MDViewModel>();
                 var model = _container.Resolve<MDModel>();
                 var view = _container.Resolve<MDView>();
-                //TODO: This needs to change to MDView which hosts a pane to show browser
 
                 //Model details
                 model.PropertyChanged += vm.ModelOnPropertyChanged;
@@ -113,11 +148,67 @@ namespace WideMD.Core
             return null;
         }
 
-        public bool SaveContent(ContentViewModel contentViewModel, bool saveAs = false)
+        /// <summary>
+        /// Saves the content of the TextViewModel
+        /// </summary>
+        /// <param name="contentViewModel">This needs to be a TextViewModel that needs to be saved</param>
+        /// <param name="saveAs">Pass in true if you need to Save As?</param>
+        /// <returns>true, if successful - false, otherwise</returns>
+        public virtual bool SaveContent(ContentViewModel contentViewModel, bool saveAs = false)
         {
-            throw new NotImplementedException();
+            var mdViewModel = contentViewModel as MDViewModel;
+
+            if (mdViewModel == null)
+            {
+                _loggerService.Log("ContentViewModel needs to be a MDViewModel to save details", LogCategory.Exception, LogPriority.High);
+                throw new ArgumentException("ContentViewModel needs to be a MDViewModel to save details");
+            }
+
+            var mdModel = mdViewModel.Model as MDModel;
+
+            if (mdModel == null)
+            {
+                _loggerService.Log("MDViewModel does not have a MDModel which should have the text", LogCategory.Exception, LogPriority.High);
+                throw new ArgumentException("MDViewModel does not have a MDModel which should have the text");
+            }
+
+            var location = mdModel.Location as string;
+
+            if (location == null)
+            {
+                //If there is no location, just prompt for Save As..
+                saveAs = true;
+            }
+
+            if (saveAs)
+            {
+                //TODO: Save as...?
+                //contentViewModel.Model.Location = "tesT";
+            }
+            else
+            {
+                try
+                {
+                    File.WriteAllText(location, mdModel.Document.Text);
+                    mdModel.SetDirty(false);
+                    return true;
+                }
+                catch (Exception exception)
+                {
+                    _loggerService.Log(exception.Message, LogCategory.Exception, LogPriority.High);
+                    _loggerService.Log(exception.StackTrace, LogCategory.Exception, LogPriority.High);
+                    return false;
+                }
+            }
+
+            return false;
         }
 
+        /// <summary>
+        /// Validates the content from an ID - the ContentID from the ContentViewModel
+        /// </summary>
+        /// <param name="contentId">The content ID which needs to be validated</param>
+        /// <returns>True, if valid from content ID - false, otherwise</returns>
         public bool ValidateContentFromId(string contentId)
         {
             string[] split = Regex.Split(contentId, ":##:");

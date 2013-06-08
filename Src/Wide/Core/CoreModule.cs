@@ -68,7 +68,7 @@ namespace Wide.Core
 
         #region IModule Members
         /// <summary>
-        /// The intialize call of the module - this gets called when the container is trying to load the modules.
+        /// The initialize call of the module - this gets called when the container is trying to load the modules.
         /// Register your <see cref="Type"/>s and Commands here
         /// </summary>
         public void Initialize()
@@ -147,7 +147,7 @@ namespace Wide.Core
             var closeCommand = new DelegateCommand(CloseDocument, CanExecuteCloseDocument);
             manager.RegisterCommand("CLOSE", closeCommand);
 
-            var newCommand = new DelegateCommand(NewDocument,CanExecuteNewCommand);
+            var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
             manager.RegisterCommand("NEW", newCommand);
         }
 
@@ -195,7 +195,6 @@ namespace Wide.Core
 
         private void NewDocument()
         {
-            //TODO: This is the place where we want to show a window and make the end user select a type of file
             var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
             if(contentHandler != null)
             {
@@ -203,6 +202,7 @@ namespace Wide.Core
                 {
                     foreach (var handler in contentHandler.ContentHandlers)
                     {
+                        //TODO: This is the place where we want to show a window and make the end user select a type of file
                         handler.NewContent(null);
                     }
                 }

@@ -2,7 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" mc:Ignorable="d" d:DesignHeight="300"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:Core="clr-namespace:WideMD.Core"
+             mc:Ignorable="d" d:DesignHeight="300"
              d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -10,10 +11,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" MinWidth="200" />
         </Grid.ColumnDefinitions>
-        <avalonedit:TextEditor Grid.Column="0" Name="textEditor" Document="{Binding Document}" ShowLineNumbers="True"></avalonedit:TextEditor>
-        <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1"
-                      ResizeBehavior="PreviousAndNext" Width="5" Background="#FFBCBCBC" />
-        <WebBrowser Name="Browser" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="2" Source="http://www.google.com" />
+        <avalonedit:TextEditor Grid.Column="0" Name="textEditor" Document="{Binding Document}" ShowLineNumbers="True" TextChanged="textEditor_TextChanged"></avalonedit:TextEditor>
+        <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ResizeBehavior="PreviousAndNext" Width="5" Background="#FFBCBCBC" />
+        <WebBrowser Name="Browser" ScrollViewer.CanContentScroll="True" Core:BrowserBehavior.Html="{Binding HTMLResult, Mode=TwoWay}" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Visible" />
     </Grid>
 </UserControl>
