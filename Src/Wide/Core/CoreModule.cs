@@ -21,6 +21,7 @@ using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using CommandManager = Wide.Core.Services.CommandManager;
+using System.ComponentModel;
 
 namespace Wide.Core
 {
@@ -144,7 +145,7 @@ namespace Wide.Core
             var manager = _container.Resolve<ICommandManager>();
 
             //TODO: Check if you can hook up to the Workspace.ActiveDocument.CloseCommand
-            var closeCommand = new DelegateCommand(CloseDocument, CanExecuteCloseDocument);
+            var closeCommand = new DelegateCommand<CancelEventArgs>(CloseDocument, CanExecuteCloseDocument);
             manager.RegisterCommand("CLOSE", closeCommand);
 
             var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
@@ -156,35 +157,66 @@ namespace Wide.Core
         /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
         /// </summary>
         /// <returns><c>true</c> if this instance can execute close document; otherwise, <c>false</c>.</returns>
-        private bool CanExecuteCloseDocument()
+        private bool CanExecuteCloseDocument(CancelEventArgs e)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             return workspace.ActiveDocument != null;
         }
+
         /// <summary>
         /// CloseDocument method that gets called when the Close command gets executed.
         /// </summary>
-        private void CloseDocument()
+        private void CloseDocument(CancelEventArgs e)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            ILoggerService logger = _container.Resolve<ILoggerService>();
             if (workspace.ActiveDocument.Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                var res = MessageBox.Show(
-                    string.Format("Save changes for document '{0}'?", workspace.ActiveDocument.Title), "Are you sure?",
-                    MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", workspace.ActiveDocument.Title), "Are you sure?", MessageBoxButton.YesNoCancel);
+
+                //Pressed Yes
                 if (res == MessageBoxResult.Yes)
                 {
-                    workspace.ActiveDocument.Handler.SaveContent(workspace.ActiveDocument);
+                    if (!workspace.ActiveDocument.Handler.SaveContent(workspace.ActiveDocument))
+                    {
+                        //Failed to save - return cancel
+                        res = MessageBoxResult.Cancel;
+                        
+                        //Cancel was pressed - so, we cant close
+                        if (e != null)
+                        {
+                            e.Cancel = true;
+                        }
+                        return;
+                    }
                 }
-                if (res != MessageBoxResult.Cancel)
+
+                //Pressed Cancel
+                if (res == MessageBoxResult.Cancel)
                 {
-                    workspace.Documents.Remove(workspace.ActiveDocument);
+                    //Cancel was pressed - so, we cant close
+                    if (e != null)
+                    {
+                        e.Cancel = true;
+                    }
+                    return;
                 }
+            }
+
+            if (e == null)
+            {
+                logger.Log("Closing document " + workspace.ActiveDocument.Model.Location, LogCategory.Info, LogPriority.None);
+                workspace.Documents.Remove(workspace.ActiveDocument);
             }
             else
             {
-                workspace.Documents.Remove(workspace.ActiveDocument);
+                // If the location is not there - then we can remove it.
+                // This can happen when on clicking "No" in the popup and we still want to quit
+                if (workspace.ActiveDocument.Model.Location == null)
+                {
+                    workspace.Documents.Remove(workspace.ActiveDocument);
+                }
             }
         }
 
@@ -196,6 +228,8 @@ namespace Wide.Core
         private void NewDocument()
         {
             var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
+            var workspace = _container.Resolve<AbstractWorkspace>();
+
             if(contentHandler != null)
             {
                 if(contentHandler.ContentHandlers.Count != 1)
@@ -203,13 +237,12 @@ namespace Wide.Core
                     foreach (var handler in contentHandler.ContentHandlers)
                     {
                         //TODO: This is the place where we want to show a window and make the end user select a type of file
-                        handler.NewContent(null);
+                        workspace.Documents.Add(handler.NewContent(null));
                     }
                 }
                 else
                 {
                     var openValue = contentHandler.ContentHandlers[0].NewContent(null);
-                    var workspace = _container.Resolve<AbstractWorkspace>();
                     workspace.Documents.Add(openValue);
 
                     //Make it the active document
