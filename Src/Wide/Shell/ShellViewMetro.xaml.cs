@@ -110,7 +110,7 @@ namespace Wide.Shell
         private void Window_Closing_1(object sender, CancelEventArgs e)
         {
             var workspace = DataContext as IWorkspace;
-            if (!workspace.Closing())
+            if (!workspace.Closing(e))
             {
                 e.Cancel = true;
             }

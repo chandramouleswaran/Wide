@@ -76,7 +76,7 @@ namespace Wide.Interfaces
             _workspace = workspace;
             _commandManager = commandManager;
             _logger = logger;
-            CloseCommand = new DelegateCommand(ActualCloseDocument);
+            CloseCommand = _commandManager.GetCommand("CLOSE");
         }
         #endregion
 
@@ -216,53 +216,7 @@ namespace Wide.Interfaces
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Closes the document.
-        /// </summary>
-        /// <returns><c>true</c> if able to remove the document from workspace, <c>false</c> otherwise</returns>
-        public bool CloseDocument()
-        {
-            if (Model.IsDirty)
-            {
-                //means the document is dirty - show a message box and then handle based on the user's selection
-                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", Title.Substring(0,Title.Length - 1)), "Are you sure?",
-                                          MessageBoxButton.YesNoCancel);
-                if (res == MessageBoxResult.Yes)
-                {
-                    // If the save is cancelled by the user, set the result as cancel
-                    if(!Handler.SaveContent(this))
-                    {
-                        res = MessageBoxResult.Cancel;
-                    }
-                }
-                if (res != MessageBoxResult.Cancel)
-                {
-                    // If the location is not there - then we can remove it.
-                    // This can happen when on clicking "No" in the popup
-                    if (this.Model.Location == null || res == MessageBoxResult.No)
-                    {
-                        _workspace.Documents.Remove(this);
-                    }
-                    return true;
-                }
-            }
-            else
-            {
-                _logger.Log("Closing document " + Model.Location, LogCategory.Info, LogPriority.None);
-                _workspace.Documents.Remove(this);
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Closes this document.
-        /// </summary>
-        internal void ActualCloseDocument()
-        {
-            CloseDocument();
-        }
-
+        
         #endregion
     }
 }

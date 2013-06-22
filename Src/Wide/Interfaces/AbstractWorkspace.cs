@@ -150,7 +150,7 @@ namespace Wide.Interfaces
         /// Closing this instance.
         /// </summary>
         /// <returns><c>true</c> if the application is closing, <c>false</c> otherwise</returns>
-        public virtual bool Closing()
+        public virtual bool Closing(CancelEventArgs e)
         {
             for (int i = 0; i < Documents.Count; i++)
             {
@@ -158,11 +158,18 @@ namespace Wide.Interfaces
                 if (vm.Model.IsDirty)
                 {
                     ActiveDocument = vm;
-                    if (!vm.CloseDocument())
+                    
+                    //Execute the close command
+                    vm.CloseCommand.Execute(e);
+                    
+                    //If canceled
+                    if (e.Cancel == true)
                     {
                         return false;
                     }
-                    else
+                    
+                    // This can happen only when a view model with no location was closed
+                    if(Documents.Count > 0 && vm != Documents[i])
                     {
                         //Closed the document - now reduce the count as Documents.Count would have decreased.
                         i--;
