@@ -156,6 +156,7 @@ namespace Wide.Core
         /// <summary>
         /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
         /// </summary>
+        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
         /// <returns><c>true</c> if this instance can execute close document; otherwise, <c>false</c>.</returns>
         private bool CanExecuteCloseDocument(CancelEventArgs e)
         {
