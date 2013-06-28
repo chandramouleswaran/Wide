@@ -49,10 +49,9 @@ namespace Wide.Settings
         {
             get
             {
-                var c = new ContentControl();
-                var propertyGrid = new PropertyGrid {ShowSearchBox = false, SelectedObject = this};
-                c.Content = propertyGrid;
-                return c;
+                var p = ContentControl.Content as PropertyGrid;
+                p.SelectedObject = this;
+                return ContentControl; 
             }
         }
         #endregion
@@ -107,6 +106,17 @@ namespace Wide.Settings
                 Children.Clone().ToObservableCollection();
             return newChildren;
         }
+        #endregion
+
+        #region Static
+        //Singleton which can be reused
+        private static readonly ContentControl ContentControl = new ContentControl()
+                                                            {
+                                                                Content =
+                                                                    new PropertyGrid
+                                                                        {ShowSearchBox = false}
+                                                            };
+
         #endregion
     }
 }

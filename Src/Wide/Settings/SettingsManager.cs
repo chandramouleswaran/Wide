@@ -9,6 +9,7 @@
 #endregion
 using System;
 using System.Windows.Controls;
+using Wide.Interfaces;
 
 namespace Wide.Settings
 {
@@ -30,6 +31,12 @@ namespace Wide.Settings
         /// <param name="settings">The settings.</param>
         /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
         bool Add(AbstractSettings settings);
+
+        /// <summary>
+        /// Gets the settings menu.
+        /// </summary>
+        /// <value>The settings menu.</value>
+        AbstractMenuItem SettingsMenu { get; }
     }
 
     /// <summary>
@@ -78,5 +85,11 @@ namespace Wide.Settings
                 settings.Reset();
             }
         }
+
+        /// <summary>
+        /// Gets the settings menu.
+        /// </summary>
+        /// <value>The settings menu.</value>
+        public AbstractMenuItem SettingsMenu { get; private set; }
     }
 }
