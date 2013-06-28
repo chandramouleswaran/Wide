@@ -45,6 +45,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// Closing this instance.
         /// </summary>
+        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
         /// <returns><c>true</c> if the application is closing, <c>false</c> otherwise</returns>
         bool Closing(CancelEventArgs e);
     }
