@@ -137,6 +137,7 @@ namespace Wide.Core
         }
 
         #endregion
+
         /// <summary>
         /// The AppCommands registered by the Core Module
         /// </summary>
