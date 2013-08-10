@@ -124,8 +124,7 @@ namespace Wide.Interfaces
         {
             if (item.GetType().IsAssignableFrom(typeof (AbstractMenuItem)))
             {
-                throw new ArgumentException(
-                    "Expected a AbstractMenuItem as the argument. Only Menu's can be added within a Menu.");
+                throw new ArgumentException("Expected a AbstractMenuItem as the argument. Only Menu's can be added within a Menu.");
             }
             return base.Add(item);
         }

@@ -124,6 +124,7 @@
     <Compile Include="Interfaces\Services\IOpenFileService.cs" />
     <Compile Include="Interfaces\IShell.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
+    <Compile Include="Interfaces\Settings\ISettingsManager.cs" />
     <Compile Include="Interfaces\ToolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -151,8 +152,8 @@
     <Compile Include="Interfaces\ViewModelBase.cs" />
     <Compile Include="Interfaces\Settings\AbstractSettings.cs" />
     <Compile Include="Interfaces\Settings\AbstractSettingsItem.cs" />
-    <Compile Include="Interfaces\Settings\SettingsManager.cs" />
-    <Compile Include="Interfaces\Settings\SettingsWindow.xaml.cs">
+    <Compile Include="Core\Settings\SettingsManager.cs" />
+    <Compile Include="Core\Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Shell\ActiveDocumentConverter.cs" />
@@ -242,7 +243,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Interfaces\Settings\SettingsWindow.xaml">
+    <Page Include="Core\Settings\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,7 +273,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Core\Settings\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

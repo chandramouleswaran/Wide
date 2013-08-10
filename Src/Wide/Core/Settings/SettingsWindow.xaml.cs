@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Wide.Interfaces.Settings
+namespace Wide.Core.Settings
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml
@@ -10,6 +10,11 @@ namespace Wide.Interfaces.Settings
         public SettingsWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

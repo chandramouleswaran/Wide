@@ -16,10 +16,12 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Wide.Core.Services;
+using Wide.Core.Settings;
 using Wide.Core.TextDocument;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
+using Wide.Interfaces.Settings;
 using CommandManager = Wide.Core.Services.CommandManager;
 using System.ComponentModel;
 
@@ -108,6 +110,8 @@ namespace Wide.Core
                                          new InjectionParameter(typeof (ICommand), null),
                                          new InjectionParameter(typeof (bool), false),
                                          new InjectionParameter(typeof (IUnityContainer), _container)));
+
+            _container.RegisterType<ISettingsManager, SettingsManager>(new ContainerControlledLifetimeManager());
 
             AppCommands();
 

@@ -15,7 +15,7 @@ namespace Wide.Interfaces
     /// Interface IPrioritizedTree
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IPrioritizedTree<T>
+    internal interface IPrioritizedTree<T>
     {
         /// <summary>
         /// Gets the children.

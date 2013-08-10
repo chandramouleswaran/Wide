@@ -21,6 +21,7 @@ using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
+using Wide.Interfaces.Settings;
 using Wide.Interfaces.Themes;
 
 namespace WideMD.Core
@@ -92,6 +93,7 @@ namespace WideMD.Core
                                                                               {Message = "Menus.."});
             var manager = _container.Resolve<ICommandManager>();
             var vm = _container.Resolve<AbstractMenuItem>();
+            var sm = _container.Resolve<ISettingsManager>();
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");
 
@@ -167,6 +169,8 @@ namespace WideMD.Core
                                                   {IsCheckable = true, IsChecked = false, CommandParameter = "Light"});
 
             vm.Add(new MenuItemViewModel("_Tools", 4));
+            vm.Get("_Tools").Add(new MenuItemViewModel("Settings", 1, null, sm.SettingsCommand));
+
             vm.Add(new MenuItemViewModel("_Help", 4));
         }
 
