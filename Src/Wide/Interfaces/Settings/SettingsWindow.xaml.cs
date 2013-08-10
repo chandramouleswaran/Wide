@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Wide.Settings
+namespace Wide.Interfaces.Settings
 {
     /// <summary>
     /// Interaction logic for SettingsWindow.xaml

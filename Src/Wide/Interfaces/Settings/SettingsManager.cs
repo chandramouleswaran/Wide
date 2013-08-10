@@ -7,48 +7,19 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-using System;
-using System.Windows.Controls;
-using Wide.Interfaces;
 
-namespace Wide.Settings
+namespace Wide.Interfaces.Settings
 {
     /// <summary>
     /// Class WideSettingsManager
     /// </summary>
-    internal class WideSettingsManager : AbstractSettings
+    internal class WideSettingsManager : AbstractSettingsItem
     {
-        //NOTE: There is a difference between settings manager and each setting - settings manager is like a host for settings and does not need to be saved/loaded.
-        //It however needs a clone as the clone will be hosted in the view.
-
         /// <summary>
-        /// Gets the view that displays the setting.
+        /// Initializes a new instance of the <see cref="WideSettingsManager"/> class.
         /// </summary>
-        /// <value>The view.</value>
-        public override ContentControl View
+        public WideSettingsManager() : base("", null)
         {
-            get { return null; }
-        }
-
-        /// <summary>
-        /// Creates a new object that is a copy of the current instance. All implementation of settings needs to provide this clone.
-        /// </summary>
-        /// <returns>A new object that is a copy of this instance.</returns>
-        public override object Clone()
-        {
-            //Need a clone
-            return null;
-        }
-
-        /// <summary>
-        /// Resets this instance with the default values for settings.
-        /// </summary>
-        public override void Reset()
-        {
-            foreach (AbstractSettings settings in Children)
-            {
-                settings.Reset();
-            }
         }
 
         /// <summary>

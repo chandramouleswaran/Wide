@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wide.Settings.SettingsWindow"
+﻿<Window x:Class="Wide.Interfaces.Settings.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Settings" Height="300" Width="300">
@@ -8,7 +8,13 @@
             <RowDefinition Height="55" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+                <TreeView Grid.Column="0" ItemsSource="{Binding Path=Children}" />
+            </Grid>
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
