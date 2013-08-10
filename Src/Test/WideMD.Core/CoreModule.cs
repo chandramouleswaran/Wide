@@ -18,6 +18,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
+using Wide.Core.Settings;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
@@ -63,9 +64,10 @@ namespace WideMD.Core
             _eventAggregator.GetEvent<SplashMessageUpdateEvent>().Publish(new SplashMessageUpdateEvent
                                                                               {Message = "Themes.."});
             var manager = _container.Resolve<IThemeManager>();
+            var themeSettings = _container.Resolve<ThemeSettings>();
             manager.AddTheme(new LightTheme());
             manager.AddTheme(new DarkTheme());
-            manager.SetCurrent("Dark");
+            manager.SetCurrent(themeSettings.SelectedTheme);
         }
 
         private void LoadCommands()
@@ -94,6 +96,7 @@ namespace WideMD.Core
             var manager = _container.Resolve<ICommandManager>();
             var vm = _container.Resolve<AbstractMenuItem>();
             var sm = _container.Resolve<ISettingsManager>();
+            var themeSettings = _container.Resolve<ThemeSettings>();
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");
 
@@ -163,10 +166,12 @@ namespace WideMD.Core
                                         {IsCheckable = true, IsChecked = logger.IsVisible});
 
             vm.Get("_View").Add(new MenuItemViewModel("Themes", 1));
+
+            //Set the checkmark of the theme menu's based on which is currently selected
             vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Dark", 1, null, manager.GetCommand("THEMECHANGE"))
-                                                  {IsCheckable = true, IsChecked = true, CommandParameter = "Dark"});
+                                                  {IsCheckable = true, IsChecked = (themeSettings.SelectedTheme == "Dark"), CommandParameter = "Dark"});
             vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Light", 2, null, manager.GetCommand("THEMECHANGE"))
-                                                  {IsCheckable = true, IsChecked = false, CommandParameter = "Light"});
+                                                  {IsCheckable = true, IsChecked = (themeSettings.SelectedTheme == "Light"), CommandParameter = "Light"});
 
             vm.Add(new MenuItemViewModel("_Tools", 4));
             vm.Get("_Tools").Add(new MenuItemViewModel("Settings", 1, null, sm.SettingsCommand));

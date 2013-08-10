@@ -92,6 +92,7 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Core\Settings\ThemeSettings.cs" />
     <Compile Include="Core\TextDocument\TextModel.cs" />
     <Compile Include="Core\TextDocument\TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>

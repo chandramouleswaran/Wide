@@ -8,43 +8,34 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
+using System;
+using System.Configuration;
+using Microsoft.Practices.Prism.Events;
+using Wide.Interfaces;
+using Wide.Interfaces.Events;
 using Wide.Interfaces.Settings;
 
 namespace Wide.Core.Settings
 {
-    /// <summary>
-    /// Class WideSettingsManager
-    /// </summary>
-    internal class SettingsManager : AbstractSettingsItem, ISettingsManager
+    public class ThemeSettings : AbstractSettings
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WideSettingsManager"/> class.
-        /// </summary>
-        public SettingsManager() : base("", null)
+        public ThemeSettings(IEventAggregator eventAggregator)
         {
-            SettingsCommand = new DelegateCommand(OpenSettings);
+            eventAggregator.GetEvent<ThemeChangeEvent>().Subscribe(NewSelectedTheme);
         }
 
-        /// <summary>
-        /// Gets the settings menu.
-        /// </summary>
-        /// <value>The settings menu.</value>
-        public ICommand SettingsCommand { get; private set; }
-
-        private void OpenSettings()
+        private void NewSelectedTheme(ITheme theme)
         {
-            SettingsWindow window = new SettingsWindow();
-            bool? result = window.ShowDialog();
-            if(result == true)
-            {
-                this.Save();
-            }
-            else
-            {
-                this.Reset();
-            }
+            this.SelectedTheme = theme.Name;
+            this.Save();
+        }
+
+        [UserScopedSetting()]
+        [DefaultSettingValue("Dark")]
+        public string SelectedTheme
+        {
+            get { return (string) this["SelectedTheme"]; }
+            set { this["SelectedTheme"] = value; }
         }
     }
 }

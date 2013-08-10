@@ -82,6 +82,7 @@ namespace Wide.Core
             _container.RegisterType<TextModel>();
             _container.RegisterType<TextView>();
             _container.RegisterType<AllFileHandler>();
+            _container.RegisterType<ThemeSettings>(new ContainerControlledLifetimeManager());
 
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
@@ -114,6 +115,7 @@ namespace Wide.Core
             _container.RegisterType<ISettingsManager, SettingsManager>(new ContainerControlledLifetimeManager());
 
             AppCommands();
+            LoadSettings();
 
             //Try resolving a workspace
             try
@@ -155,6 +157,11 @@ namespace Wide.Core
 
             var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
             manager.RegisterCommand("NEW", newCommand);
+        }
+
+        private void LoadSettings()
+        {
+            _container.Resolve<ThemeSettings>();
         }
 
         #region Commands
