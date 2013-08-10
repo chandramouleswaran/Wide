@@ -14,35 +14,9 @@ using Wide.Interfaces;
 namespace Wide.Settings
 {
     /// <summary>
-    /// Interface ISettingsManager
-    /// </summary>
-    public interface ISettingsManager
-    {
-        /// <summary>
-        /// Gets the node with the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns>AbstractSettings.</returns>
-        AbstractSettings Get(string key);
-
-        /// <summary>
-        /// Adds the specified settings.
-        /// </summary>
-        /// <param name="settings">The settings.</param>
-        /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
-        bool Add(AbstractSettings settings);
-
-        /// <summary>
-        /// Gets the settings menu.
-        /// </summary>
-        /// <value>The settings menu.</value>
-        AbstractMenuItem SettingsMenu { get; }
-    }
-
-    /// <summary>
     /// Class WideSettingsManager
     /// </summary>
-    internal class WideSettingsManager : AbstractSettings, ISettingsManager
+    internal class WideSettingsManager : AbstractSettings
     {
         //NOTE: There is a difference between settings manager and each setting - settings manager is like a host for settings and does not need to be saved/loaded.
         //It however needs a clone as the clone will be hosted in the view.
@@ -54,15 +28,6 @@ namespace Wide.Settings
         public override ContentControl View
         {
             get { return null; }
-        }
-
-        /// <summary>
-        /// Loads this settings.
-        /// </summary>
-        /// <exception cref="System.NotImplementedException">Don't need to load a WideSettingsManager</exception>
-        public override void Load()
-        {
-            throw new NotImplementedException("Don't need to load a WideSettingsManager");
         }
 
         /// <summary>

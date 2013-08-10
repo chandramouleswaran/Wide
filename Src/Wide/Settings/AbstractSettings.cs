@@ -92,11 +92,6 @@ namespace Wide.Settings
         }
 
         /// <summary>
-        /// Loads this settings.
-        /// </summary>
-        public abstract void Load();
-
-        /// <summary>
         /// Creates a clone of the children.
         /// </summary>
         /// <returns>ObservableCollection{AbstractSettings}.</returns>
