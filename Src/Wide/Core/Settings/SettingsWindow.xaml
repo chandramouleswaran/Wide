@@ -13,7 +13,16 @@
                     <ColumnDefinition Width="3*" />
                     <ColumnDefinition Width="7*" />
                 </Grid.ColumnDefinitions>
-                <TreeView Grid.Column="0" ItemsSource="{Binding Path=Children}" ScrollViewer.CanContentScroll="True" />
+                <TreeView Name="settingsTreeView" Grid.Column="0" ItemsSource="{Binding Path=Children}" ScrollViewer.CanContentScroll="True">
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Title}" Margin="4,0,4,0"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+                <ContentControl Grid.Column="1" DataContext="{Binding ElementName=settingsTreeView, Path=SelectedItem}" Content="{Binding Path=View}" ScrollViewer.CanContentScroll="True" />
             </Grid>
         </Grid>
         <Grid Grid.Row="1">

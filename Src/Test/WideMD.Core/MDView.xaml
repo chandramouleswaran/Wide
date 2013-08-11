@@ -2,7 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:Core="clr-namespace:WideMD.Core"
+             xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:Core="clr-namespace:WideMD.Core"
+             xmlns:Settings="clr-namespace:WideMD.Core.Settings"
              mc:Ignorable="d" d:DesignHeight="300"
              d:DesignWidth="300">
     <Grid>
@@ -11,7 +13,13 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" MinWidth="200" />
         </Grid.ColumnDefinitions>
-        <avalonedit:TextEditor Grid.Column="0" Name="textEditor" Document="{Binding Document}" ShowLineNumbers="True" TextChanged="textEditor_TextChanged"></avalonedit:TextEditor>
+        <avalonedit:TextEditor Grid.Column="0" Name="textEditor" Document="{Binding Document}" TextChanged="textEditor_TextChanged" 
+                               Background="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=BackgroundColor}" 
+                               Foreground="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=ForegroundColor}"
+                               ShowLineNumbers="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=ShowLineNumbers}"
+                               WordWrap="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=WordWrap}"
+                               FontFamily="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=FontFamily}"
+                               FontSize="{Binding Source={x:Static Settings:MDEditorOptions.Default}, Path=FontSize}"/>
         <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ResizeBehavior="PreviousAndNext" Width="5" Background="#FFBCBCBC" />
         <WebBrowser Name="Browser" ScrollViewer.CanContentScroll="True" Core:BrowserBehavior.Html="{Binding HTMLResult, Mode=TwoWay}" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Visible" />
     </Grid>

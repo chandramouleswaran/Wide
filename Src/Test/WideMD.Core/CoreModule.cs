@@ -24,6 +24,7 @@ using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
 using Wide.Interfaces.Themes;
+using WideMD.Core.Settings;
 
 namespace WideMD.Core
 {
@@ -48,6 +49,14 @@ namespace WideMD.Core
             LoadCommands();
             LoadMenus();
             RegisterParts();
+            LoadSettings();
+        }
+
+        private void LoadSettings()
+        {
+            ISettingsManager manager = _container.Resolve<ISettingsManager>();
+            manager.Add(new MDSettingsItem("Text Editor", 1, null));
+            manager.Get("Text Editor").Add(new MDSettingsItem("General", 1, MDEditorOptions.Default));
         }
 
         private void RegisterParts()

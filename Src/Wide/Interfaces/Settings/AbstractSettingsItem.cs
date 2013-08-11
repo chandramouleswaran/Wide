@@ -26,6 +26,7 @@ namespace Wide.Interfaces.Settings
         protected AbstractSettingsItem(string title, AbstractSettings settings) : base()
         {
             this.Title = title;
+            this.Key = title;
             this._appSettings = settings;
         }
         #endregion
@@ -47,9 +48,17 @@ namespace Wide.Interfaces.Settings
         {
             get
             {
-                var p = ContentControl.Content as PropertyGrid;
-                p.SelectedObject = this;
-                return ContentControl; 
+                if (_appSettings != null)
+                {
+                    var p = ContentControl.Content as PropertyGrid;
+                    p.SelectedObject = _appSettings;
+                    return ContentControl;
+                }
+                if(Children.Count > 0)
+                {
+                    return Children[0].View;
+                }
+                return null;
             }
         }
         #endregion        
