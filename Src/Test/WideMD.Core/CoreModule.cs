@@ -56,7 +56,7 @@ namespace WideMD.Core
         {
             ISettingsManager manager = _container.Resolve<ISettingsManager>();
             manager.Add(new MDSettingsItem("Text Editor", 1, null));
-            manager.Get("Text Editor").Add(new MDSettingsItem("General", 1, MDEditorOptions.Default));
+            manager.Get("Text Editor").Add(new MDSettingsItem("General", 1, EditorOptions.Default));
         }
 
         private void RegisterParts()

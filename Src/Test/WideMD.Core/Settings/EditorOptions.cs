@@ -15,16 +15,16 @@ using Wide.Interfaces.Settings;
 
 namespace WideMD.Core.Settings
 {
-    public class MDEditorOptions : AbstractSettings
+    public class EditorOptions : AbstractSettings
     {
-        private static MDEditorOptions settings = new MDEditorOptions();
+        private static EditorOptions settings = new EditorOptions();
 
-        private MDEditorOptions()
+        private EditorOptions()
         {
         }
 
         [Browsable(false)]
-        public static MDEditorOptions Default
+        public static EditorOptions Default
         {
             get 
             { return settings; }
@@ -32,6 +32,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("White")]
+        [Category("Colors")]
+        [DisplayName("Background Color")]
+        [Description("The background color of the text editor")]
         public SolidColorBrush BackgroundColor
         {
             get { return (SolidColorBrush)this["BackgroundColor"]; }
@@ -40,6 +43,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("Black")]
+        [Category("Colors")]
+        [DisplayName("Foreground Color")]
+        [Description("The foreground color of the text editor")]
         public SolidColorBrush ForegroundColor
         {
             get { return (SolidColorBrush)this["ForegroundColor"]; }
@@ -48,6 +54,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("true")]
+        [Category("Format")]
+        [DisplayName("Display line numbers?")]
+        [Description("Set to Yes to show line numbers on the text editor")]
         public bool ShowLineNumbers
         {
             get { return (bool)this["ShowLineNumbers"]; }
@@ -56,6 +65,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("false")]
+        [Category("Format")]
+        [DisplayName("Word wrap?")]
+        [Description("Set to Yes to wrap words in a line on the text editor")]
         public bool WordWrap
         {
             get { return (bool)this["WordWrap"]; }
@@ -64,6 +76,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("Consolas")]
+        [Category("Format")]
+        [DisplayName("Font")]
+        [Description("Select the font to use in the text editor")]
         public FontFamily FontFamily
         {
             get { return (FontFamily)this["FontFamily"]; }
@@ -72,6 +87,9 @@ namespace WideMD.Core.Settings
 
         [UserScopedSetting()]
         [DefaultSettingValue("14")]
+        [Category("Format")]
+        [DisplayName("Size")]
+        [Description("Select the size to use for the font in the text editor")]
         public int FontSize
         {
             get { return (int)this["FontSize"]; }

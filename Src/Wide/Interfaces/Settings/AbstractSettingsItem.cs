@@ -52,6 +52,8 @@ namespace Wide.Interfaces.Settings
                 {
                     var p = ContentControl.Content as PropertyGrid;
                     p.SelectedObject = _appSettings;
+                    p.SelectedObjectName = "";
+                    p.SelectedObjectTypeName = this.Title;
                     return ContentControl;
                 }
                 if(Children.Count > 0)
