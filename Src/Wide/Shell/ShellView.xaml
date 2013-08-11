@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wide.Shell.ShellView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Window x:Class="Wide.Shell.ShellView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" x:ClassModifier="internal"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:Host="clr-namespace:Wide.Shell" Title="{Binding Title}" Icon="{Binding Icon}" Closing="Window_Closing_1">
     <Window.Resources>

@@ -92,6 +92,7 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Core\Settings\WindowPositionSettings.cs" />
     <Compile Include="Core\Settings\ThemeSettings.cs" />
     <Compile Include="Core\TextDocument\TextModel.cs" />
     <Compile Include="Core\TextDocument\TextView.xaml.cs">
@@ -107,6 +108,7 @@
     <Compile Include="Interfaces\Controls\ToolbarViewModel.cs" />
     <Compile Include="Interfaces\Converters\CommandVisibilityConverter.cs" />
     <Compile Include="Interfaces\Events\ActiveContentChangedEvent.cs" />
+    <Compile Include="Interfaces\Events\WindowClosingEvent.cs" />
     <Compile Include="Interfaces\Events\LogEvent.cs" />
     <Compile Include="Interfaces\Events\SplashCloseEvent.cs" />
     <Compile Include="Interfaces\Events\SplashMessageUpdatedEvent.cs" />

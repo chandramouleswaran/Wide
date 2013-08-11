@@ -22,6 +22,7 @@ using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
+using Wide.Shell;
 using CommandManager = Wide.Core.Services.CommandManager;
 using System.ComponentModel;
 
@@ -83,6 +84,7 @@ namespace Wide.Core
             _container.RegisterType<TextView>();
             _container.RegisterType<AllFileHandler>();
             _container.RegisterType<ThemeSettings>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<WindowPositionSettings>(new ContainerControlledLifetimeManager());
 
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
@@ -161,7 +163,20 @@ namespace Wide.Core
 
         private void LoadSettings()
         {
+            //Resolve to get the last used theme from the settings
             _container.Resolve<ThemeSettings>();
+            
+            //Set the position of the window based on previous session values
+            WindowPositionSettings position = _container.Resolve<WindowPositionSettings>();
+            ShellViewMetro metro = _container.Resolve<IShell>() as ShellViewMetro;
+            if(metro != null)
+            {
+                metro.Top = position.Top;
+                metro.Left = position.Left;
+                metro.Width = position.Width;
+                metro.Height = position.Height;
+                metro.WindowState = position.State;
+            }
         }
 
         #region Commands

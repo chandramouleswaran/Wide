@@ -7,51 +7,17 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-namespace Wide.Interfaces
+
+using System.Windows;
+using Microsoft.Practices.Prism.Events;
+using Wide.Interfaces.Services;
+
+namespace Wide.Interfaces.Events
 {
     /// <summary>
-    /// Interface IShell
+    /// Class LogEvent - This event is used when a logging operation happens.
     /// </summary>
-    public interface IShell
+    public class WindowClosingEvent : CompositePresentationEvent<Window>
     {
-        /// <summary>
-        /// Shows this instance of the shell
-        /// </summary>
-        void Show();
-
-        /// <summary>
-        /// Loads the layout of the shell from previous run.
-        /// </summary>
-        void LoadLayout();
-        
-        /// <summary>
-        /// Saves the layout of the shell.
-        /// </summary>
-        void SaveLayout();
-
-
-        /// <summary>
-        /// Gets the top.
-        /// </summary>
-        /// <value>The top.</value>
-        double Top { get; }
-        
-        /// <summary>
-        /// Gets the left.
-        /// </summary>
-        /// <value>The left.</value>
-        double Left { get; }
-
-        /// <summary>
-        /// Gets the width.
-        /// </summary>
-        /// <value>The width.</value>
-        double Width { get; }
-
-        /// <summary>
-        /// Gets the height.
-        /// </summary>
-        /// <value>The height.</value>
-        double Height { get; }
     }
 }
