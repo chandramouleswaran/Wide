@@ -22,7 +22,7 @@ namespace Wide.Shell
     /// <summary>
     /// Interaction logic for Shell.xaml
     /// </summary>
-    public partial class ShellView : IShell
+    internal partial class ShellView : IShell
     {
         private readonly IUnityContainer _container;
 

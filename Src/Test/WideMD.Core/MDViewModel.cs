@@ -19,9 +19,6 @@ namespace WideMD.Core
 {
     internal class MDViewModel : TextViewModel
     {
-        private ContentModel _model;
-        private UserControl _view;
-
         public MDViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger)
             : base(workspace, commandManager, logger)
         {

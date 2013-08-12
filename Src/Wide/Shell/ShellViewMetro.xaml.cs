@@ -25,7 +25,7 @@ namespace Wide.Shell
     /// <summary>
     /// Interaction logic for Shell.xaml
     /// </summary>
-    public partial class ShellViewMetro : IShell
+    internal partial class ShellViewMetro : IShell
     {
         private readonly IUnityContainer _container;
         private IEventAggregator _eventAggregator;
@@ -113,7 +113,9 @@ namespace Wide.Shell
             if (!workspace.Closing(e))
             {
                 e.Cancel = true;
+                return;
             }
+            _eventAggregator.GetEvent<WindowClosingEvent>().Publish(this);
         }
 
         private void dockManager_ActiveContentChanged(object sender, EventArgs e)

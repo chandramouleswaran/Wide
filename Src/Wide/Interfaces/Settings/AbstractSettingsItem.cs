@@ -7,28 +7,27 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-using System;
-using System.Collections.ObjectModel;
+
 using System.ComponentModel;
 using System.Windows.Controls;
-using Wide.Interfaces;
-using Wide.Interfaces.Utils;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 
-namespace Wide.Settings
+namespace Wide.Interfaces.Settings
 {
     /// <summary>
     /// Class AbstractSettings
     /// </summary>
-    public abstract class AbstractSettings : AbstractPrioritizedTree<AbstractSettings>, ICloneable
+    public abstract class AbstractSettingsItem : AbstractPrioritizedTree<AbstractSettingsItem>
     {
         #region CTOR
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractSettings"/> class.
         /// </summary>
-        protected AbstractSettings() : base()
+        protected AbstractSettingsItem(string title, AbstractSettings settings) : base()
         {
-            Reset();
+            this.Title = title;
+            this.Key = title;
+            this._appSettings = settings;
         }
         #endregion
 
@@ -49,21 +48,22 @@ namespace Wide.Settings
         {
             get
             {
-                var c = new ContentControl();
-                var propertyGrid = new PropertyGrid {ShowSearchBox = false, SelectedObject = this};
-                c.Content = propertyGrid;
-                return c;
+                if (_appSettings != null)
+                {
+                    var p = ContentControl.Content as PropertyGrid;
+                    p.SelectedObject = _appSettings;
+                    p.SelectedObjectName = "";
+                    p.SelectedObjectTypeName = this.Title;
+                    return ContentControl;
+                }
+                if(Children.Count > 0)
+                {
+                    return Children[0].View;
+                }
+                return null;
             }
         }
-        #endregion
-
-        #region ICloneable Members
-        /// <summary>
-        /// Creates a new object that is a copy of the current instance. All implementation of settings needs to provide this clone.
-        /// </summary>
-        /// <returns>A new object that is a copy of this instance.</returns>
-        public abstract object Clone();
-        #endregion
+        #endregion        
 
         #region Methods
         /// <summary>
@@ -71,13 +71,14 @@ namespace Wide.Settings
         /// </summary>
         public virtual void Reset()
         {
-            // Iterate through each property and call ResetValue()
-            foreach (PropertyDescriptor property in TypeDescriptor.GetProperties(this))
-                property.ResetValue(this);
-
-            foreach (AbstractSettings settings in Children)
+            foreach (AbstractSettingsItem settings in Children)
             {
                 settings.Reset();
+            }
+            if (_appSettings != null)
+            {
+                //The app settings should use reload. Reset with set it to "defaults" whereas we need to read from the settings file instead of loading defaults.
+                _appSettings.Reload();
             }
         }
 
@@ -86,27 +87,30 @@ namespace Wide.Settings
         /// </summary>
         public virtual void Save()
         {
-            foreach (AbstractSettings settings in Children)
+            foreach (AbstractSettingsItem settings in Children)
             {
                 settings.Save();
             }
+            if(_appSettings != null)
+            {
+                _appSettings.Save();
+            }
         }
+        #endregion
 
-        /// <summary>
-        /// Loads this settings.
-        /// </summary>
-        public abstract void Load();
+        #region Static
+        //Singleton which can be reused
+        private static readonly ContentControl ContentControl = new ContentControl()
+                                                            {
+                                                                Content =
+                                                                    new PropertyGrid
+                                                                        {ShowSearchBox = false}
+                                                            };
 
-        /// <summary>
-        /// Creates a clone of the children.
-        /// </summary>
-        /// <returns>ObservableCollection{AbstractSettings}.</returns>
-        protected ObservableCollection<AbstractSettings> ChildClone()
-        {
-            ObservableCollection<AbstractSettings> newChildren =
-                Children.Clone().ToObservableCollection();
-            return newChildren;
-        }
+        #endregion
+
+        #region Members
+        protected AbstractSettings _appSettings;
         #endregion
     }
 }

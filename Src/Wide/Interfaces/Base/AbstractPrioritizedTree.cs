@@ -7,6 +7,7 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,7 +20,7 @@ namespace Wide.Interfaces
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class AbstractPrioritizedTree<T> : ViewModelBase, IPrioritizedTree<T>
-        where T : IPrioritizedTree<T>
+        where T : AbstractPrioritizedTree<T>
     {
         /// <summary>
         /// The children of this tree node
@@ -40,26 +41,31 @@ namespace Wide.Interfaces
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
-        public virtual bool Add(T item)
+        public virtual string Add(T item)
         {
             _children.Add(item);
+            item.GuidString = Guid.NewGuid().ToString();
             RaisePropertyChanged("Children");
-            return true;
+            return item.GuidString;
         }
 
         /// <summary>
         /// Removes the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
+        /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        public virtual bool Remove(string key)
+        public virtual bool Remove(string key, string GuidString)
         {
             IEnumerable<T> items = _children.Where(f => f.Key == key);
             if (items.Any())
             {
-                _children.Remove(items.ElementAt(0));
-                RaisePropertyChanged("Children");
-                return true;
+                if (items.ElementAt(0).GuidString == GuidString)
+                {
+                    _children.Remove(items.ElementAt(0));
+                    RaisePropertyChanged("Children");
+                    return true;
+                }
             }
             return false;
         }
@@ -108,6 +114,8 @@ namespace Wide.Interfaces
         /// <value>The key.</value>
         [Browsable(false)]
         public virtual string Key { get; protected set; }
+
+        protected string GuidString { get; set; }
         #endregion
     }
 }

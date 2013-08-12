@@ -7,51 +7,45 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-namespace Wide.Interfaces
+
+using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
+using Wide.Interfaces.Settings;
+
+namespace Wide.Core.Settings
 {
     /// <summary>
-    /// Interface IShell
+    /// Class WideSettingsManager
     /// </summary>
-    public interface IShell
+    internal class SettingsManager : AbstractSettingsItem, ISettingsManager
     {
         /// <summary>
-        /// Shows this instance of the shell
+        /// Initializes a new instance of the <see cref="WideSettingsManager"/> class.
         /// </summary>
-        void Show();
+        public SettingsManager() : base("", null)
+        {
+            SettingsCommand = new DelegateCommand(OpenSettings);
+        }
 
         /// <summary>
-        /// Loads the layout of the shell from previous run.
+        /// Gets the settings menu.
         /// </summary>
-        void LoadLayout();
-        
-        /// <summary>
-        /// Saves the layout of the shell.
-        /// </summary>
-        void SaveLayout();
+        /// <value>The settings menu.</value>
+        public ICommand SettingsCommand { get; private set; }
 
-
-        /// <summary>
-        /// Gets the top.
-        /// </summary>
-        /// <value>The top.</value>
-        double Top { get; }
-        
-        /// <summary>
-        /// Gets the left.
-        /// </summary>
-        /// <value>The left.</value>
-        double Left { get; }
-
-        /// <summary>
-        /// Gets the width.
-        /// </summary>
-        /// <value>The width.</value>
-        double Width { get; }
-
-        /// <summary>
-        /// Gets the height.
-        /// </summary>
-        /// <value>The height.</value>
-        double Height { get; }
+        private void OpenSettings()
+        {
+            SettingsWindow window = new SettingsWindow();
+            window.DataContext = this;
+            bool? result = window.ShowDialog();
+            if(result == true)
+            {
+                this.Save();
+            }
+            else
+            {
+                this.Reset();
+            }
+        }
     }
 }

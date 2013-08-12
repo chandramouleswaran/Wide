@@ -15,7 +15,7 @@ namespace Wide.Interfaces
     /// Interface IPrioritizedTree
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IPrioritizedTree<T>
+    internal interface IPrioritizedTree<T>
     {
         /// <summary>
         /// Gets the children.
@@ -39,15 +39,16 @@ namespace Wide.Interfaces
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
-        bool Add(T item);
+        /// <returns>A GUID string for the menu</returns>
+        string Add(T item);
         
         /// <summary>
         /// Removes the specified key.
         /// </summary>
         /// <param name="key">The key.</param>
+        /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        bool Remove(string key);
+        bool Remove(string key, string GuidString);
 
         /// <summary>
         /// Gets the specified node in the tree with this key.

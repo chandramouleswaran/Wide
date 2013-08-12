@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wide</RootNamespace>
     <AssemblyName>Wide</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit">
@@ -58,7 +60,13 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libs\System.Windows.Interactivity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,13 +78,12 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\..\Libs\WPFToolkit.Extended.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Xceed.Wpf.AvalonDock">
       <HintPath>..\..\Libs\Xceed.Wpf.AvalonDock.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\Libs\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +96,8 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Core\Settings\WindowPositionSettings.cs" />
+    <Compile Include="Core\Settings\ThemeSettings.cs" />
     <Compile Include="Core\TextDocument\TextModel.cs" />
     <Compile Include="Core\TextDocument\TextView.xaml.cs">
       <DependentUpon>TextView.xaml</DependentUpon>
@@ -103,6 +112,7 @@
     <Compile Include="Interfaces\Controls\ToolbarViewModel.cs" />
     <Compile Include="Interfaces\Converters\CommandVisibilityConverter.cs" />
     <Compile Include="Interfaces\Events\ActiveContentChangedEvent.cs" />
+    <Compile Include="Interfaces\Events\WindowClosingEvent.cs" />
     <Compile Include="Interfaces\Events\LogEvent.cs" />
     <Compile Include="Interfaces\Events\SplashCloseEvent.cs" />
     <Compile Include="Interfaces\Events\SplashMessageUpdatedEvent.cs" />
@@ -121,6 +131,7 @@
     <Compile Include="Interfaces\Services\IOpenFileService.cs" />
     <Compile Include="Interfaces\IShell.cs" />
     <Compile Include="Interfaces\IWorkspace.cs" />
+    <Compile Include="Interfaces\Settings\ISettingsManager.cs" />
     <Compile Include="Interfaces\ToolModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -146,8 +157,12 @@
     <Compile Include="Interfaces\ToolViewModel.cs" />
     <Compile Include="Interfaces\Utils\ListExtensions.cs" />
     <Compile Include="Interfaces\ViewModelBase.cs" />
-    <Compile Include="Settings\AbstractSettings.cs" />
-    <Compile Include="Settings\SettingsManager.cs" />
+    <Compile Include="Interfaces\Settings\AbstractSettings.cs" />
+    <Compile Include="Interfaces\Settings\AbstractSettingsItem.cs" />
+    <Compile Include="Core\Settings\SettingsManager.cs" />
+    <Compile Include="Core\Settings\SettingsWindow.xaml.cs">
+      <DependentUpon>SettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\ActiveDocumentConverter.cs" />
     <Compile Include="Shell\LayoutInitializer.cs" />
     <Compile Include="Shell\PanesStyleSelector.cs" />
@@ -235,6 +250,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Core\Settings\SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell\ShellView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -260,7 +279,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Utils\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

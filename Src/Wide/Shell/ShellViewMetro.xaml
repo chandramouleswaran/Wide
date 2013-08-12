@@ -1,8 +1,13 @@
-﻿<Controls:MetroWindow x:Class="Wide.Shell.ShellViewMetro"
+﻿<Controls:MetroWindow x:Class="Wide.Shell.ShellViewMetro" x:ClassModifier="internal"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-                      xmlns:local="clr-namespace:Wide.Shell" xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-                      TitleForeground="#FF717171" TitleCaps="False" Title="{Binding Title}" Icon="{Binding Icon}" Closing="Window_Closing_1">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                      xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+                      xmlns:local="clr-namespace:Wide.Shell" 
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                      xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+                      TitleForeground="#FF717171" TitleCaps="False" Title="{Binding Title}" Icon="{Binding Icon}" WindowTransitionsEnabled="False" 
+                      Closing="Window_Closing_1">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -37,8 +37,9 @@ namespace WideMD.Core
         private static void OnHtmlChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
         {
             WebBrowser webBrowser = dependencyObject as WebBrowser;
-            if (webBrowser != null && e.NewValue != "")
-                webBrowser.NavigateToString(e.NewValue as string);
+            string value = e.NewValue as string;
+            if (webBrowser != null && string.IsNullOrEmpty(value) == false)
+                webBrowser.NavigateToString(value);
         }
     }
 }

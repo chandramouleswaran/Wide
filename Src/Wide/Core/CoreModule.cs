@@ -16,10 +16,13 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Wide.Core.Services;
+using Wide.Core.Settings;
 using Wide.Core.TextDocument;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
+using Wide.Interfaces.Settings;
+using Wide.Shell;
 using CommandManager = Wide.Core.Services.CommandManager;
 using System.ComponentModel;
 
@@ -80,6 +83,8 @@ namespace Wide.Core
             _container.RegisterType<TextModel>();
             _container.RegisterType<TextView>();
             _container.RegisterType<AllFileHandler>();
+            _container.RegisterType<ThemeSettings>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<WindowPositionSettings>(new ContainerControlledLifetimeManager());
 
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
@@ -109,7 +114,10 @@ namespace Wide.Core
                                          new InjectionParameter(typeof (bool), false),
                                          new InjectionParameter(typeof (IUnityContainer), _container)));
 
+            _container.RegisterType<ISettingsManager, SettingsManager>(new ContainerControlledLifetimeManager());
+
             AppCommands();
+            LoadSettings();
 
             //Try resolving a workspace
             try
@@ -137,6 +145,7 @@ namespace Wide.Core
         }
 
         #endregion
+
         /// <summary>
         /// The AppCommands registered by the Core Module
         /// </summary>
@@ -150,6 +159,24 @@ namespace Wide.Core
 
             var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
             manager.RegisterCommand("NEW", newCommand);
+        }
+
+        private void LoadSettings()
+        {
+            //Resolve to get the last used theme from the settings
+            _container.Resolve<ThemeSettings>();
+            
+            //Set the position of the window based on previous session values
+            WindowPositionSettings position = _container.Resolve<WindowPositionSettings>();
+            ShellViewMetro metro = _container.Resolve<IShell>() as ShellViewMetro;
+            if(metro != null)
+            {
+                metro.Top = position.Top;
+                metro.Left = position.Left;
+                metro.Width = position.Width;
+                metro.Height = position.Height;
+                metro.WindowState = position.State;
+            }
         }
 
         #region Commands
