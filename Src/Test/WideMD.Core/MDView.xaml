@@ -6,7 +6,7 @@
              xmlns:Core="clr-namespace:WideMD.Core"
              xmlns:Settings="clr-namespace:WideMD.Core.Settings"
              mc:Ignorable="d" d:DesignHeight="300"
-             d:DesignWidth="300">
+             d:DesignWidth="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="200" />
@@ -21,6 +21,6 @@
                                FontFamily="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=FontFamily}"
                                FontSize="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=FontSize}"/>
         <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ResizeBehavior="PreviousAndNext" Width="5" Background="#FFBCBCBC" />
-        <WebBrowser Name="Browser" ScrollViewer.CanContentScroll="True" Core:BrowserBehavior.Html="{Binding HTMLResult, Mode=TwoWay}" Grid.Column="2" ScrollViewer.HorizontalScrollBarVisibility="Visible" />
+        <WebBrowser Name="Browser" Grid.Column="2" Core:BrowserBehavior.Html="{Binding HTMLResult, Mode=TwoWay}" />
     </Grid>
 </UserControl>
