@@ -34,6 +34,11 @@
         <SolidColorBrush Color="{DynamicResource GlowColor}" />
     </Controls:MetroWindow.GlowBrush>
 
+    <i:Interaction.Behaviors>
+        <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
+        <behaviours:GlowWindowBehavior />
+    </i:Interaction.Behaviors>
+
     <Border>
         <DockPanel>
             <!--Menu-->
