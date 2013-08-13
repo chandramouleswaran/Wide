@@ -224,12 +224,21 @@ namespace WideMD.Core
 
         private void ThemeChangeCommand(string s)
         {
-            var vm = _container.Resolve<AbstractMenuItem>();
             var manager = _container.Resolve<IThemeManager>();
-
+            var vm = _container.Resolve<AbstractMenuItem>();
             MenuItemViewModel mvm = vm.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
-            mvm.IsChecked = false;
-            manager.SetCurrent(s);
+
+            if (manager.CurrentTheme.Name != s)
+            {
+                if (mvm != null) 
+                    mvm.IsChecked = false;
+                manager.SetCurrent(s);
+            }
+            else
+            {
+                if (mvm != null) 
+                    mvm.IsChecked = true;
+            }
         }
 
         #endregion
