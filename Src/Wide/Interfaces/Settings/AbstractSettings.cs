@@ -70,12 +70,12 @@ namespace Wide.Interfaces.Settings
         [Browsable(false)]
         public string Error
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
 
         string IDataErrorInfo.this[string columnName]
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
         }
         #endregion
     }
