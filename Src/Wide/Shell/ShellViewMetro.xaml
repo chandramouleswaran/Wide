@@ -6,12 +6,14 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
+                      xmlns:Converter="clr-namespace:Wide.Interfaces.Converters"
                       TitleForeground="#FF717171" 
                       TitleCaps="False" 
                       Title="{Binding Title}" 
                       Icon="{Binding Icon}" 
                       WindowTransitionsEnabled="False" 
                       ResizeMode="CanResizeWithGrip"
+                      GlowBrush="{Binding ElementName=WideStatusBar, Path=Background}"
                       Closing="Window_Closing_1">
     <Window.Resources>
         <ResourceDictionary>
@@ -32,12 +34,11 @@
             </ResourceDictionary.MergedDictionaries>
             <avalonDock:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <local:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+            <Converter:NullObjectToVisibiltyConverter x:Key="nullToVisibilityConverter" />
+            <Converter:BoolToInsertModeConverter x:Key="booleanToInsertModeConverter" />
+            <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
-
-    <Controls:MetroWindow.GlowBrush>
-        <SolidColorBrush Color="{DynamicResource GlowColor}" />
-    </Controls:MetroWindow.GlowBrush>
 
     <i:Interaction.Behaviors>
         <behaviours:BorderlessWindowBehavior ResizeWithGrip="True" AllowsTransparency="False" />
@@ -52,26 +53,58 @@
             <!--Toolbar (can we improve this?)-->
             <ContentControl Content="{Binding ToolBarTray}" DockPanel.Dock="Top" />
             <!--Status bar-->
-            <StatusBar DockPanel.Dock="Bottom" Background="{DynamicResource WindowTitleColorBrush}">
+            <StatusBar x:Name="WideStatusBar" DockPanel.Dock="Bottom" Background="{Binding Path=StatusBar.Background}">
                 <StatusBar.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="25" />
-                            </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="Auto" MaxWidth="100" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="30" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                         </Grid>
                     </ItemsPanelTemplate>
                 </StatusBar.ItemsPanel>
+                <!--Status message-->
                 <StatusBarItem>
-                    <TextBlock x:Name="StatusBarText" Foreground="{DynamicResource BlackBrush}">Ready</TextBlock>
+                    <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=StatusBar.Text, UpdateSourceTrigger=PropertyChanged}" />
                 </StatusBarItem>
-                <StatusBarItem Grid.Column="2">
-                    <TextBlock Foreground="{DynamicResource BlackBrush}">Testing</TextBlock>
+                <!--Progress bar-->
+                <StatusBarItem Grid.Column="1" HorizontalContentAlignment="Stretch" Visibility="{Binding Path=StatusBar.ShowProgressBar, Converter={StaticResource ResourceKey=booleanToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <ProgressBar Width="Auto" Maximum="{Binding Path=StatusBar.ProgressMaximum, UpdateSourceTrigger=PropertyChanged}" Value="{Binding Path=StatusBar.ProgressValue, UpdateSourceTrigger=PropertyChanged}" />
+                </StatusBarItem>
+                <!--Icon animation-->
+                <StatusBarItem Grid.Column="2" Visibility="{Binding Path=StatusBar.AnimationImage, Converter={StaticResource ResourceKey=nullToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <ContentControl Content="{Binding Path=StatusBar.AnimationImage, UpdateSourceTrigger=PropertyChanged}" />
+                </StatusBarItem>
+                <!--Line number-->
+                <StatusBarItem Grid.Column="3" Visibility="{Binding Path=StatusBar.LineNumber, Converter={StaticResource ResourceKey=nullToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="Ln " />
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=StatusBar.LineNumber, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StatusBarItem>
+                <!--Column number-->
+                <StatusBarItem Grid.Column="4" Visibility="{Binding Path=StatusBar.ColPosition, Converter={StaticResource ResourceKey=nullToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="Col " />
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=StatusBar.ColPosition}" />
+                    </StackPanel>
+                </StatusBarItem>
+                <!--Character number-->
+                <StatusBarItem Grid.Column="5" Visibility="{Binding Path=StatusBar.CharPosition, Converter={StaticResource ResourceKey=nullToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="Ch " />
+                        <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=StatusBar.CharPosition, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </StatusBarItem>
+                <!--Insert-->
+                <StatusBarItem Grid.Column="6" HorizontalAlignment="Right" Visibility="{Binding Path=StatusBar.InsertMode, Converter={StaticResource ResourceKey=nullToVisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBlock Foreground="{Binding Path=StatusBar.Foreground, UpdateSourceTrigger=PropertyChanged}" Text="{Binding Path=StatusBar.InsertMode, Converter={StaticResource ResourceKey=booleanToInsertModeConverter}, UpdateSourceTrigger=PropertyChanged}" />
                 </StatusBarItem>
             </StatusBar>
             

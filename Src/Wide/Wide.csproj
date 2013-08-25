@@ -62,6 +62,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libs\System.Windows.Interactivity.dll</HintPath>
@@ -109,7 +110,9 @@
     <Compile Include="Interfaces\Base\AbstractPrioritizedTree.cs" />
     <Compile Include="Interfaces\Base\IPrioritizedTree.cs" />
     <Compile Include="Interfaces\Controls\AbstractCommandable.cs" />
-    <Compile Include="Interfaces\Controls\AbstractStatusbar.cs" />
+    <Compile Include="Interfaces\Controls\WideStatusbar.cs" />
+    <Compile Include="Interfaces\Converters\BoolToInsertModeConverter.cs" />
+    <Compile Include="Interfaces\Converters\NullObjectToVisibiltyConverter.cs" />
     <Compile Include="Interfaces\Services\IMenuService.cs" />
     <Compile Include="Interfaces\Services\IStatusbarService.cs" />
     <Compile Include="Interfaces\Controls\ToolBarItemTemplateSelector.cs" />

@@ -18,6 +18,5 @@ namespace Wide.Interfaces.Services
         int? CharPosition { get; set; }
         int? ColPosition { get; set; }
         bool Progress(bool On, uint current, uint total);
-        bool Analysis(Image image, string text, ICommand command);
     }
 }

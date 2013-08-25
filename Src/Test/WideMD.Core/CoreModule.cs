@@ -63,6 +63,7 @@ namespace WideMD.Core
         {
             _container.RegisterType<MDHandler>();
             _container.RegisterType<MDViewModel>();
+            _container.RegisterType<MDView>();
 
             IContentHandler handler = _container.Resolve<MDHandler>();
             _container.Resolve<IContentHandlerRegistry>().Register(handler);
