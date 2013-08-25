@@ -109,6 +109,9 @@
     <Compile Include="Interfaces\Base\AbstractPrioritizedTree.cs" />
     <Compile Include="Interfaces\Base\IPrioritizedTree.cs" />
     <Compile Include="Interfaces\Controls\AbstractCommandable.cs" />
+    <Compile Include="Interfaces\Controls\AbstractStatusbar.cs" />
+    <Compile Include="Interfaces\Controls\IMenuService.cs" />
+    <Compile Include="Interfaces\Controls\IStatusbar.cs" />
     <Compile Include="Interfaces\Controls\ToolBarItemTemplateSelector.cs" />
     <Compile Include="Interfaces\Controls\ToolbarViewModel.cs" />
     <Compile Include="Interfaces\Converters\CommandVisibilityConverter.cs" />

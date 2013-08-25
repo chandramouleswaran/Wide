@@ -103,15 +103,15 @@ namespace WideMD.Core
             _eventAggregator.GetEvent<SplashMessageUpdateEvent>().Publish(new SplashMessageUpdateEvent
                                                                               {Message = "Menus.."});
             var manager = _container.Resolve<ICommandManager>();
-            var vm = _container.Resolve<AbstractMenuItem>();
-            var sm = _container.Resolve<ISettingsManager>();
+            var menuService = _container.Resolve<IMenuService>();
+            var settingsManager = _container.Resolve<ISettingsManager>();
             var themeSettings = _container.Resolve<ThemeSettings>();
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");
 
-            vm.Add(new MenuItemViewModel("_File", 1));
+            menuService.Add(new MenuItemViewModel("_File", 1));
 
-            vm.Get("_File").Add(
+            menuService.Get("_File").Add(
                 (new MenuItemViewModel("_New", 3,
                                        new BitmapImage(
                                            new Uri(
@@ -119,73 +119,73 @@ namespace WideMD.Core
                                        manager.GetCommand("NEW"),
                                        new KeyGesture(Key.N, ModifierKeys.Control, "Ctrl + N"))));
 
-            vm.Get("_File").Add(
+            menuService.Get("_File").Add(
                 (new MenuItemViewModel("_Open", 4,
                                        new BitmapImage(
                                            new Uri(
                                                @"pack://application:,,,/WideMD.Core;component/Icons/OpenFileDialog_692.png")),
                                        manager.GetCommand("OPEN"),
                                        new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
-            vm.Get("_File").Add(new MenuItemViewModel("_Save", 5,
+            menuService.Get("_File").Add(new MenuItemViewModel("_Save", 5,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Save_6530.png")),
                                                       manager.GetCommand("SAVE"),
                                                       new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl + S")));
-            vm.Get("_File").Add(new MenuItemViewModel("Close", 8, null, manager.GetCommand("CLOSE"),
+            menuService.Get("_File").Add(new MenuItemViewModel("Close", 8, null, manager.GetCommand("CLOSE"),
                                                       new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4")));
 
 
-            vm.Add(new MenuItemViewModel("_Edit", 2));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Undo", 1,
+            menuService.Add(new MenuItemViewModel("_Edit", 2));
+            menuService.Get("_Edit").Add(new MenuItemViewModel("_Undo", 1,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Undo_16x.png")),
                                                       ApplicationCommands.Undo));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Redo", 2,
+            menuService.Get("_Edit").Add(new MenuItemViewModel("_Redo", 2,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Redo_16x.png")),
                                                       ApplicationCommands.Redo));
-            vm.Get("_Edit").Add(MenuItemViewModel.Separator(15));
-            vm.Get("_Edit").Add(new MenuItemViewModel("Cut", 20,
+            menuService.Get("_Edit").Add(MenuItemViewModel.Separator(15));
+            menuService.Get("_Edit").Add(new MenuItemViewModel("Cut", 20,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Cut_6523.png")),
                                                       ApplicationCommands.Cut));
-            vm.Get("_Edit").Add(new MenuItemViewModel("Copy", 21,
+            menuService.Get("_Edit").Add(new MenuItemViewModel("Copy", 21,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Copy_6524.png")),
                                                       ApplicationCommands.Copy));
-            vm.Get("_Edit").Add(new MenuItemViewModel("_Paste", 22,
+            menuService.Get("_Edit").Add(new MenuItemViewModel("_Paste", 22,
                                                       new BitmapImage(
                                                           new Uri(
                                                               @"pack://application:,,,/WideMD.Core;component/Icons/Paste_6520.png")),
                                                       ApplicationCommands.Paste));
 
-            vm.Add(new MenuItemViewModel("_View", 3));
+            menuService.Add(new MenuItemViewModel("_View", 3));
 
             if (logger != null)
-                vm.Get("_View").Add(new MenuItemViewModel("_Logger", 1,
+                menuService.Get("_View").Add(new MenuItemViewModel("_Logger", 1,
                                                           new BitmapImage(
                                                               new Uri(
                                                                   @"pack://application:,,,/WideMD.Core;component/Icons/Undo_16x.png")),
                                                           manager.GetCommand("LOGSHOW"))
                                         {IsCheckable = true, IsChecked = logger.IsVisible});
 
-            vm.Get("_View").Add(new MenuItemViewModel("Themes", 1));
+            menuService.Get("_View").Add(new MenuItemViewModel("Themes", 1));
 
             //Set the checkmark of the theme menu's based on which is currently selected
-            vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Dark", 1, null, manager.GetCommand("THEMECHANGE"))
+            menuService.Get("_View").Get("Themes").Add(new MenuItemViewModel("Dark", 1, null, manager.GetCommand("THEMECHANGE"))
                                                   {IsCheckable = true, IsChecked = (themeSettings.SelectedTheme == "Dark"), CommandParameter = "Dark"});
-            vm.Get("_View").Get("Themes").Add(new MenuItemViewModel("Light", 2, null, manager.GetCommand("THEMECHANGE"))
+            menuService.Get("_View").Get("Themes").Add(new MenuItemViewModel("Light", 2, null, manager.GetCommand("THEMECHANGE"))
                                                   {IsCheckable = true, IsChecked = (themeSettings.SelectedTheme == "Light"), CommandParameter = "Light"});
 
-            vm.Add(new MenuItemViewModel("_Tools", 4));
-            vm.Get("_Tools").Add(new MenuItemViewModel("Settings", 1, null, sm.SettingsCommand));
+            menuService.Add(new MenuItemViewModel("_Tools", 4));
+            menuService.Get("_Tools").Add(new MenuItemViewModel("Settings", 1, null, settingsManager.SettingsCommand));
 
-            vm.Add(new MenuItemViewModel("_Help", 4));
+            menuService.Add(new MenuItemViewModel("_Help", 4));
         }
 
         #region Commands
@@ -225,8 +225,8 @@ namespace WideMD.Core
         private void ThemeChangeCommand(string s)
         {
             var manager = _container.Resolve<IThemeManager>();
-            var vm = _container.Resolve<AbstractMenuItem>();
-            MenuItemViewModel mvm = vm.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
+            var menuService = _container.Resolve<IMenuService>();
+            MenuItemViewModel mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
 
             if (manager.CurrentTheme.Name != s)
             {
@@ -248,12 +248,12 @@ namespace WideMD.Core
         private void ToggleLogger()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
-            var vm = _container.Resolve<AbstractMenuItem>();
+            var menuService = _container.Resolve<IMenuService>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");
             if (logger != null)
             {
                 logger.IsVisible = !logger.IsVisible;
-                var mi = vm.Get("_View").Get("_Logger") as AbstractMenuItem;
+                var mi = menuService.Get("_View").Get("_Logger") as AbstractMenuItem;
                 mi.IsChecked = logger.IsVisible;
             }
         }

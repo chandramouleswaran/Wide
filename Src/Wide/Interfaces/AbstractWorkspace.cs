@@ -64,7 +64,7 @@ namespace Wide.Interfaces
             _container = container;
             _docs = new ObservableCollection<ContentViewModel>();
             _tools = new ObservableCollection<ToolViewModel>();
-            _menus = _container.Resolve<AbstractMenuItem>() as MenuItemViewModel;
+            _menus = _container.Resolve<IMenuService>() as MenuItemViewModel;
             _menus.PropertyChanged += _menus_PropertyChanged;
             _toolbarService = _container.Resolve<IToolbarService>();
             _commandManager = _container.Resolve<ICommandManager>();

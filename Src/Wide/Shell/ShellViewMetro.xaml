@@ -6,7 +6,12 @@
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
-                      TitleForeground="#FF717171" TitleCaps="False" Title="{Binding Title}" Icon="{Binding Icon}" WindowTransitionsEnabled="False" 
+                      TitleForeground="#FF717171" 
+                      TitleCaps="False" 
+                      Title="{Binding Title}" 
+                      Icon="{Binding Icon}" 
+                      WindowTransitionsEnabled="False" 
+                      ResizeMode="CanResizeWithGrip"
                       Closing="Window_Closing_1">
     <Window.Resources>
         <ResourceDictionary>
@@ -73,7 +78,8 @@
             <!--The magical avalon dock-->
             <avalonDock:DockingManager x:Name="dockManager" AnchorablesSource="{Binding Tools}"
                                        DocumentsSource="{Binding Documents}"
-                                       ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}" ActiveContentChanged="dockManager_ActiveContentChanged">
+                                       ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}" 
+                                       ActiveContentChanged="dockManager_ActiveContentChanged">
                 <!--<avalonDock:DockingManager.Theme>
                     <avalonDock:VS2012Theme />
                 </avalonDock:DockingManager.Theme>-->

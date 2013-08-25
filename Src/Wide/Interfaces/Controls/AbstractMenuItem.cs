@@ -18,7 +18,7 @@ namespace Wide.Interfaces
     /// <summary>
     /// Class AbstractMenuItem - representation of a Menu
     /// </summary>
-    public abstract class AbstractMenuItem : AbstractCommandable
+    public abstract class AbstractMenuItem : AbstractCommandable, IMenuService
     {
         #region Static
 
