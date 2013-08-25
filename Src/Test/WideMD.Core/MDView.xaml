@@ -13,13 +13,14 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" MinWidth="200" />
         </Grid.ColumnDefinitions>
+
         <avalonedit:TextEditor Grid.Column="0" Name="textEditor" Document="{Binding Document}" TextChanged="textEditor_TextChanged" 
                                Background="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=BackgroundColor}" 
                                Foreground="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=ForegroundColor}"
                                ShowLineNumbers="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=ShowLineNumbers}"
                                WordWrap="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=WordWrap}"
                                FontFamily="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=FontFamily}"
-                               FontSize="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=FontSize}"/>
+                               FontSize="{Binding Source={x:Static Settings:EditorOptions.Default}, Path=FontSize}" />
         <GridSplitter HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Column="1" ResizeBehavior="PreviousAndNext" Width="5" Background="#FFBCBCBC" />
         <WebBrowser Name="Browser" Grid.Column="2" Core:BrowserBehavior.Html="{Binding HTMLResult, Mode=TwoWay}" />
     </Grid>

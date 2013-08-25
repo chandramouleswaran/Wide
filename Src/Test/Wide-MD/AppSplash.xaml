@@ -28,16 +28,25 @@
         </Border>
 
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontSize="30"
-                   FontWeight="Bold" Margin="0,30,0,0" Text="My application title" Foreground="#FF007ACC">
+                   FontWeight="Bold" Margin="0,30,0,0" Text="Wide-MD" Foreground="#FF007ACC">
             <TextBlock.Effect>
                 <DropShadowEffect Opacity="0.7" ShadowDepth="4" />
             </TextBlock.Effect>
         </TextBlock>
 
-        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Status}" Foreground="White">
+        <TextBlock Grid.Row="2" x:Name="templateTextBlock" Grid.Column="1" Text="{Binding Status, NotifyOnTargetUpdated=True}" Foreground="White" ScrollViewer.CanContentScroll="True">
             <TextBlock.Effect>
                 <DropShadowEffect ShadowDepth="1" Color="#99ffffff" />
             </TextBlock.Effect>
+            <!--<TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Binding.TargetUpdated">
+                    <BeginStoryboard>
+                        <Storyboard AutoReverse="True">
+                            <DoubleAnimation Storyboard.TargetName="templateTextBlock" Storyboard.TargetProperty="Opacity" To=".1" Duration="0:0:.6" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>-->
         </TextBlock>
 
         <ProgressBar IsIndeterminate="True" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Height="6" />

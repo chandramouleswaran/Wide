@@ -88,11 +88,11 @@ namespace Wide.Core
 
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(
-                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IStatusbarService, WideStatusbar>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IToolbarService, ToolbarService>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<AbstractMenuItem, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
+            _container.RegisterType<IMenuService, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
                                                                          new InjectionConstructor(
                                                                              new InjectionParameter(typeof (string),
                                                                                                     "$MAIN$"),
@@ -154,7 +154,7 @@ namespace Wide.Core
             var manager = _container.Resolve<ICommandManager>();
 
             //TODO: Check if you can hook up to the Workspace.ActiveDocument.CloseCommand
-            var closeCommand = new DelegateCommand<CancelEventArgs>(CloseDocument, CanExecuteCloseDocument);
+            var closeCommand = new DelegateCommand<object>(CloseDocument, CanExecuteCloseDocument);
             manager.RegisterCommand("CLOSE", closeCommand);
 
             var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
@@ -183,10 +183,14 @@ namespace Wide.Core
         /// <summary>
         /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
         /// </summary>
-        /// <param name="e">The <see cref="CancelEventArgs"/> instance containing the event data.</param>
+        /// <param name="obj">The obj.</param>
         /// <returns><c>true</c> if this instance can execute close document; otherwise, <c>false</c>.</returns>
-        private bool CanExecuteCloseDocument(CancelEventArgs e)
+        private bool CanExecuteCloseDocument(object obj)
         {
+            ContentViewModel vm = obj as ContentViewModel;
+            if (vm != null)
+                return true;
+
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             return workspace.ActiveDocument != null;
         }
@@ -194,14 +198,20 @@ namespace Wide.Core
         /// <summary>
         /// CloseDocument method that gets called when the Close command gets executed.
         /// </summary>
-        private void CloseDocument(CancelEventArgs e)
+        private void CloseDocument(object obj)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ILoggerService logger = _container.Resolve<ILoggerService>();
-            if (workspace.ActiveDocument.Model.IsDirty)
+            CancelEventArgs e = obj as CancelEventArgs;
+            ContentViewModel activeDocument = obj as ContentViewModel;
+
+            if (activeDocument == null)
+                activeDocument = workspace.ActiveDocument;
+
+            if (activeDocument.Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", workspace.ActiveDocument.Title), "Are you sure?", MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", activeDocument.Title), "Are you sure?", MessageBoxButton.YesNoCancel);
 
                 //Pressed Yes
                 if (res == MessageBoxResult.Yes)
@@ -234,16 +244,16 @@ namespace Wide.Core
 
             if (e == null)
             {
-                logger.Log("Closing document " + workspace.ActiveDocument.Model.Location, LogCategory.Info, LogPriority.None);
-                workspace.Documents.Remove(workspace.ActiveDocument);
+                logger.Log("Closing document " + activeDocument.Model.Location, LogCategory.Info, LogPriority.None);
+                workspace.Documents.Remove(activeDocument);
             }
             else
             {
                 // If the location is not there - then we can remove it.
                 // This can happen when on clicking "No" in the popup and we still want to quit
-                if (workspace.ActiveDocument.Model.Location == null)
+                if (activeDocument.Model.Location == null)
                 {
-                    workspace.Documents.Remove(workspace.ActiveDocument);
+                    workspace.Documents.Remove(activeDocument);
                 }
             }
         }

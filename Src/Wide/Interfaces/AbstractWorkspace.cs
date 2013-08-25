@@ -48,10 +48,16 @@ namespace Wide.Interfaces
         /// The toolbar service
         /// </summary>
         protected IToolbarService _toolbarService;
+
+        /// <summary>
+        /// The status bar service
+        /// </summary>
+        protected IStatusbarService _statusbarService; 
+
         /// <summary>
         /// The list of tools
         /// </summary>
-        protected ObservableCollection<ToolViewModel> _tools = new ObservableCollection<ToolViewModel>(); 
+        protected ObservableCollection<ToolViewModel> _tools = new ObservableCollection<ToolViewModel>();
         #endregion
 
         #region CTOR
@@ -64,9 +70,10 @@ namespace Wide.Interfaces
             _container = container;
             _docs = new ObservableCollection<ContentViewModel>();
             _tools = new ObservableCollection<ToolViewModel>();
-            _menus = _container.Resolve<AbstractMenuItem>() as MenuItemViewModel;
+            _menus = _container.Resolve<IMenuService>() as MenuItemViewModel;
             _menus.PropertyChanged += _menus_PropertyChanged;
             _toolbarService = _container.Resolve<IToolbarService>();
+            _statusbarService = _container.Resolve<IStatusbarService>();
             _commandManager = _container.Resolve<ICommandManager>();
         }
         #endregion
@@ -88,6 +95,11 @@ namespace Wide.Interfaces
         public ToolBarTray ToolBarTray
         {
             get { return _toolbarService.ToolBarTray; }
+        }
+
+        public IStatusbarService StatusBar
+        {
+            get { return _statusbarService; }
         }
         #endregion
 
