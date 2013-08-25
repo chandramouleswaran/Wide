@@ -2,10 +2,11 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Wide.Interfaces.Services;
 
 namespace Wide.Interfaces
 {
-    internal class AbstractStatusbar : IStatusbar
+    internal class AbstractStatusbar : IStatusbarService
     {
         public bool Animation(Image image)
         {

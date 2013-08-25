@@ -2,9 +2,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Wide.Interfaces
+namespace Wide.Interfaces.Services
 {
-    public interface IStatusbar
+    public interface IStatusbarService
     {
         bool Animation(Image image);
         bool Clear();

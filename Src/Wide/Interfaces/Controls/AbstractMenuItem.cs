@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Practices.Unity;
+using Wide.Interfaces.Services;
 
 namespace Wide.Interfaces
 {

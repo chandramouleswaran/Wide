@@ -1,4 +1,4 @@
-namespace Wide.Interfaces
+namespace Wide.Interfaces.Services
 {
     public interface IMenuService
     {
