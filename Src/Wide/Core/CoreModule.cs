@@ -84,8 +84,8 @@ namespace Wide.Core
             _container.RegisterType<TextView>();
             _container.RegisterType<AllFileHandler>();
             _container.RegisterType<ThemeSettings>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IRecentViewSettings, RecentViewSettings>(new ContainerControlledLifetimeManager());
             _container.RegisterType<WindowPositionSettings>(new ContainerControlledLifetimeManager());
-
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(new ContainerControlledLifetimeManager());
@@ -202,6 +202,8 @@ namespace Wide.Core
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ILoggerService logger = _container.Resolve<ILoggerService>();
+            IMenuService menuService = _container.Resolve<IMenuService>();
+
             CancelEventArgs e = obj as CancelEventArgs;
             ContentViewModel activeDocument = obj as ContentViewModel;
 
@@ -246,6 +248,7 @@ namespace Wide.Core
             {
                 logger.Log("Closing document " + activeDocument.Model.Location, LogCategory.Info, LogPriority.None);
                 workspace.Documents.Remove(activeDocument);
+                menuService.Refresh();
             }
             else
             {

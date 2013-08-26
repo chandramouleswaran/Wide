@@ -98,6 +98,9 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Interfaces\Services\IRecentViewSettings.cs" />
+    <Compile Include="Core\Settings\RecentViewItem.cs" />
+    <Compile Include="Core\Settings\RecentViewSettings.cs" />
     <Compile Include="Core\Settings\WindowPositionSettings.cs" />
     <Compile Include="Core\Settings\ThemeSettings.cs" />
     <Compile Include="Core\TextDocument\TextModel.cs" />
@@ -162,7 +165,6 @@
     <Compile Include="Interfaces\Themes\VS2010.cs" />
     <Compile Include="Interfaces\Converters\PercentToFontSizeConverter.cs" />
     <Compile Include="Interfaces\ToolViewModel.cs" />
-    <Compile Include="Interfaces\Utils\ListExtensions.cs" />
     <Compile Include="Interfaces\ViewModelBase.cs" />
     <Compile Include="Interfaces\Settings\AbstractSettings.cs" />
     <Compile Include="Interfaces\Settings\AbstractSettingsItem.cs" />

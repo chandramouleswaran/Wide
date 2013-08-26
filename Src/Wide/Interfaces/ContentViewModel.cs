@@ -76,7 +76,7 @@ namespace Wide.Interfaces
             _workspace = workspace;
             _commandManager = commandManager;
             _logger = logger;
-            CloseCommand = new DelegateCommand(Close, CanClose);
+            CloseCommand = new DelegateCommand<object>(Close, CanClose);
         }
         #endregion
 
@@ -219,18 +219,27 @@ namespace Wide.Interfaces
         /// <summary>
         /// Determines whether this instance can close.
         /// </summary>
+        /// <param name="obj">The object.</param>
         /// <returns><c>true</c> if this instance can close; otherwise, <c>false</c>.</returns>
-        protected virtual bool CanClose()
+        protected virtual bool CanClose(object obj)
         {
-            return _commandManager.GetCommand("CLOSE").CanExecute(this);
+            return (obj != null) ?_commandManager.GetCommand("CLOSE").CanExecute(obj): _commandManager.GetCommand("CLOSE").CanExecute(this);
         }
 
         /// <summary>
         /// Closes this instance.
         /// </summary>
-        protected virtual void Close()
+        /// <param name="obj">The object.</param>
+        protected virtual void Close(object obj)
         {
-            _commandManager.GetCommand("CLOSE").Execute(this);
+            if (obj != null)
+            {
+                _commandManager.GetCommand("CLOSE").Execute(obj);
+            }
+            else
+            {
+                 _commandManager.GetCommand("CLOSE").Execute(this);
+            }
         }
         #endregion
     }

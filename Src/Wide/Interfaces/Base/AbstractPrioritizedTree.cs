@@ -52,20 +52,16 @@ namespace Wide.Interfaces
         /// <summary>
         /// Removes the specified key.
         /// </summary>
-        /// <param name="key">The key.</param>
         /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        public virtual bool Remove(string key, string GuidString)
+        public virtual bool Remove(string GuidString)
         {
-            IEnumerable<T> items = _children.Where(f => f.Key == key);
+            IEnumerable<T> items = _children.Where(f => f.GuidString == GuidString);
             if (items.Any())
             {
-                if (items.ElementAt(0).GuidString == GuidString)
-                {
-                    _children.Remove(items.ElementAt(0));
-                    RaisePropertyChanged("Children");
-                    return true;
-                }
+                _children.Remove(items.ElementAt(0));
+                RaisePropertyChanged("Children");
+                return true;
             }
             return false;
         }
@@ -102,14 +98,14 @@ namespace Wide.Interfaces
         }
 
         /// <summary>
-        /// Gets or sets the priority.
+        /// Gets the priority.
         /// </summary>
         /// <value>The priority.</value>
         [Browsable(false)]
         public virtual int Priority { get; protected set; }
 
         /// <summary>
-        /// Gets or sets the key.
+        /// Gets the key.
         /// </summary>
         /// <value>The key.</value>
         [Browsable(false)]

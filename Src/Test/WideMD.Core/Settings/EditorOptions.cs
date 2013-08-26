@@ -15,7 +15,7 @@ using Wide.Interfaces.Settings;
 
 namespace WideMD.Core.Settings
 {
-    public class EditorOptions : AbstractSettings
+    internal class EditorOptions : AbstractSettings
     {
         private static EditorOptions settings = new EditorOptions();
 

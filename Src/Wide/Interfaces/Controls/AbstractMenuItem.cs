@@ -129,6 +129,16 @@ namespace Wide.Interfaces
             }
             return base.Add(item);
         }
+
+        public void Refresh()
+        {
+            this.RaisePropertyChanged("Header");
+            this.RaisePropertyChanged("Children");
+            this.RaisePropertyChanged("Icon");
+            this.RaisePropertyChanged("ToolTip");
+            this.RaisePropertyChanged("IsVisible");
+        }
+
         #endregion
 
         #region CTOR

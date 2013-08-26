@@ -14,6 +14,12 @@ namespace Wide.Interfaces
     /// </summary>
     public interface IShell
     {
+
+        /// <summary>
+        /// Closes this instance of the shell.
+        /// </summary>
+        void Close();
+
         /// <summary>
         /// Shows this instance of the shell
         /// </summary>

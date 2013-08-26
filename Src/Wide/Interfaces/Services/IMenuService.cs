@@ -13,10 +13,9 @@ namespace Wide.Interfaces.Services
         /// <summary>
         /// Removes the specified key.
         /// </summary>
-        /// <param name="key">The key.</param>
         /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        bool Remove(string key, string GuidString);
+        bool Remove(string GuidString);
 
         /// <summary>
         /// Gets the node with the specified key.
@@ -24,5 +23,10 @@ namespace Wide.Interfaces.Services
         /// <param name="key">The key.</param>
         /// <returns>`0.</returns>
         AbstractCommandable Get(string key);
+
+        /// <summary>
+        /// Refreshes this instance.
+        /// </summary>
+        void Refresh();
     }
 }

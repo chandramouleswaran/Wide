@@ -7,38 +7,18 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+using System.Collections.Generic;
+using System.Xml.Serialization;
+using Wide.Core.Settings;
 
-using System.Windows.Input;
-
-namespace Wide.Interfaces.Settings
+namespace Wide.Interfaces.Services
 {
-    public interface ISettingsManager
+    public interface IRecentViewSettings
     {
-        /// <summary>
-        /// Gets the settings command.
-        /// </summary>
-        /// <value>The settings.</value>
-        ICommand SettingsCommand { get; }
+        [XmlIgnore]
+        AbstractMenuItem RecentMenu { get; }
 
-        /// <summary>
-        /// Adds the specified item.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns>The GUID for the item added which needs to be used to remove the item</returns>
-        string Add(AbstractSettingsItem item);
-
-        /// <summary>
-        /// Removes the specified key.
-        /// </summary>
-        /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
-        /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        bool Remove(string GuidString);
-
-        /// <summary>
-        /// Gets the node with the specified key.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns>`0.</returns>
-        AbstractSettingsItem Get(string key);
+        [XmlIgnore]
+        IReadOnlyList<RecentViewItem> RecentItems { get; }
     }
 }

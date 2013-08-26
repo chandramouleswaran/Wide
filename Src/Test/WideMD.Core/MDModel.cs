@@ -21,10 +21,11 @@ namespace WideMD.Core
     public class MDModel : TextModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="MDModel"/> class.
+        /// Initializes a new instance of the <see cref="MDModel" /> class.
         /// </summary>
         /// <param name="commandManager">The injected command manager.</param>
-        public MDModel(ICommandManager commandManager) : base(commandManager)
+        /// <param name="menuService">The menu service.</param>
+        public MDModel(ICommandManager commandManager, IMenuService menuService) : base(commandManager, menuService)
         {
         }
 

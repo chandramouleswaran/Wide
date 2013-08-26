@@ -68,7 +68,7 @@ namespace Wide.Interfaces.Settings
 
         #region IDataErrorInfo
         [Browsable(false)]
-        public string Error
+        public virtual string Error
         {
             get { return null; }
         }
