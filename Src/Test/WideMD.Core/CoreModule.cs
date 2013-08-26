@@ -86,8 +86,8 @@ namespace WideMD.Core
                                                                               {Message = "Commands.."});
             var manager = _container.Resolve<ICommandManager>();
 
-            //throw new NotImplementedException();
             var openCommand = new DelegateCommand(OpenModule);
+            var exitCommand = new DelegateCommand(CloseCommandExecute);
             var saveCommand = new DelegateCommand(SaveDocument, CanExecuteSaveDocument);
             var themeCommand = new DelegateCommand<string>(ThemeChangeCommand);
             var loggerCommand = new DelegateCommand(ToggleLogger);
@@ -95,8 +95,15 @@ namespace WideMD.Core
 
             manager.RegisterCommand("OPEN", openCommand);
             manager.RegisterCommand("SAVE", saveCommand);
+            manager.RegisterCommand("EXIT", exitCommand);
             manager.RegisterCommand("LOGSHOW", loggerCommand);
             manager.RegisterCommand("THEMECHANGE", themeCommand);
+        }
+
+        private void CloseCommandExecute()
+        {
+            IShell shell = _container.Resolve<IShell>();
+            shell.Close();
         }
 
         private void LoadMenus()
@@ -138,6 +145,9 @@ namespace WideMD.Core
                                                       new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4")));
 
             menuService.Get("_File").Add(recentFiles.RecentMenu);
+
+            menuService.Get("_File").Add(new MenuItemViewModel("E_xit", 101, null, manager.GetCommand("EXIT"),
+                                                      new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4")));
 
 
             menuService.Add(new MenuItemViewModel("_Edit", 2));
