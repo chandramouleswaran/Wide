@@ -84,8 +84,8 @@ namespace Wide.Core
             _container.RegisterType<TextView>();
             _container.RegisterType<AllFileHandler>();
             _container.RegisterType<ThemeSettings>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IRecentViewSettings, RecentViewSettings>(new ContainerControlledLifetimeManager());
             _container.RegisterType<WindowPositionSettings>(new ContainerControlledLifetimeManager());
-
             _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(new ContainerControlledLifetimeManager());

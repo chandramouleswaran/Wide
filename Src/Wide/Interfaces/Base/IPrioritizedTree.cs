@@ -28,13 +28,7 @@ namespace Wide.Interfaces
         /// </summary>
         /// <value>The priority.</value>
         int Priority { get; }
-        
-        /// <summary>
-        /// Gets the key of this instance.
-        /// </summary>
-        /// <value>The key.</value>
-        string Key { get; }
-        
+             
         /// <summary>
         /// Adds the specified item.
         /// </summary>
@@ -43,12 +37,11 @@ namespace Wide.Interfaces
         string Add(T item);
         
         /// <summary>
-        /// Removes the specified key.
+        /// Removes the item with the GUID.
         /// </summary>
-        /// <param name="key">The key.</param>
         /// <param name="GuidString">The unique GUID set for the menu available for the creator.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        bool Remove(string key, string GuidString);
+        bool Remove(string GuidString);
 
         /// <summary>
         /// Gets the specified node in the tree with this key.

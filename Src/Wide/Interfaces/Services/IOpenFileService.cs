@@ -25,7 +25,8 @@ namespace Wide.Interfaces.Services
         /// Opens from content from an ID.
         /// </summary>
         /// <param name="contentID">The content ID.</param>
+        /// <param name="makeActive">if set to <c>true</c> makes the new document as the active document.</param>
         /// <returns>ContentViewModel.</returns>
-        ContentViewModel OpenFromID(string contentID);
+        ContentViewModel OpenFromID(string contentID, bool makeActive = false);
     }
 }

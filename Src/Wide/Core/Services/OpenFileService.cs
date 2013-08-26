@@ -15,6 +15,7 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.Win32;
 using Wide.Core.Attributes;
+using Wide.Core.Settings;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
@@ -61,6 +62,7 @@ namespace Wide.Core.Services
         public ContentViewModel Open(object location = null)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            RecentViewSettings recentSettings = _container.Resolve<IRecentViewSettings>() as RecentViewSettings;
             var contentHandlerRegistry = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
 
             var dialog = new OpenFileDialog();
@@ -118,6 +120,9 @@ namespace Wide.Core.Services
 
                         //Make it the active document
                         workspace.ActiveDocument = openValue;
+
+                        //Add it to the recent documents opened
+                        recentSettings.Update(openValue);
                     }
                     else
                     {
@@ -137,10 +142,12 @@ namespace Wide.Core.Services
         /// Opens the contentID
         /// </summary>
         /// <param name="contentID">The contentID to open</param>
+        /// <param name="makeActive">if set to <c>true</c> makes the new document as the active document.</param>
         /// <returns>A document which was added to the workspace as a content view model</returns>
-        public ContentViewModel OpenFromID(string contentID)
+        public ContentViewModel OpenFromID(string contentID, bool makeActive = false)
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            RecentViewSettings recentSettings = _container.Resolve<IRecentViewSettings>() as RecentViewSettings;
             var handler = _container.Resolve<IContentHandlerRegistry>();
 
             //Let the handler figure out which view model to return
@@ -155,6 +162,10 @@ namespace Wide.Core.Services
                     {
                         _logger.Log("Document " + contentViewModel.Model.Location + "already open.", LogCategory.Info,
                                     LogPriority.Low);
+                        
+                        if (makeActive)
+                            workspace.ActiveDocument = contentViewModel;
+                        
                         return contentViewModel;
                     }
                 }
@@ -165,6 +176,12 @@ namespace Wide.Core.Services
                 _eventAggregator.GetEvent<OpenContentEvent>().Publish(openValue);
 
                 workspace.Documents.Add(openValue);
+
+                if (makeActive)
+                    workspace.ActiveDocument = openValue;
+
+                //Add it to the recent documents opened
+                recentSettings.Update(openValue);
 
                 return openValue;
             }

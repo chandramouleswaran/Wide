@@ -107,6 +107,7 @@ namespace WideMD.Core
             var menuService = _container.Resolve<IMenuService>();
             var settingsManager = _container.Resolve<ISettingsManager>();
             var themeSettings = _container.Resolve<ThemeSettings>();
+            var recentFiles = _container.Resolve<IRecentViewSettings>();
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");
 
@@ -135,6 +136,8 @@ namespace WideMD.Core
                                                       new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl + S")));
             menuService.Get("_File").Add(new MenuItemViewModel("Close", 8, null, manager.GetCommand("CLOSE"),
                                                       new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4")));
+
+            menuService.Get("_File").Add(recentFiles.RecentMenu);
 
 
             menuService.Add(new MenuItemViewModel("_Edit", 2));
