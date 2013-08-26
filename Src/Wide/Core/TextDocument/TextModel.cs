@@ -24,19 +24,27 @@ namespace Wide.Core.TextDocument
         /// The command manager
         /// </summary>
         protected readonly ICommandManager _commandManager;
+
+        /// <summary>
+        /// The menu service
+        /// </summary>
+        protected readonly IMenuService _menuService;
+
         /// <summary>
         /// The old text which was last saved
         /// </summary>
         protected string OldText;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextModel"/> class.
+        /// Initializes a new instance of the <see cref="TextModel" /> class.
         /// </summary>
         /// <param name="commandManager">The injected command manager.</param>
-        public TextModel(ICommandManager commandManager)
+        /// <param name="menuService">The menu service.</param>
+        public TextModel(ICommandManager commandManager, IMenuService menuService)
         {
             Document = new ICSharpCode.AvalonEdit.Document.TextDocument();
             _commandManager = commandManager;
+            _menuService = menuService;
             Document.PropertyChanged += DocumentPropertyChanged;
             Document.TextChanged += DocumentOnTextChanged;
             OldText = "";
@@ -59,6 +67,7 @@ namespace Wide.Core.TextDocument
                 else
                 {
                     _commandManager.Refresh();
+                    _menuService.Refresh();
                 }
             }
         }

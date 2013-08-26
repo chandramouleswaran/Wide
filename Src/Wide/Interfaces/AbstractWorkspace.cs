@@ -9,6 +9,7 @@
 #endregion
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -69,6 +70,7 @@ namespace Wide.Interfaces
         {
             _container = container;
             _docs = new ObservableCollection<ContentViewModel>();
+            _docs.CollectionChanged += _docs_CollectionChanged;
             _tools = new ObservableCollection<ToolViewModel>();
             _menus = _container.Resolve<IMenuService>() as MenuItemViewModel;
             _menus.PropertyChanged += _menus_PropertyChanged;
@@ -138,6 +140,7 @@ namespace Wide.Interfaces
                     _activeDocument = value;
                     RaisePropertyChanged("ActiveDocument");
                     _commandManager.Refresh();
+                    _menus.Refresh();
                     //TODO: Implement pub/sub Active document changed event
                 }
             }
@@ -202,6 +205,16 @@ namespace Wide.Interfaces
         private void _menus_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged("Menus");
+        }
+
+
+        void _docs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                if (_docs.Count == 0)
+                    _activeDocument = null;
+            }
         }
     }
 }

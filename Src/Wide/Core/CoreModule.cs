@@ -202,6 +202,8 @@ namespace Wide.Core
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ILoggerService logger = _container.Resolve<ILoggerService>();
+            IMenuService menuService = _container.Resolve<IMenuService>();
+
             CancelEventArgs e = obj as CancelEventArgs;
             ContentViewModel activeDocument = obj as ContentViewModel;
 
@@ -246,6 +248,7 @@ namespace Wide.Core
             {
                 logger.Log("Closing document " + activeDocument.Model.Location, LogCategory.Info, LogPriority.None);
                 workspace.Documents.Remove(activeDocument);
+                menuService.Refresh();
             }
             else
             {
