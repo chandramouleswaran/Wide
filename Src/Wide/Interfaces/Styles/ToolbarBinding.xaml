@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Interfaces="clr-namespace:Wide.Interfaces"
                     xmlns:conv="clr-namespace:Wide.Interfaces.Converters">
-    
-    <conv:CommandVisibilityConverter x:Key="cvc" />
+
+    <conv:MenuVisibilityConverter x:Key="cvc" />
     
     <!--Toolbar image icon disabled style-->
     <Style TargetType="{x:Type Image}" x:Key="toolbarImageStyle">
