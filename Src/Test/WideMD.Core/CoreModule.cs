@@ -240,7 +240,7 @@ namespace WideMD.Core
         {
             var manager = _container.Resolve<IThemeManager>();
             var menuService = _container.Resolve<IMenuService>();
-            MenuItemViewModel mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
+            AbstractMenuItem mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as AbstractMenuItem;
 
             if (manager.CurrentTheme.Name != s)
             {

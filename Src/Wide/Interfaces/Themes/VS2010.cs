@@ -24,7 +24,7 @@ namespace Wide.Interfaces.Themes
         {
             UriList = new List<Uri>
                           {
-                              new Uri("pack://application:,,,/AvalonDock.Themes.VS2010;component/Theme.xaml"),
+                              new Uri("pack://application:,,,/Xceed.Wpf.AvalonDock.Themes.VS2010;component/Theme.xaml"),
                               new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2010/Theme.xaml")
                           };
         }
