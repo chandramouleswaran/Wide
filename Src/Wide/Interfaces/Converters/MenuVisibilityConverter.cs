@@ -13,12 +13,20 @@ using System.Windows.Data;
 
 namespace Wide.Interfaces.Converters
 {
-    public class CommandVisibilityConverter : IValueConverter
+    public class MenuVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return value != null ? Visibility.Visible : Visibility.Hidden;
+            AbstractMenuItem menu = value as AbstractMenuItem;
+            
+            if (menu == null)
+                return Visibility.Hidden;
+
+            if (menu.Children.Count > 0  || menu.Command !=null)
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

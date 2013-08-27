@@ -120,7 +120,7 @@
     <Compile Include="Interfaces\Services\IStatusbarService.cs" />
     <Compile Include="Interfaces\Controls\ToolBarItemTemplateSelector.cs" />
     <Compile Include="Interfaces\Controls\ToolbarViewModel.cs" />
-    <Compile Include="Interfaces\Converters\CommandVisibilityConverter.cs" />
+    <Compile Include="Interfaces\Converters\MenuVisibilityConverter.cs" />
     <Compile Include="Interfaces\Events\ActiveContentChangedEvent.cs" />
     <Compile Include="Interfaces\Events\WindowClosingEvent.cs" />
     <Compile Include="Interfaces\Events\LogEvent.cs" />
