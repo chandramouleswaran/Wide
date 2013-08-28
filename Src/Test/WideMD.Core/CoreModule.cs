@@ -48,8 +48,27 @@ namespace WideMD.Core
             LoadTheme();
             LoadCommands();
             LoadMenus();
+            LoadToolbar();
             RegisterParts();
             LoadSettings();
+        }
+
+        private void LoadToolbar()
+        {
+            _eventAggregator.GetEvent<SplashMessageUpdateEvent>().Publish(new SplashMessageUpdateEvent { Message = "Toolbar.." });
+            var toolbarService = _container.Resolve<IToolbarService>();
+            var menuService = _container.Resolve<IMenuService>();
+
+            toolbarService.Add(new ToolbarViewModel("$FILE$", 1) {Band = 1, BandIndex = 1});
+            toolbarService.Get("$FILE$").Add(menuService.Get("_File").Get("_New"));
+            toolbarService.Get("$FILE$").Add(menuService.Get("_File").Get("_Open"));
+
+            toolbarService.Add(new ToolbarViewModel("$EDIT$", 1) { Band = 1, BandIndex = 2 });
+            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Undo"));
+            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Redo"));
+            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("Cut"));
+            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("Copy"));
+            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Paste"));
         }
 
         private void LoadSettings()
@@ -124,7 +143,7 @@ namespace WideMD.Core
                 (new MenuItemViewModel("_New", 3,
                                        new BitmapImage(
                                            new Uri(
-                                               @"pack://application:,,,/WideMD.Core;component/Icons/OpenFileDialog_692.png")),
+                                               @"pack://application:,,,/WideMD.Core;component/Icons/NewRequest_8796.png")),
                                        manager.GetCommand("NEW"),
                                        new KeyGesture(Key.N, ModifierKeys.Control, "Ctrl + N"))));
 

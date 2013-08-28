@@ -18,7 +18,7 @@
     <!--Toolbar binding-->
     <DataTemplate x:Key="buttonTemplate" DataType="{x:Type Interfaces:MenuItemViewModel}">
         <Button Command="{Binding Command}" Style="{DynamicResource ResourceKey={x:Static ToolBar.ButtonStyleKey}}"
-                ToolTip="{Binding ToolTip}" Visibility="{Binding Command, Converter={StaticResource ResourceKey=cvc}}">
+                ToolTip="{Binding ToolTip}" Visibility="{Binding ., Converter={StaticResource ResourceKey=cvc}}">
             <Image Source="{Binding Icon}" Style="{StaticResource toolbarImageStyle}"></Image>
         </Button>
     </DataTemplate>
