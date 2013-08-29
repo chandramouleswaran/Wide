@@ -7,7 +7,7 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
-using System;
+
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Practices.Unity;
@@ -17,7 +17,7 @@ namespace Wide.Interfaces
     /// <summary>
     /// Class ToolbarViewModel
     /// </summary>
-    public sealed class ToolbarViewModel : AbstractMenuItem
+    public sealed class ToolbarViewModel : AbstractToolbar
     {
         #region CTOR
         /// <summary>
@@ -32,38 +32,9 @@ namespace Wide.Interfaces
         /// <exception cref="System.ArgumentException">Header cannot be SEP for a Toolbar</exception>
         public ToolbarViewModel(string header, int priority, ImageSource icon = null, ICommand command = null,
                                 bool isCheckable = false, IUnityContainer container = null)
-            : base(header, priority, icon, command, null, isCheckable)
+            : base(header, priority, icon, command, isCheckable, container)
         {
-            Priority = priority;
-            IsSeparator = false;
-            Header = header;
-            Key = header;
-            Command = command;
-            IsCheckable = isCheckable;
-            Icon = icon;
-            if (isCheckable)
-            {
-                IsChecked = false;
-            }
-            if (Header == "SEP")
-            {
-                throw new ArgumentException("Header cannot be SEP for a Toolbar");
-            }
         }
-        #endregion
-
-        #region Properties
-        /// <summary>
-        /// Gets or sets the band number for the toolbar in the toolbar tray.
-        /// </summary>
-        /// <value>The band.</value>
-        public int Band { get; set; }
-
-        /// <summary>
-        /// Gets or sets the band index of the toolbar in the toolbar tray.
-        /// </summary>
-        /// <value>The index of the band.</value>
-        public int BandIndex { get; set; }
         #endregion
     }
 }

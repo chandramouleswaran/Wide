@@ -7,69 +7,46 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Markup;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
+using Xceed.Wpf.AvalonDock.Converters;
 
 namespace Wide.Core.Services
 {
     /// <summary>
     /// The Wide tool bar service
     /// </summary>
-    internal sealed class ToolbarService : IToolbarService
+    internal sealed class ToolbarService : AbstractToolbar, IToolbarService
     {
-        /// <summary>
-        /// The dictionary of toolbars
-        /// </summary>
-        private static readonly Dictionary<string, ToolbarViewModel> ToolbarDictionary = new Dictionary<string, ToolbarViewModel>();
+        private static BoolToVisibilityConverter btv = new BoolToVisibilityConverter();
 
-        #region IToolbarService Members
-        /// <summary>
-        /// Adds a new toolbar to the application
-        /// </summary>
-        /// <param name="item">The toolbar to add</param>
-        /// <returns>true, if successful - false, otherwise</returns>
-        public bool Add(ToolbarViewModel item)
+        public ToolbarService():base("$MAIN$",0)
         {
-            if (!ToolbarDictionary.ContainsKey(item.Key))
-            {
-                ToolbarDictionary.Add(item.Key, item);
-                return true;
-            }
-            return false;
-        }
-        
-        /// <summary>
-        /// Removes a toolbar from the application
-        /// </summary>
-        /// <param name="key">The key of the toolbar to remove</param>
-        /// <returns>true, if successful - false, otherwise</returns>
-        public bool Remove(string key)
-        {
-            if (ToolbarDictionary.ContainsKey(key))
-            {
-                ToolbarDictionary.Remove(key);
-                return true;
-            }
-            return false;
+            
         }
 
         /// <summary>
-        /// Gets the toolbar with this key
+        /// Adds the specified item.
         /// </summary>
-        /// <param name="key">The key of the toolbar</param>
-        /// <returns>A ToolbarViewModel or null if not found</returns>
-        public ToolbarViewModel Get(string key)
+        /// <param name="item">The item.</param>
+        /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
+        public override string Add(AbstractCommandable item)
         {
-            if (ToolbarDictionary.ContainsKey(key))
+            AbstractToolbar tb = item as AbstractToolbar;
+            if(tb != null)
             {
-                return ToolbarDictionary[key];
+                tb.IsCheckable = true;
+                tb.IsChecked = true;
             }
-            return null;
+            return base.Add(item);
         }
 
         /// <summary>
@@ -80,25 +57,41 @@ namespace Wide.Core.Services
             get
             {
                 var tray = new ToolBarTray();
+                tray.ContextMenu = new ContextMenu();
+                tray.ContextMenu.ItemsSource = _children;
                 IAddChild child = tray;
-                foreach (var valuePair in ToolbarDictionary)
+                foreach (var node in this.Children)
                 {
-                    var tb = new ToolBar();
-                    var t =
-                        Application.Current.MainWindow.FindResource("toolBarItemTemplateSelector") as
-                        DataTemplateSelector;
-                    tb.SetValue(ItemsControl.ItemTemplateSelectorProperty, t);
-                    //Need to set these by binding
-                    tb.Band = valuePair.Value.Band;
-                    tb.BandIndex = valuePair.Value.BandIndex;
+                    var value = node as AbstractToolbar;
+                    if (value != null)
+                    {
+                        var tb = new ToolBar();
+                        var t = Application.Current.MainWindow.FindResource("toolBarItemTemplateSelector") as DataTemplateSelector;
+                        tb.SetValue(ItemsControl.ItemTemplateSelectorProperty, t);
+                        
+                        //Set the necessary bindings
+                        var bandBinding = new Binding("Band");
+                        var bandIndexBinding = new Binding("BandIndex");
+                        var visibilityBinding = new Binding("IsChecked")
+                        {
+                            Converter = btv
+                        };
 
-                    tb.ItemsSource = valuePair.Value.Children;
-                    child.AddChild(tb);
+                        bandBinding.Source = value;
+                        bandIndexBinding.Source = value;
+                        visibilityBinding.Source = value;
+
+                        tb.SetBinding(ToolBar.BandProperty, bandBinding);
+                        tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);
+                        tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
+
+                        tb.ItemsSource = value.Children;
+                        child.AddChild(tb);
+                    }
                 }
+                tray.ContextMenu.ItemContainerStyle = Application.Current.MainWindow.FindResource("ToolbarContextMenu") as Style;
                 return tray;
             }
         }
-
-        #endregion
     }
 }

@@ -59,16 +59,16 @@ namespace WideMD.Core
             var toolbarService = _container.Resolve<IToolbarService>();
             var menuService = _container.Resolve<IMenuService>();
 
-            toolbarService.Add(new ToolbarViewModel("$FILE$", 1) {Band = 1, BandIndex = 1});
-            toolbarService.Get("$FILE$").Add(menuService.Get("_File").Get("_New"));
-            toolbarService.Get("$FILE$").Add(menuService.Get("_File").Get("_Open"));
+            toolbarService.Add(new ToolbarViewModel("Standard", 1) {Band = 1, BandIndex = 1});
+            toolbarService.Get("Standard").Add(menuService.Get("_File").Get("_New"));
+            toolbarService.Get("Standard").Add(menuService.Get("_File").Get("_Open"));
 
-            toolbarService.Add(new ToolbarViewModel("$EDIT$", 1) { Band = 1, BandIndex = 2 });
-            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Undo"));
-            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Redo"));
-            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("Cut"));
-            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("Copy"));
-            toolbarService.Get("$EDIT$").Add(menuService.Get("_Edit").Get("_Paste"));
+            toolbarService.Add(new ToolbarViewModel("Edit", 1) { Band = 1, BandIndex = 2 });
+            toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Undo"));
+            toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Redo"));
+            toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Cut"));
+            toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Copy"));
+            toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
         }
 
         private void LoadSettings()
