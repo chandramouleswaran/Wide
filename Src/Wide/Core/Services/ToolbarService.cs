@@ -34,6 +34,22 @@ namespace Wide.Core.Services
         }
 
         /// <summary>
+        /// Adds the specified item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
+        public override string Add(AbstractCommandable item)
+        {
+            AbstractToolbar tb = item as AbstractToolbar;
+            if(tb != null)
+            {
+                tb.IsCheckable = true;
+                tb.IsChecked = true;
+            }
+            return base.Add(item);
+        }
+
+        /// <summary>
         /// The toolbar tray which will be used in the application
         /// </summary>
         public ToolBarTray ToolBarTray
@@ -52,20 +68,24 @@ namespace Wide.Core.Services
                         var tb = new ToolBar();
                         var t = Application.Current.MainWindow.FindResource("toolBarItemTemplateSelector") as DataTemplateSelector;
                         tb.SetValue(ItemsControl.ItemTemplateSelectorProperty, t);
-                        //Need to set these by binding
-                        tb.Band = value.Band;
-                        tb.BandIndex = value.BandIndex;
-
-                        tb.ItemsSource = value.Children;
                         
+                        //Set the necessary bindings
+                        var bandBinding = new Binding("Band");
+                        var bandIndexBinding = new Binding("BandIndex");
                         var visibilityBinding = new Binding("IsChecked")
                         {
                             Converter = btv
                         };
-                        value.IsCheckable = true;
-                        value.IsChecked = true;
+
+                        bandBinding.Source = value;
+                        bandIndexBinding.Source = value;
                         visibilityBinding.Source = value;
+
+                        tb.SetBinding(ToolBar.BandProperty, bandBinding);
+                        tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);
                         tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
+
+                        tb.ItemsSource = value.Children;
                         child.AddChild(tb);
                     }
                 }
