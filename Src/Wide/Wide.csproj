@@ -98,6 +98,7 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Interfaces\Controls\AbstractToolbarItem.cs" />
     <Compile Include="Interfaces\Services\IRecentViewSettings.cs" />
     <Compile Include="Core\Settings\RecentViewItem.cs" />
     <Compile Include="Core\Settings\RecentViewSettings.cs" />

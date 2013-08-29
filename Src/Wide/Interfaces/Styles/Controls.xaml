@@ -31,4 +31,29 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="ToolbarContextMenu" TargetType="{x:Type MenuItem}"  BasedOn="{StaticResource {x:Type MenuItem}}">
+        <Setter Property="Header" Value="{Binding Path=Header}" />
+        <Setter Property="IsCheckable" Value="True" />
+        <Setter Property="IsChecked" Value="{Binding Path=IsChecked}" />
+        <Setter Property="Command" Value="{Binding Path=Command}" />
+        <Setter Property="CommandParameter" Value="{Binding Path=Key}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsSeparator}" Value="true">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="30" Width="Auto" SharedSizeGroup="Icon" />
+                                    <ColumnDefinition MinWidth="70" Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Separator Grid.Column="1" Height="1" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

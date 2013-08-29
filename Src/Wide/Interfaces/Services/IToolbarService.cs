@@ -27,20 +27,20 @@ namespace Wide.Interfaces.Services
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns><c>true</c> if successfully added, <c>false</c> otherwise</returns>
-        bool Add(ToolbarViewModel item);
+        string Add(AbstractCommandable item);
 
         /// <summary>
         /// Removes the specified key.
         /// </summary>
-        /// <param name="key">The key.</param>
+        /// <param name="GUID">The GUID.</param>
         /// <returns><c>true</c> if successfully removed, <c>false</c> otherwise</returns>
-        bool Remove(string key);
+        bool Remove(string GUID);
 
         /// <summary>
         /// Gets the specified toolbar using the key.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>ToolbarViewModel.</returns>
-        ToolbarViewModel Get(string key);
+        /// <returns>AbstractCommandable.</returns>
+        AbstractCommandable Get(string key);
     }
 }
