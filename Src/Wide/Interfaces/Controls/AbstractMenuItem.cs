@@ -130,7 +130,7 @@ namespace Wide.Interfaces
             return base.Add(item);
         }
 
-        public void Refresh()
+        public virtual void Refresh()
         {
             this.RaisePropertyChanged("Header");
             this.RaisePropertyChanged("Children");

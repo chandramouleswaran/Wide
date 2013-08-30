@@ -19,6 +19,7 @@ using Wide.Core.Settings;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
+using Wide.Interfaces.Settings;
 
 namespace Wide.Core.Services
 {

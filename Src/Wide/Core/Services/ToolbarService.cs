@@ -28,7 +28,7 @@ namespace Wide.Core.Services
         private AbstractMenuItem menuItem;
         private ToolBarTray tray;
 
-        public ToolbarService(ICommandManager manager):base("$MAIN$",0)
+        public ToolbarService():base("$MAIN$",0)
         {
         }
 
@@ -83,6 +83,9 @@ namespace Wide.Core.Services
                             bandBinding.Source = value;
                             bandIndexBinding.Source = value;
                             visibilityBinding.Source = value;
+
+                            bandBinding.Mode = BindingMode.TwoWay;
+                            bandIndexBinding.Mode = BindingMode.TwoWay;
 
                             tb.SetBinding(ToolBar.BandProperty, bandBinding);
                             tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);

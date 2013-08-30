@@ -71,6 +71,9 @@ namespace WideMD.Core
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
 
             menuService.Get("_Tools").Add(toolbarService.MenuItem);
+
+            //Initiate the position settings changes for toolbar
+            _container.Resolve<IToolbarPositionSettings>();
         }
 
         private void LoadSettings()
@@ -95,7 +98,7 @@ namespace WideMD.Core
             _eventAggregator.GetEvent<SplashMessageUpdateEvent>().Publish(new SplashMessageUpdateEvent
                                                                               {Message = "Themes.."});
             var manager = _container.Resolve<IThemeManager>();
-            var themeSettings = _container.Resolve<ThemeSettings>();
+            var themeSettings = _container.Resolve<IThemeSettings>();
             manager.AddTheme(new LightTheme());
             manager.AddTheme(new DarkTheme());
             manager.SetCurrent(themeSettings.SelectedTheme);
@@ -134,7 +137,7 @@ namespace WideMD.Core
             var manager = _container.Resolve<ICommandManager>();
             var menuService = _container.Resolve<IMenuService>();
             var settingsManager = _container.Resolve<ISettingsManager>();
-            var themeSettings = _container.Resolve<ThemeSettings>();
+            var themeSettings = _container.Resolve<IThemeSettings>();
             var recentFiles = _container.Resolve<IRecentViewSettings>();
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
             ToolViewModel logger = workspace.Tools.First(f => f.ContentId == "Logger");

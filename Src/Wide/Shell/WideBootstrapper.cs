@@ -19,11 +19,11 @@ namespace Wide.Shell
 {
     public class WideBootstrapper : UnityBootstrapper
     {
-        private readonly bool _isMetro;
+        public static bool IsMetro { get; protected set; }
 
         public WideBootstrapper(bool isMetro = true)
         {
-            _isMetro = isMetro;
+            IsMetro = isMetro;
         }
 
         public bool HideSplashWindow { get; set; }
@@ -52,7 +52,7 @@ namespace Wide.Shell
         protected override void ConfigureContainer()
         {
             //Create an instance of the workspace
-            if (_isMetro)
+            if (IsMetro)
             {
                 //Use MahApps Metro window
                 Container.RegisterType<IShell, ShellViewMetro>(new ContainerControlledLifetimeManager());
