@@ -103,7 +103,7 @@
     <Compile Include="Interfaces\Settings\IThemeSettings.cs" />
     <Compile Include="Interfaces\Settings\IWindowPositionSettings.cs" />
     <Compile Include="Core\Settings\ToolbarPositionSettings.cs" />
-    <Compile Include="Interfaces\Controls\AbstractToolbarItem.cs" />
+    <Compile Include="Interfaces\Controls\AbstractToolbar.cs" />
     <Compile Include="Interfaces\Controls\IToolbar.cs" />
     <Compile Include="Interfaces\Settings\IRecentViewSettings.cs" />
     <Compile Include="Core\Settings\RecentViewItem.cs" />
