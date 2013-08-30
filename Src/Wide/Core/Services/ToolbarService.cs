@@ -27,11 +27,9 @@ namespace Wide.Core.Services
         private static BoolToVisibilityConverter btv = new BoolToVisibilityConverter();
         private AbstractMenuItem menuItem;
         private ToolBarTray tray;
-        private ICommand cmd;
 
         public ToolbarService(ICommandManager manager):base("$MAIN$",0)
         {
-            //cmd = manager.Dummy;
         }
 
         /// <summary>
@@ -116,7 +114,7 @@ namespace Wide.Core.Services
                     {
                         var tb = tray.ToolBars[i];
                         var tbData = _children[i] as AbstractToolbar;
-                        var mivm = new MenuItemViewModel(tbData.Header, i + 1, null, cmd, null, true)
+                        var mivm = new MenuItemViewModel(tbData.Header, i + 1, null, null, null, true)
                                        {IsChecked = tbData.IsChecked};
                         menuItem.Add(mivm);
                         
