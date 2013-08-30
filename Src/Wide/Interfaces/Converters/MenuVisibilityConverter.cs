@@ -23,7 +23,7 @@ namespace Wide.Interfaces.Converters
             if (menu == null)
                 return Visibility.Hidden;
 
-            if (menu.Children.Count > 0  || menu.Command !=null)
+            if (menu.Children.Count > 0  || menu.Command !=null || menu.IsCheckable == true)
                 return Visibility.Visible;
 
             return Visibility.Collapsed;

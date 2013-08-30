@@ -69,6 +69,8 @@ namespace WideMD.Core
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Cut"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Copy"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
+
+            menuService.Get("_Tools").Add(toolbarService.MenuItem);
         }
 
         private void LoadSettings()
