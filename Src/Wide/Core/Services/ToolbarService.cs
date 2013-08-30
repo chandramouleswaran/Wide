@@ -8,13 +8,11 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Markup;
-using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 using Xceed.Wpf.AvalonDock.Converters;
@@ -27,10 +25,11 @@ namespace Wide.Core.Services
     internal sealed class ToolbarService : AbstractToolbar, IToolbarService
     {
         private static BoolToVisibilityConverter btv = new BoolToVisibilityConverter();
+        private AbstractMenuItem menuItem;
+        private ToolBarTray tray;
 
-        public ToolbarService():base("$MAIN$",0)
+        public ToolbarService(ICommandManager manager):base("$MAIN$",0)
         {
-            
         }
 
         /// <summary>
@@ -56,41 +55,78 @@ namespace Wide.Core.Services
         {
             get
             {
-                var tray = new ToolBarTray();
-                tray.ContextMenu = new ContextMenu();
-                tray.ContextMenu.ItemsSource = _children;
-                IAddChild child = tray;
-                foreach (var node in this.Children)
+                if (tray == null)
                 {
-                    var value = node as AbstractToolbar;
-                    if (value != null)
+                    tray = new ToolBarTray();
+                    tray.ContextMenu = new ContextMenu();
+                    tray.ContextMenu.ItemsSource = _children;
+                    IAddChild child = tray;
+                    foreach (var node in this.Children)
                     {
-                        var tb = new ToolBar();
-                        var t = Application.Current.MainWindow.FindResource("toolBarItemTemplateSelector") as DataTemplateSelector;
-                        tb.SetValue(ItemsControl.ItemTemplateSelectorProperty, t);
+                        var value = node as AbstractToolbar;
+                        if (value != null)
+                        {
+                            var tb = new ToolBar();
+                            var t =
+                                Application.Current.MainWindow.FindResource("toolBarItemTemplateSelector") as
+                                DataTemplateSelector;
+                            tb.SetValue(ItemsControl.ItemTemplateSelectorProperty, t);
+
+                            //Set the necessary bindings
+                            var bandBinding = new Binding("Band");
+                            var bandIndexBinding = new Binding("BandIndex");
+                            var visibilityBinding = new Binding("IsChecked")
+                                                        {
+                                                            Converter = btv
+                                                        };
+
+                            bandBinding.Source = value;
+                            bandIndexBinding.Source = value;
+                            visibilityBinding.Source = value;
+
+                            tb.SetBinding(ToolBar.BandProperty, bandBinding);
+                            tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);
+                            tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
+
+                            tb.ItemsSource = value.Children;
+                            child.AddChild(tb);
+                        }
+                    }
+                    tray.ContextMenu.ItemContainerStyle =
+                        Application.Current.MainWindow.FindResource("ToolbarContextMenu") as Style;
+                }
+                return tray;
+            }
+        }
+
+        public AbstractMenuItem MenuItem
+        {
+            get
+            {
+                if(tray == null)
+                {
+                    var t = this.ToolBarTray;
+                }
+                if (menuItem == null)
+                {
+                    menuItem = new MenuItemViewModel("_Toolbars", 100);
+                    for (int i = 0; i < tray.ToolBars.Count; i++)
+                    {
+                        var tb = tray.ToolBars[i];
+                        var tbData = _children[i] as AbstractToolbar;
+                        var mivm = new MenuItemViewModel(tbData.Header, i + 1, null, null, null, true)
+                                       {IsChecked = tbData.IsChecked};
+                        menuItem.Add(mivm);
                         
-                        //Set the necessary bindings
-                        var bandBinding = new Binding("Band");
-                        var bandIndexBinding = new Binding("BandIndex");
                         var visibilityBinding = new Binding("IsChecked")
                         {
                             Converter = btv
                         };
-
-                        bandBinding.Source = value;
-                        bandIndexBinding.Source = value;
-                        visibilityBinding.Source = value;
-
-                        tb.SetBinding(ToolBar.BandProperty, bandBinding);
-                        tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);
+                        visibilityBinding.Source = mivm;
                         tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
-
-                        tb.ItemsSource = value.Children;
-                        child.AddChild(tb);
                     }
                 }
-                tray.ContextMenu.ItemContainerStyle = Application.Current.MainWindow.FindResource("ToolbarContextMenu") as Style;
-                return tray;
+                return menuItem;
             }
         }
     }

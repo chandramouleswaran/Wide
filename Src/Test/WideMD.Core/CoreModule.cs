@@ -69,6 +69,8 @@ namespace WideMD.Core
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Cut"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Copy"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
+
+            menuService.Get("_Tools").Add(toolbarService.MenuItem);
         }
 
         private void LoadSettings()
@@ -259,7 +261,7 @@ namespace WideMD.Core
         {
             var manager = _container.Resolve<IThemeManager>();
             var menuService = _container.Resolve<IMenuService>();
-            AbstractMenuItem mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as AbstractMenuItem;
+            MenuItemViewModel mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
 
             if (manager.CurrentTheme.Name != s)
             {
@@ -286,7 +288,7 @@ namespace WideMD.Core
             if (logger != null)
             {
                 logger.IsVisible = !logger.IsVisible;
-                var mi = menuService.Get("_View").Get("_Logger") as AbstractMenuItem;
+                var mi = menuService.Get("_View").Get("_Logger") as MenuItemViewModel;
                 mi.IsChecked = logger.IsVisible;
             }
         }

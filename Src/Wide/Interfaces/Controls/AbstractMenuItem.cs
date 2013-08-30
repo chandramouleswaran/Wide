@@ -76,19 +76,19 @@ namespace Wide.Interfaces
         /// Gets the header of the menu.
         /// </summary>
         /// <value>The header.</value>
-        public virtual string Header { get; internal set; }
+        public virtual string Header { get; protected internal set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is checkable.
         /// </summary>
         /// <value><c>true</c> if this instance is checkable; otherwise, <c>false</c>.</value>
-        public virtual bool IsCheckable { get; set; }
+        public virtual bool IsCheckable { get; protected internal set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is visible.
         /// </summary>
         /// <value><c>true</c> if this instance is visible; otherwise, <c>false</c>.</value>
-        public virtual bool IsVisible { get; internal set; }
+        public virtual bool IsVisible { get; protected internal set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is checked.
@@ -97,7 +97,7 @@ namespace Wide.Interfaces
         public virtual bool IsChecked
         {
             get { return _isChecked; }
-            set
+            protected internal set
             {
                 _isChecked = value;
                 RaisePropertyChanged("IsChecked");

@@ -8,7 +8,7 @@
     
     <!--Menu Item Binding with Icon-->
     <Image x:Key="imgCTX" x:Shared="false" Source="{Binding Path=Icon}" Height="16px" Width="16px" />
-    <Style TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
+    <Style x:Key="MetroMenuStyle" TargetType="MenuItem" BasedOn="{StaticResource MetroMenuItem}">
         <Setter Property="Icon" Value="{StaticResource imgCTX}" />
         <Setter Property="Header" Value="{Binding Path=Header}" />
         <Setter Property="IsCheckable" Value="{Binding Path=IsCheckable}" />

@@ -47,6 +47,38 @@ namespace Wide.Interfaces
         {
             return new MenuItemViewModel("SEP", priority);
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is checkable.
+        /// </summary>
+        /// <value><c>true</c> if this instance is checkable; otherwise, <c>false</c>.</value>
+        public new bool IsCheckable
+        {
+            get
+            {
+                return base.IsCheckable;
+            }
+            set
+            {
+                base.IsCheckable = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is checked.
+        /// </summary>
+        /// <value><c>true</c> if this instance is checked; otherwise, <c>false</c>.</value>
+        public new bool IsChecked
+        {
+            get
+            {
+                return base.IsChecked;
+            }
+            set
+            {
+                base.IsChecked = value;
+            }
+        }
         #endregion
     }
 }

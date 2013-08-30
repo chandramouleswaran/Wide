@@ -42,5 +42,7 @@ namespace Wide.Interfaces.Services
         /// <param name="key">The key.</param>
         /// <returns>AbstractCommandable.</returns>
         AbstractCommandable Get(string key);
+
+        AbstractMenuItem MenuItem { get; }
     }
 }
