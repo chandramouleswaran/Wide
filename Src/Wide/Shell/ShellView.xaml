@@ -26,8 +26,7 @@
     <Border>
         <DockPanel>
             <!--Menu-->
-            <Menu DockPanel.Dock="Top" IsMainMenu="True" x:Name="mainMenu" VerticalAlignment="Top"
-                  ItemsSource="{Binding Path=Menus, UpdateSourceTrigger=PropertyChanged}" />
+            <Menu DockPanel.Dock="Top" IsMainMenu="True" x:Name="mainMenu" VerticalAlignment="Top" ItemsSource="{Binding Path=Menus, UpdateSourceTrigger=PropertyChanged}" ItemContainerStyle="{DynamicResource StandardMenuStyle}" />
             <!--Toolbar (can we improve this?)-->
             <ContentControl Content="{Binding ToolBarTray}" DockPanel.Dock="Top" />
             <!--Status bar-->
