@@ -109,7 +109,7 @@ namespace Wide.Core.Settings
         }
 
         [XmlIgnore]
-        public IReadOnlyList<RecentViewItem> RecentItems
+        public IReadOnlyList<IRecentViewItem> RecentItems
         {
             get
             {

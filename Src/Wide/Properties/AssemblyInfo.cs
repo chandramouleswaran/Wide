@@ -17,7 +17,7 @@ using System.Windows;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Wide")]
-[assembly: AssemblyDescription("Used to create a participatory IDE.")]
+[assembly: AssemblyDescription("Used to create a participatory IDE based on PRISM.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Wide")]
 [assembly: AssemblyProduct("Wide")]
@@ -62,6 +62,5 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
-[assembly: InternalsVisibleTo("Wide.Core")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
