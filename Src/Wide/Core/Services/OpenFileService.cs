@@ -41,17 +41,29 @@ namespace Wide.Core.Services
         /// </summary>
         private readonly ILoggerService _logger;
 
+        private OpenFileDialog _dialog;
+
+        private AbstractWorkspace _workspace;
+
+        private ContentHandlerRegistry _handler;
+
+        private RecentViewSettings _recentSettings;
+
         /// <summary>
         /// Constructor for Open file service
         /// </summary>
         /// <param name="container">The injected container</param>
         /// <param name="eventAggregator">The injected event aggregator</param>
         /// <param name="logger">The injected logger</param>
-        public OpenFileService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
+        public OpenFileService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger, AbstractWorkspace workspace, IContentHandlerRegistry handler, IRecentViewSettings recentSettings)
         {
             _container = container;
             _eventAggregator = eventAggregator;
             _logger = logger;
+            _dialog = new OpenFileDialog();
+            _workspace = workspace;
+            _handler = handler as ContentHandlerRegistry;
+            _recentSettings = recentSettings as RecentViewSettings;
         }
 
         #region IOpenFileService Members
@@ -62,27 +74,22 @@ namespace Wide.Core.Services
         /// <returns>A document which was added to the workspace as a content view model</returns>
         public ContentViewModel Open(object location = null)
         {
-            IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
-            RecentViewSettings recentSettings = _container.Resolve<IRecentViewSettings>() as RecentViewSettings;
-            var contentHandlerRegistry = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
-
-            var dialog = new OpenFileDialog();
             bool? result;
 
             if (location == null)
             {
-                dialog.Filter = "";
+                _dialog.Filter = "";
                 string sep = "";
-                var attributes = contentHandlerRegistry.ContentHandlers.SelectMany(handler => (FileContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (FileContentAttribute), true)).ToList();
+                var attributes = _handler.ContentHandlers.SelectMany(handler => (FileContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (FileContentAttribute), true)).ToList();
                 attributes.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
                 foreach (var contentAttribute in attributes)
                 {
-                    dialog.Filter = String.Format("{0}{1}{2} ({3})|{3}", dialog.Filter, sep, contentAttribute.Display, contentAttribute.Extension);
+                    _dialog.Filter = String.Format("{0}{1}{2} ({3})|{3}", _dialog.Filter, sep, contentAttribute.Display, contentAttribute.Extension);
                     sep = "|";
                 }
 
-                result = dialog.ShowDialog();
-                location = dialog.FileName;
+                result = _dialog.ShowDialog();
+                location = _dialog.FileName;
             }
             else
             {
@@ -92,21 +99,21 @@ namespace Wide.Core.Services
             if (result == true && !string.IsNullOrWhiteSpace(location.ToString()))
             {
                 //Let the handler figure out which view model to return
-                if (contentHandlerRegistry != null)
+                if (_handler != null)
                 {
-                    ContentViewModel openValue = contentHandlerRegistry.GetViewModel(location);
+                    ContentViewModel openValue = _handler.GetViewModel(location);
 
                     if (openValue != null)
                     {
                         //Check if the document is already open
-                        foreach (ContentViewModel contentViewModel in workspace.Documents)
+                        foreach (ContentViewModel contentViewModel in _workspace.Documents)
                         {
                             if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
                             {
                                 _logger.Log(
                                     "Document " + contentViewModel.Model.Location + "already open - making it active",
                                     LogCategory.Info, LogPriority.Low);
-                                workspace.ActiveDocument = contentViewModel;
+                                _workspace.ActiveDocument = contentViewModel;
                                 return contentViewModel;
                             }
                         }
@@ -117,13 +124,13 @@ namespace Wide.Core.Services
                         _eventAggregator.GetEvent<OpenContentEvent>().Publish(openValue);
 
                         //Add it to the actual workspace
-                        workspace.Documents.Add(openValue);
+                        _workspace.Documents.Add(openValue);
 
                         //Make it the active document
-                        workspace.ActiveDocument = openValue;
+                        _workspace.ActiveDocument = openValue;
 
                         //Add it to the recent documents opened
-                        recentSettings.Update(openValue);
+                        _recentSettings.Update(openValue);
                     }
                     else
                     {
@@ -147,17 +154,13 @@ namespace Wide.Core.Services
         /// <returns>A document which was added to the workspace as a content view model</returns>
         public ContentViewModel OpenFromID(string contentID, bool makeActive = false)
         {
-            IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
-            RecentViewSettings recentSettings = _container.Resolve<IRecentViewSettings>() as RecentViewSettings;
-            var handler = _container.Resolve<IContentHandlerRegistry>();
-
             //Let the handler figure out which view model to return
-            ContentViewModel openValue = handler.GetViewModelFromContentId(contentID);
+            ContentViewModel openValue = _handler.GetViewModelFromContentId(contentID);
 
             if (openValue != null)
             {
                 //Check if the document is already open
-                foreach (ContentViewModel contentViewModel in workspace.Documents)
+                foreach (ContentViewModel contentViewModel in _workspace.Documents)
                 {
                     if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
                     {
@@ -165,7 +168,7 @@ namespace Wide.Core.Services
                                     LogPriority.Low);
                         
                         if (makeActive)
-                            workspace.ActiveDocument = contentViewModel;
+                            _workspace.ActiveDocument = contentViewModel;
                         
                         return contentViewModel;
                     }
@@ -176,13 +179,13 @@ namespace Wide.Core.Services
                 // Publish the event to the Application - subscribers can use this object
                 _eventAggregator.GetEvent<OpenContentEvent>().Publish(openValue);
 
-                workspace.Documents.Add(openValue);
+                _workspace.Documents.Add(openValue);
 
                 if (makeActive)
-                    workspace.ActiveDocument = openValue;
+                    _workspace.ActiveDocument = openValue;
 
                 //Add it to the recent documents opened
-                recentSettings.Update(openValue);
+                _recentSettings.Update(openValue);
 
                 return openValue;
             }
