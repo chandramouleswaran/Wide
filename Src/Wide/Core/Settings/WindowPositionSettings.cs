@@ -16,7 +16,7 @@ using Wide.Interfaces.Settings;
 
 namespace Wide.Core.Settings
 {
-    public class WindowPositionSettings : AbstractSettings
+    internal class WindowPositionSettings : AbstractSettings, IWindowPositionSettings
     {
         public WindowPositionSettings(IEventAggregator eventAggregator)
         {
@@ -25,10 +25,13 @@ namespace Wide.Core.Settings
 
         private void SaveWindowPositions(Window window)
         {
-            Left = window.Left;
-            Top = window.Top;
-            Height = window.Height;
-            Width = window.Width;
+            if (window.WindowState == WindowState.Normal)
+            {
+                Left = window.Left;
+                Top = window.Top;
+                Height = window.Height;
+                Width = window.Width;
+            }
             State = window.WindowState;
             Save();
         }

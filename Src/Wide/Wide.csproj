@@ -98,8 +98,14 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
-    <Compile Include="Interfaces\Controls\AbstractToolbarItem.cs" />
-    <Compile Include="Interfaces\Services\IRecentViewSettings.cs" />
+    <Compile Include="Core\Settings\IToolbarPositionSettings.cs" />
+    <Compile Include="Core\Settings\ToolbarSettingItem.cs" />
+    <Compile Include="Interfaces\Settings\IThemeSettings.cs" />
+    <Compile Include="Interfaces\Settings\IWindowPositionSettings.cs" />
+    <Compile Include="Core\Settings\ToolbarPositionSettings.cs" />
+    <Compile Include="Interfaces\Controls\AbstractToolbar.cs" />
+    <Compile Include="Interfaces\Controls\IToolbar.cs" />
+    <Compile Include="Interfaces\Settings\IRecentViewSettings.cs" />
     <Compile Include="Core\Settings\RecentViewItem.cs" />
     <Compile Include="Core\Settings\RecentViewSettings.cs" />
     <Compile Include="Core\Settings\WindowPositionSettings.cs" />

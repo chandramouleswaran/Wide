@@ -16,7 +16,7 @@ using Wide.Interfaces.Settings;
 
 namespace Wide.Core.Settings
 {
-    public class ThemeSettings : AbstractSettings
+    internal class ThemeSettings : AbstractSettings, IThemeSettings
     {
         public ThemeSettings(IEventAggregator eventAggregator)
         {

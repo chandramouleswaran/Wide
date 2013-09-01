@@ -7,36 +7,13 @@
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
+
 using System;
 
-namespace Wide.Core.Settings
+namespace Wide.Interfaces.Settings
 {
-    [Serializable]
-    public class RecentViewItem
+    public interface IThemeSettings
     {
-        public RecentViewItem()
-        {
-            this.DisplayValue = "";
-            this.ContentID = "";
-        }
-
-        public string DisplayValue { get; internal set; }
-        public string ContentID { get; internal set; }
-
-        public override bool Equals(object obj)
-        {
-            RecentViewItem item = obj as RecentViewItem;
-            return (item != null) && ContentID.Equals(item.ContentID);
-        }
-
-        public override int GetHashCode()
-        {
-            return ContentID.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return ContentID.ToString();
-        }
+        string SelectedTheme { get; }
     }
 }

@@ -9,34 +9,26 @@
 #endregion
 using System;
 
-namespace Wide.Core.Settings
+namespace Wide.Interfaces.Controls
 {
-    [Serializable]
-    public class RecentViewItem
+    public interface IToolbar
     {
-        public RecentViewItem()
-        {
-            this.DisplayValue = "";
-            this.ContentID = "";
-        }
+        /// <summary>
+        /// Gets the header of the toolbar.
+        /// </summary>
+        /// <value>The header.</value>
+        string Header { get; }
 
-        public string DisplayValue { get; internal set; }
-        public string ContentID { get; internal set; }
+        /// <summary>
+        /// Gets the band number for the toolbar in the toolbar tray.
+        /// </summary>
+        /// <value>The band.</value>
+        int Band { get; }
 
-        public override bool Equals(object obj)
-        {
-            RecentViewItem item = obj as RecentViewItem;
-            return (item != null) && ContentID.Equals(item.ContentID);
-        }
-
-        public override int GetHashCode()
-        {
-            return ContentID.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return ContentID.ToString();
-        }
+        /// <summary>
+        /// Gets the band index of the toolbar in the toolbar tray.
+        /// </summary>
+        /// <value>The index of the band.</value>
+        int BandIndex { get; }
     }
 }

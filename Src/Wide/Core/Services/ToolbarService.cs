@@ -28,7 +28,7 @@ namespace Wide.Core.Services
         private AbstractMenuItem menuItem;
         private ToolBarTray tray;
 
-        public ToolbarService(ICommandManager manager):base("$MAIN$",0)
+        public ToolbarService():base("$MAIN$",0)
         {
         }
 
@@ -84,6 +84,9 @@ namespace Wide.Core.Services
                             bandIndexBinding.Source = value;
                             visibilityBinding.Source = value;
 
+                            bandBinding.Mode = BindingMode.TwoWay;
+                            bandIndexBinding.Mode = BindingMode.TwoWay;
+
                             tb.SetBinding(ToolBar.BandProperty, bandBinding);
                             tb.SetBinding(ToolBar.BandIndexProperty, bandIndexBinding);
                             tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
@@ -105,25 +108,15 @@ namespace Wide.Core.Services
             {
                 if(tray == null)
                 {
-                    var t = this.ToolBarTray;
+                    tray = this.ToolBarTray;
                 }
                 if (menuItem == null)
                 {
                     menuItem = new MenuItemViewModel("_Toolbars", 100);
-                    for (int i = 0; i < tray.ToolBars.Count; i++)
+                    foreach (var value in tray.ContextMenu.ItemsSource)
                     {
-                        var tb = tray.ToolBars[i];
-                        var tbData = _children[i] as AbstractToolbar;
-                        var mivm = new MenuItemViewModel(tbData.Header, i + 1, null, null, null, true)
-                                       {IsChecked = tbData.IsChecked};
-                        menuItem.Add(mivm);
-                        
-                        var visibilityBinding = new Binding("IsChecked")
-                        {
-                            Converter = btv
-                        };
-                        visibilityBinding.Source = mivm;
-                        tb.SetBinding(ToolBar.VisibilityProperty, visibilityBinding);
+                        var menu = value as AbstractMenuItem;
+                        menuItem.Add(menu);
                     }
                 }
                 return menuItem;
