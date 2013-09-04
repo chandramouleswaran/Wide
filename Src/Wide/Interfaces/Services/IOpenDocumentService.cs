@@ -10,9 +10,9 @@
 namespace Wide.Interfaces.Services
 {
     /// <summary>
-    /// Interface IOpenFileService - used to open a file
+    /// Interface IOpenDocumentService - used to open a file
     /// </summary>
-    public interface IOpenFileService
+    public interface IOpenDocumentService
     {
         /// <summary>
         /// Opens the document from the specified location.
