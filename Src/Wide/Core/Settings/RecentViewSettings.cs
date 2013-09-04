@@ -26,7 +26,7 @@ namespace Wide.Core.Settings
         private AbstractMenuItem recentMenu;
         private List<string> menuGuids;
         private DelegateCommand<string> recentOpen;
-        private IOpenFileService fileService;
+        private IOpenDocumentService fileService;
         private IUnityContainer _container;
 
         public RecentViewSettings(IUnityContainer container)
@@ -84,7 +84,7 @@ namespace Wide.Core.Settings
         {
             if (fileService == null)
             {
-                fileService = _container.Resolve<IOpenFileService>();
+                fileService = _container.Resolve<IOpenDocumentService>();
             }
             fileService.OpenFromID(s, true);
         }
