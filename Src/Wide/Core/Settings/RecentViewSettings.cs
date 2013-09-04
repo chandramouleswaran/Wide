@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.Commands;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
+using Microsoft.Practices.Unity;
 
 namespace Wide.Core.Settings
 {
@@ -26,13 +27,14 @@ namespace Wide.Core.Settings
         private List<string> menuGuids;
         private DelegateCommand<string> recentOpen;
         private IOpenFileService fileService;
+        private IUnityContainer _container;
 
-        public RecentViewSettings(IOpenFileService fileService)
+        public RecentViewSettings(IUnityContainer container)
         {
             recentMenu = new MenuItemViewModel("Recentl_y opened..", 100);
             menuGuids = new List<string>();
             recentOpen = new DelegateCommand<string>(ExecuteMethod);
-            this.fileService = fileService;
+            this._container = container;
         }
 
         [UserScopedSetting()]
@@ -80,6 +82,10 @@ namespace Wide.Core.Settings
 
         private void ExecuteMethod(string s)
         {
+            if (fileService == null)
+            {
+                fileService = _container.Resolve<IOpenFileService>();
+            }
             fileService.OpenFromID(s, true);
         }
 
@@ -109,7 +115,7 @@ namespace Wide.Core.Settings
         }
 
         [XmlIgnore]
-        public IReadOnlyList<RecentViewItem> RecentItems
+        public IReadOnlyList<IRecentViewItem> RecentItems
         {
             get
             {

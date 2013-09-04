@@ -9,13 +9,11 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using Wide.Interfaces.Controls;
-
-namespace Wide.Core.Settings
+namespace Wide.Interfaces.Settings
 {
-    public interface IToolbarPositionSettings
+    public interface IRecentViewItem
     {
-        //IReadOnlyList<ToolbarSettingItem> Toolbars { get; }
+        string ContentID { get; }
+        string DisplayValue { get; }
     }
 }

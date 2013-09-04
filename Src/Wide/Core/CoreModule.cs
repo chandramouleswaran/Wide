@@ -87,7 +87,6 @@ namespace Wide.Core
             _container.RegisterType<IRecentViewSettings, RecentViewSettings>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IWindowPositionSettings, WindowPositionSettings>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IToolbarPositionSettings, ToolbarPositionSettings>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IStatusbarService, WideStatusbar>(new ContainerControlledLifetimeManager());
@@ -116,6 +115,7 @@ namespace Wide.Core
                                          new InjectionParameter(typeof (IUnityContainer), _container)));
 
             _container.RegisterType<ISettingsManager, SettingsManager>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
 
             AppCommands();
             LoadSettings();
