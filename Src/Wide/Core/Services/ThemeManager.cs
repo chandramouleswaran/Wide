@@ -90,11 +90,12 @@ namespace Wide.Core.Services
                 appTheme.MergedDictionaries.Clear();
                 foreach (Uri uri in newTheme.UriList)
                 {
-                    theme.MergedDictionaries.Add(new ResourceDictionary {Source = uri});
+                    ResourceDictionary newDict = new ResourceDictionary {Source = uri};
                     if (uri.ToString().Contains("AvalonDock"))
                     {
-                        appTheme.MergedDictionaries.Add(new ResourceDictionary {Source = uri});
+                        appTheme.MergedDictionaries.Add(newDict);
                     }
+                    theme.MergedDictionaries.Add(newDict);
                 }
                 _logger.Log("Theme set to " + name, LogCategory.Info, LogPriority.None);
                 _eventAggregator.GetEvent<ThemeChangeEvent>().Publish(newTheme);

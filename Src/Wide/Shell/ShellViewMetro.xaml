@@ -7,6 +7,7 @@
                       xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                       xmlns:behaviours="clr-namespace:MahApps.Metro.Behaviours;assembly=MahApps.Metro"
                       xmlns:Converter="clr-namespace:Wide.Interfaces.Converters"
+                      xmlns:Utils="clr-namespace:Wide.Utils"
                       TitleForeground="#FF717171" 
                       TitleCaps="False" 
                       Title="{Binding Title}" 
@@ -20,23 +21,16 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="ThemeDictionary">
                     <ResourceDictionary.MergedDictionaries>
-                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
-                        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                        <ResourceDictionary
-                            Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                        <ResourceDictionary
-                            Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
-                        <ResourceDictionary
-                            Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightTheme.xaml" />                        
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
-                <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/ControlsMetro.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <avalonDock:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <local:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
             <Converter:NullObjectToVisibiltyConverter x:Key="nullToVisibilityConverter" />
             <Converter:BoolToInsertModeConverter x:Key="booleanToInsertModeConverter" />
             <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+            <Utils:DatabindingDebugConverter x:Key="bindDebug" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -115,21 +109,7 @@
                 <!--<avalonDock:DockingManager.Theme>
                     <avalonDock:VS2012Theme />
                 </avalonDock:DockingManager.Theme>-->
-                
-                <avalonDock:DockingManager.DocumentContextMenu>
-                    <ContextMenu ItemContainerStyle="{DynamicResource MetroMenuItem}" Style="{DynamicResource MetroContextMenu}">
-                        <ContextMenu.ItemsSource>
-                            <CompositeCollection>
-                                <CollectionContainer Collection="{Binding Path=Menus}" />
-                                <MenuItem Header="Close" Command="{Binding Path=CloseCommand}" />
-                                <MenuItem Header="Float" Command="{Binding Path=FloatCommand}" />
-                                <MenuItem Header="Close All But This" Command="{Binding Path=CloseAllButThisCommand}" />
-                                <MenuItem Header="Dock As Document" Command="{Binding Path=DockAsDocumentCommand}" />
-                            </CompositeCollection>
-                        </ContextMenu.ItemsSource>
-                    </ContextMenu>
-                </avalonDock:DockingManager.DocumentContextMenu>
-                
+
                 <avalonDock:DockingManager.LayoutItemTemplateSelector>
                     <local:PanesTemplateSelector>
                         <local:PanesTemplateSelector.ContentViewTemplate>

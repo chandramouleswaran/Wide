@@ -25,37 +25,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type ContextMenu}" x:Key="MetroContextMenu">
-        <Setter Property="Background" Value="{DynamicResource ControlOpenColorBrush}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource SeparatorColorBrush}" />
-        <Setter Property="Padding" Value="0,2,0,2" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ContextMenu}">
-                    <Border Margin="2" x:Name="Menu" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0"
-                            Effect="{DynamicResource StandardDropShadow}">
-                        <Border.Triggers>
-                            <EventTrigger RoutedEvent="Rectangle.Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity"
-                                                         Storyboard.TargetName="Menu" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Border.Triggers>
-                        <Grid>
-                            <ItemsPresenter Margin="{TemplateBinding Padding}" />
-                        </Grid>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-
     <!-- TopLevelHeader -->
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey}" TargetType="MenuItem">
         <Border Name="OuterBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent">
@@ -244,13 +213,11 @@
     <!-- MenuItem Style -->
     <Style x:Key="MetroMenuItem" TargetType="{x:Type MenuItem}">
         <Setter Property="Background" Value="{DynamicResource ControlOpenColorBrush}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ContentFontSize}" />
         <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlOpenColorBrush}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="8,2,10,2" />
-        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey}}" />
+        <Setter Property="Template" Value="{StaticResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey}}" />
         <Style.Resources>
             <!--Disabled all images placed inside a button - most common scenario-->
             <Style TargetType="Image">
@@ -272,22 +239,52 @@
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Padding" Value="7,2,8,3" />
                 <Setter Property="Template"
-                        Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey}}" />
+                        Value="{StaticResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey}}" />
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
                 <Setter Property="Padding" Value="7,2,8,3" />
                 <Setter Property="Template"
-                        Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey}}" />
+                        Value="{StaticResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey}}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuHeader">
                 <Setter Property="Padding" Value="2,3,2,3" />
                 <Setter Property="Template"
-                        Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey}}" />
+                        Value="{StaticResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey}}" />
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Padding" Value="2,3,2,3" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}" x:Key="MetroContextMenu">
+        <Setter Property="Background" Value="{DynamicResource ControlOpenColorBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlOpenColorBrush}" />
+        <Setter Property="Padding" Value="0,2,0,2" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border Margin="2" x:Name="Menu" Opacity="0" BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0"
+                            Effect="{DynamicResource StandardDropShadow}">
+                        <Border.Triggers>
+                            <EventTrigger RoutedEvent="Rectangle.Loaded">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity"
+                                                         Storyboard.TargetName="Menu" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Border.Triggers>
+                        <Grid>
+                            <ItemsPresenter Margin="{TemplateBinding Padding}" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="StandardMenu" TargetType="Menu">
