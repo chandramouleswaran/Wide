@@ -46,6 +46,7 @@ namespace Wide.Core.Settings
                         ToolbarSettingItem item = _loadDict[tb.Header];
                         tb.Band = item.Band;
                         tb.BandIndex = item.BandIndex;
+                        tb.IsChecked = item.IsChecked;
                         tb.Refresh();
                     }
                 }
