@@ -26,7 +26,7 @@ namespace Wide.Core.Services
     /// <summary>
     /// The open file service
     /// </summary>
-    internal sealed class OpenFileService : IOpenFileService
+    internal sealed class OpenDocumentService : IOpenDocumentService
     {
         /// <summary>
         /// The injected container
@@ -55,7 +55,7 @@ namespace Wide.Core.Services
         /// <param name="container">The injected container</param>
         /// <param name="eventAggregator">The injected event aggregator</param>
         /// <param name="logger">The injected logger</param>
-        public OpenFileService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger, AbstractWorkspace workspace, IContentHandlerRegistry handler, IRecentViewSettings recentSettings)
+        public OpenDocumentService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger, AbstractWorkspace workspace, IContentHandlerRegistry handler, IRecentViewSettings recentSettings)
         {
             _container = container;
             _eventAggregator = eventAggregator;
@@ -66,7 +66,7 @@ namespace Wide.Core.Services
             _recentSettings = recentSettings as RecentViewSettings;
         }
 
-        #region IOpenFileService Members
+        #region IOpenDocumentService Members
         /// <summary>
         /// Opens the object - if object is null, show a open file dialog to select a file to open
         /// </summary>

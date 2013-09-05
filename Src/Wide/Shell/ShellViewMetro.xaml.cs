@@ -69,7 +69,7 @@ namespace Wide.Shell
                                                                     if (document != null)
                                                                     {
                                                                         var fileService =
-                                                                            _container.Resolve<IOpenFileService>();
+                                                                            _container.Resolve<IOpenDocumentService>();
                                                                         ContentViewModel model =
                                                                             fileService.OpenFromID(e.Model.ContentId);
                                                                         if (model != null)

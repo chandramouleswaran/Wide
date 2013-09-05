@@ -232,7 +232,7 @@ namespace WideMD.Core
 
         private void OpenModule()
         {
-            var service = _container.Resolve<IOpenFileService>();
+            var service = _container.Resolve<IOpenDocumentService>();
             service.Open();
         }
 
