@@ -115,6 +115,21 @@
                 <!--<avalonDock:DockingManager.Theme>
                     <avalonDock:VS2012Theme />
                 </avalonDock:DockingManager.Theme>-->
+                
+                <avalonDock:DockingManager.DocumentContextMenu>
+                    <ContextMenu ItemContainerStyle="{DynamicResource MetroMenuItem}" Style="{DynamicResource MetroContextMenu}">
+                        <ContextMenu.ItemsSource>
+                            <CompositeCollection>
+                                <CollectionContainer Collection="{Binding Path=Menus}" />
+                                <MenuItem Header="Close" Command="{Binding Path=CloseCommand}" />
+                                <MenuItem Header="Float" Command="{Binding Path=FloatCommand}" />
+                                <MenuItem Header="Close All But This" Command="{Binding Path=CloseAllButThisCommand}" />
+                                <MenuItem Header="Dock As Document" Command="{Binding Path=DockAsDocumentCommand}" />
+                            </CompositeCollection>
+                        </ContextMenu.ItemsSource>
+                    </ContextMenu>
+                </avalonDock:DockingManager.DocumentContextMenu>
+                
                 <avalonDock:DockingManager.LayoutItemTemplateSelector>
                     <local:PanesTemplateSelector>
                         <local:PanesTemplateSelector.ContentViewTemplate>

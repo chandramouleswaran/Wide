@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Wide.Interfaces.Controls;
 
 namespace Wide.Core.Settings
 {
     [Serializable]
-    public class ToolbarSettingItem : IToolbar
+    public sealed class ToolbarSettingItem : IToolbar
     {
         public ToolbarSettingItem()
         {
@@ -19,6 +20,7 @@ namespace Wide.Core.Settings
             this.BandIndex = toolbar.BandIndex;
             this.Band = toolbar.Band;
             this.Header = toolbar.Header;
+            this.IsChecked = toolbar.IsChecked;
         }
 
         public int Band { get; set; }
@@ -26,6 +28,8 @@ namespace Wide.Core.Settings
         public int BandIndex { get; set; }
 
         public string Header { get; set; }
+
+        public bool IsChecked { get; set; }
 
         public override bool Equals(object obj)
         {

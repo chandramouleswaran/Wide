@@ -30,5 +30,11 @@ namespace Wide.Interfaces.Controls
         /// </summary>
         /// <value>The index of the band.</value>
         int BandIndex { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this toolbar is visible.
+        /// </summary>
+        /// <value><c>true</c> if this toolbar is visible; otherwise, <c>false</c>.</value>
+        bool IsChecked { get; }
     }
 }
