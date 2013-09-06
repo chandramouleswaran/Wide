@@ -25,6 +25,8 @@ using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
 using Wide.Interfaces.Themes;
 using WideMD.Core.Settings;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace WideMD.Core
 {
@@ -99,9 +101,10 @@ namespace WideMD.Core
                                                                               {Message = "Themes.."});
             var manager = _container.Resolve<IThemeManager>();
             var themeSettings = _container.Resolve<IThemeSettings>();
+            var win = _container.Resolve<IShell>() as Window;
             manager.AddTheme(new LightTheme());
             manager.AddTheme(new DarkTheme());
-            manager.SetCurrent(themeSettings.SelectedTheme);
+            win.Dispatcher.InvokeAsync(() => manager.SetCurrent(themeSettings.SelectedTheme));
         }
 
         private void LoadCommands()
@@ -264,13 +267,14 @@ namespace WideMD.Core
         {
             var manager = _container.Resolve<IThemeManager>();
             var menuService = _container.Resolve<IMenuService>();
+            var win = _container.Resolve<IShell>() as Window;
             MenuItemViewModel mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
 
             if (manager.CurrentTheme.Name != s)
             {
                 if (mvm != null) 
                     mvm.IsChecked = false;
-                manager.SetCurrent(s);
+                win.Dispatcher.InvokeAsync(() => manager.SetCurrent(s));
             }
             else
             {

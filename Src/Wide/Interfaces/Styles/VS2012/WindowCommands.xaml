@@ -24,8 +24,8 @@
                                         <ControlTemplate TargetType="{x:Type Button}">
                                             <Grid Background="{TemplateBinding Background}">
                                                 <ContentPresenter x:Name="contentPresenter"
-                                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  HorizontalAlignment="Center"
+                                                                  VerticalAlignment="Center"
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="0.75"
                                                                   Margin="11,1,11,1" />
 
