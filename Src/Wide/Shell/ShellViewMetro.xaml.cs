@@ -22,6 +22,7 @@ using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
+using Wide.Interfaces.Converters;
 
 namespace Wide.Shell
 {
@@ -35,6 +36,7 @@ namespace Wide.Shell
         private ILoggerService _logger;
         private IWorkspace _workspace;
         private ContextMenu _docContextMenu;
+        private MultiBinding _itemSourceBinding;
 
         public ShellViewMetro(IUnityContainer container, IEventAggregator eventAggregator)
         {
@@ -46,8 +48,15 @@ namespace Wide.Shell
             _eventAggregator.GetEvent<ThemeChangeEvent>().Subscribe(ThemeChanged);
             _docContextMenu = new ContextMenu();
             dockManager.DocumentContextMenu = _docContextMenu;
-            var itemSourceBinding = new Binding("Model.Menus");
-            _docContextMenu.SetBinding(ContextMenu.ItemsSourceProperty, itemSourceBinding);
+            _docContextMenu.ContextMenuOpening += _docContextMenu_ContextMenuOpening;
+            _itemSourceBinding = new MultiBinding();
+            _itemSourceBinding.Converter = new DocumentContextMenuMixingConverter();
+            var origModel = new Binding(".");
+            var docMenus = new Binding("Model.Menus");
+            _itemSourceBinding.Bindings.Add(origModel);
+            _itemSourceBinding.Bindings.Add(docMenus);
+            _itemSourceBinding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+            _docContextMenu.SetBinding(ContextMenu.ItemsSourceProperty, _itemSourceBinding);
         }
 
         #region IShell Members
@@ -107,12 +116,18 @@ namespace Wide.Shell
         #endregion
 
         #region Events
+        void _docContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            MultiBindingExpression b = BindingOperations.GetMultiBindingExpression(_docContextMenu, ContextMenu.ItemsSourceProperty);
+            b.UpdateTarget();
+        }
+        
         private void ThemeChanged(ITheme theme)
         {
             dockManager.DocumentContextMenu = null;
             dockManager.DocumentContextMenu = _docContextMenu;
             _docContextMenu.Style = FindResource("MetroContextMenu") as Style;
-            _docContextMenu.ItemContainerStyle = FindResource("MetroMenuItem") as Style;
+            _docContextMenu.ItemContainerStyle = FindResource("MetroMenuStyle") as Style;
         }
 
         private void MainWindow_Unloaded(object sender, RoutedEventArgs e)

@@ -91,6 +91,12 @@ namespace Wide.Interfaces
         public virtual bool IsVisible { get; protected internal set; }
 
         /// <summary>
+        /// Gets a value indicating whether to hide this menu item when disabled.
+        /// </summary>
+        /// <value><c>true</c> if this instance should be hidden when disabled; otherwise, <c>false</c>.</value>
+        public virtual bool HideDisabled { get; protected internal set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this instance is checked.
         /// </summary>
         /// <value><c>true</c> if this instance is checked; otherwise, <c>false</c>.</value>
@@ -152,7 +158,7 @@ namespace Wide.Interfaces
         /// <param name="gesture">The gesture.</param>
         /// <param name="isCheckable">if set to <c>true</c> acts as a checkable menu.</param>
         protected AbstractMenuItem(string header, int priority, ImageSource icon = null, ICommand command = null,
-                                KeyGesture gesture = null, bool isCheckable = false)
+                                KeyGesture gesture = null, bool isCheckable = false, bool hideDisabled = false)
         {
             Priority = priority;
             IsSeparator = false;
@@ -160,6 +166,7 @@ namespace Wide.Interfaces
             Key = header;
             Command = command;
             IsCheckable = isCheckable;
+            HideDisabled = hideDisabled;
             Icon = icon;
             if (gesture != null && command != null)
             {

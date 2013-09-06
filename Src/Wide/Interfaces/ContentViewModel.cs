@@ -101,7 +101,11 @@ namespace Wide.Interfaces
         /// <value>The view.</value>
         public virtual UserControl View { get; protected internal set; }
 
-        public IReadOnlyList<string> Menus {get{return new List<string>(){"a","b","c"};}}
+        /// <summary>
+        /// The content menu that should be available for the document pane
+        /// </summary>
+        /// <value>The view.</value>
+        public IReadOnlyList<AbstractMenuItem> Menus { get { return null; } }
 
         /// <summary>
         /// The title of the document

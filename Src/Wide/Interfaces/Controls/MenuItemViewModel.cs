@@ -28,10 +28,11 @@ namespace Wide.Interfaces
         /// <param name="command">The command.</param>
         /// <param name="gesture">The gesture.</param>
         /// <param name="isCheckable">if set to <c>true</c> this menu acts as a checkable menu.</param>
+        /// <param name="hideDisabled">if set to <c>true</c> this menu is not visible when disabled.</param>
         /// <param name="container">The container.</param>
         public MenuItemViewModel(string header, int priority, ImageSource icon = null, ICommand command = null,
-                                 KeyGesture gesture = null, bool isCheckable = false, IUnityContainer container = null)
-            : base(header, priority, icon, command, gesture, isCheckable)
+                                 KeyGesture gesture = null, bool isCheckable = false, bool hideDisabled = false, IUnityContainer container = null)
+            : base(header, priority, icon, command, gesture, isCheckable, hideDisabled)
         {
         }
 
