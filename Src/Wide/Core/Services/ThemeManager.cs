@@ -93,7 +93,11 @@ namespace Wide.Core.Services
                 foreach (Uri uri in newTheme.UriList)
                 {
                     ResourceDictionary newDict = new ResourceDictionary {Source = uri};
-                    if (uri.ToString().Contains("AvalonDock"))
+                    /*AvalonDock and menu style needs to move to the application
+                     * 1. AvalonDock needs global styles as floatable windows can be created
+                     * 2. Menu's need global style as context menu can be created
+                    */
+                    if (uri.ToString().Contains("AvalonDock") || uri.ToString().Contains("Wide;component/Interfaces/Styles/VS2012/Menu.xaml"))
                     {
                         appTheme.MergedDictionaries.Add(newDict);
                     }

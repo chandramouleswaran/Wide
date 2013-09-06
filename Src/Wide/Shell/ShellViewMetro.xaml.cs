@@ -106,6 +106,7 @@ namespace Wide.Shell
 
         #endregion
 
+        #region Events
         private void ThemeChanged(ITheme theme)
         {
             dockManager.DocumentContextMenu = null;
@@ -142,7 +143,9 @@ namespace Wide.Shell
             _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(cvm);
             if(cvm != null) Logger.Log("Active document changed to " + cvm.Title, LogCategory.Info, LogPriority.None);
         }
+        #endregion
 
+        #region Property
         private ILoggerService Logger
         {
             get
@@ -153,5 +156,6 @@ namespace Wide.Shell
                 return _logger;
             }
         }
+        #endregion
     }
 }
