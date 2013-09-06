@@ -77,17 +77,19 @@ namespace Wide.Core.Services
                 ResourceDictionary appTheme = Application.Current.Resources.MergedDictionaries.Count > 0
                                                   ? Application.Current.Resources.MergedDictionaries[0]
                                                   : null;
+                theme.BeginInit();
                 theme.MergedDictionaries.Clear();
                 if (appTheme != null)
                 {
+                    appTheme.BeginInit();
                     appTheme.MergedDictionaries.Clear();
                 }
                 else
                 {
                     appTheme = new ResourceDictionary();
+                    appTheme.BeginInit();
                     Application.Current.Resources.MergedDictionaries.Add(appTheme);
                 }
-                appTheme.MergedDictionaries.Clear();
                 foreach (Uri uri in newTheme.UriList)
                 {
                     ResourceDictionary newDict = new ResourceDictionary {Source = uri};
@@ -95,8 +97,13 @@ namespace Wide.Core.Services
                     {
                         appTheme.MergedDictionaries.Add(newDict);
                     }
-                    theme.MergedDictionaries.Add(newDict);
+                    else
+                    {
+                        theme.MergedDictionaries.Add(newDict);
+                    }
                 }
+                appTheme.EndInit();
+                theme.EndInit();
                 _logger.Log("Theme set to " + name, LogCategory.Info, LogPriority.None);
                 _eventAggregator.GetEvent<ThemeChangeEvent>().Publish(newTheme);
             }

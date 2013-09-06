@@ -12,8 +12,8 @@
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid x:Name="grid" Background="{TemplateBinding Background}">
                         <ContentPresenter x:Name="contentPresenter"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          HorizontalAlignment="Center" Margin="{TemplateBinding Padding}"
+                                          VerticalAlignment="Center"
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" Opacity="1" />
                     </Grid>
                     <ControlTemplate.Triggers>

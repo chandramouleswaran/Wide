@@ -267,13 +267,14 @@ namespace WideMD.Core
         {
             var manager = _container.Resolve<IThemeManager>();
             var menuService = _container.Resolve<IMenuService>();
+            var win = _container.Resolve<IShell>() as Window;
             MenuItemViewModel mvm = menuService.Get("_View").Get("Themes").Get(manager.CurrentTheme.Name) as MenuItemViewModel;
 
             if (manager.CurrentTheme.Name != s)
             {
                 if (mvm != null) 
                     mvm.IsChecked = false;
-                manager.SetCurrent(s);
+                win.Dispatcher.InvokeAsync(() => manager.SetCurrent(s));
             }
             else
             {

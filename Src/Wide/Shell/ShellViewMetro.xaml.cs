@@ -11,12 +11,15 @@ using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Xceed.Wpf.AvalonDock;
+using Xceed.Wpf.AvalonDock.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 
@@ -31,6 +34,7 @@ namespace Wide.Shell
         private IEventAggregator _eventAggregator;
         private ILoggerService _logger;
         private IWorkspace _workspace;
+        private ContextMenu _docContextMenu;
 
         public ShellViewMetro(IUnityContainer container, IEventAggregator eventAggregator)
         {
@@ -39,6 +43,11 @@ namespace Wide.Shell
             _eventAggregator = eventAggregator;
             Loaded += MainWindow_Loaded;
             Unloaded += MainWindow_Unloaded;
+            _eventAggregator.GetEvent<ThemeChangeEvent>().Subscribe(ThemeChanged);
+            _docContextMenu = new ContextMenu();
+            dockManager.DocumentContextMenu = _docContextMenu;
+            var itemSourceBinding = new Binding("Model.Menus");
+            _docContextMenu.SetBinding(ContextMenu.ItemsSourceProperty, itemSourceBinding);
         }
 
         #region IShell Members
@@ -96,6 +105,14 @@ namespace Wide.Shell
         }
 
         #endregion
+
+        private void ThemeChanged(ITheme theme)
+        {
+            dockManager.DocumentContextMenu = null;
+            dockManager.DocumentContextMenu = _docContextMenu;
+            _docContextMenu.Style = FindResource("MetroContextMenu") as Style;
+            _docContextMenu.ItemContainerStyle = FindResource("MetroMenuItem") as Style;
+        }
 
         private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
         {
