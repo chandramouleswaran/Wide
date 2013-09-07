@@ -104,6 +104,7 @@ namespace Wide.Core
                                                                              new InjectionParameter(
                                                                                  typeof (KeyGesture), null),
                                                                              new InjectionParameter(typeof (bool), false),
+                                                                             new InjectionParameter(typeof(bool), false),
                                                                              new InjectionParameter(
                                                                                  typeof (IUnityContainer), _container)));
             _container.RegisterType<ToolbarViewModel>(

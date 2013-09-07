@@ -98,6 +98,7 @@
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Interfaces\Converters\DocumentContextMenuMixingConverter.cs" />
     <Compile Include="Interfaces\Settings\IRecentViewItem.cs" />
     <Compile Include="Interfaces\Settings\IToolbarPositionSettings.cs" />
     <Compile Include="Core\Settings\ToolbarSettingItem.cs" />

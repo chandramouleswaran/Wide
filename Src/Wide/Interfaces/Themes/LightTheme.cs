@@ -31,7 +31,8 @@ namespace Wide.Interfaces.Themes
                               new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"),
                               new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightColors.xaml"),
                               new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightTheme.xaml"),
-                              new Uri("pack://application:,,,/AvalonDock.Themes.VS2012;component/LightTheme.xaml")
+                              new Uri("pack://application:,,,/AvalonDock.Themes.VS2012;component/LightTheme.xaml"),
+                              new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/Menu.xaml")
                           };
         }
 
