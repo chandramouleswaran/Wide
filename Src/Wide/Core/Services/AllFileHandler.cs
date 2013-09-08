@@ -53,8 +53,6 @@ namespace Wide.Core.Services
             var model = _container.Resolve<TextModel>();
             var view = _container.Resolve<TextView>();
 
-            //Model details
-            model.PropertyChanged += vm.ModelOnPropertyChanged;
             _loggerService.Log("Creating a new simple file using AllFileHandler", LogCategory.Info, LogPriority.Low);
 
             //Clear the undo stack
@@ -121,7 +119,6 @@ namespace Wide.Core.Services
                 var view = _container.Resolve<TextView>();
 
                 //Model details
-                model.PropertyChanged += vm.ModelOnPropertyChanged;
                 model.SetLocation(info);
                 try
                 {

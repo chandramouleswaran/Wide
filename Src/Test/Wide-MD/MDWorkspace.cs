@@ -17,6 +17,8 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
+using System.ComponentModel;
+using Wide.Interfaces.Services;
 
 namespace WideMD
 {
@@ -25,7 +27,7 @@ namespace WideMD
         private string _document;
         private const string _title = "Wide MD";
 
-        public MDWorkspace(IUnityContainer container) : base(container)
+        public MDWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger) : base(container,eventAggregator,logger)
         {
             IEventAggregator aggregator = container.Resolve<IEventAggregator>();
             aggregator.GetEvent<ActiveContentChangedEvent>().Subscribe(ContentChanged);
@@ -58,6 +60,12 @@ namespace WideMD
         {
             _document = model == null ? "" : model.Title;
             RaisePropertyChanged("Title");
+        }
+
+        protected override void ModelChangedEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            ContentChanged(this.ActiveDocument);
+            base.ModelChangedEventHandler(sender, e);
         }
     }
 }

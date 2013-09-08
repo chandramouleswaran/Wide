@@ -1,4 +1,4 @@
-# Wide 
+# Wide
 
 ### What is this?
 

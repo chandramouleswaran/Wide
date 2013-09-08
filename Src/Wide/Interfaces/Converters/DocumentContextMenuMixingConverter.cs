@@ -1,31 +1,44 @@
-﻿using System;
+﻿#region License
+// Copyright (c) 2013 Chandramouleswaran Ravichandran
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#endregion
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
 using Xceed.Wpf.AvalonDock.Controls;
 
 namespace Wide.Interfaces.Converters
 {
-    class DocumentContextMenuMixingConverter : IMultiValueConverter 
+    class DocumentContextMenuMixingConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             AbstractMenuItem root = new MenuItemViewModel("$CROOT$", 1);
             LayoutDocumentItem doc = values[0] as LayoutDocumentItem;
             int i = 1;
-            IReadOnlyList<AbstractMenuItem> menus = values[1] as IReadOnlyList<AbstractMenuItem>;
+            IReadOnlyCollection<AbstractMenuItem> menus = values[1] as IReadOnlyCollection<AbstractMenuItem>;
             ContextMenu cm = Application.Current.FindResource("AvalonDock_ThemeVS2012_DocumentContextMenu") as ContextMenu;
             if (cm != null)
             {
                 foreach (MenuItem mi in cm.Items)
                 {
                     root.Add(FromMenuItem(mi, doc, i++));
+                }
+            }
+            if(menus != null)
+            {
+                foreach (AbstractMenuItem abstractMenuItem in menus)
+                {
+                    root.Add(abstractMenuItem);
                 }
             }
             return root.Children;

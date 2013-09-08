@@ -139,6 +139,7 @@ namespace Wide.Interfaces
         public virtual void Refresh()
         {
             this.RaisePropertyChanged("Header");
+            this.RaisePropertyChanged("Command");
             this.RaisePropertyChanged("Children");
             this.RaisePropertyChanged("Icon");
             this.RaisePropertyChanged("ToolTip");

@@ -8,6 +8,7 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -49,13 +50,16 @@ namespace Wide.Shell
             _docContextMenu = new ContextMenu();
             dockManager.DocumentContextMenu = _docContextMenu;
             _docContextMenu.ContextMenuOpening += _docContextMenu_ContextMenuOpening;
+            _docContextMenu.Opened += _docContextMenu_Opened;
             _itemSourceBinding = new MultiBinding();
             _itemSourceBinding.Converter = new DocumentContextMenuMixingConverter();
             var origModel = new Binding(".");
             var docMenus = new Binding("Model.Menus");
             _itemSourceBinding.Bindings.Add(origModel);
             _itemSourceBinding.Bindings.Add(docMenus);
-            _itemSourceBinding.UpdateSourceTrigger = UpdateSourceTrigger.LostFocus;
+            origModel.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            docMenus.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            _itemSourceBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             _docContextMenu.SetBinding(ContextMenu.ItemsSourceProperty, _itemSourceBinding);
         }
 
@@ -116,7 +120,29 @@ namespace Wide.Shell
         #endregion
 
         #region Events
+        void _docContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            RefreshMenuBinding();
+        }
+
         void _docContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            /* When you right click a document - move the focus to that document, so that commands on the context menu
+             * which are based on the ActiveDocument work correctly. Example: Save.
+             */
+            LayoutDocumentItem doc = _docContextMenu.DataContext as LayoutDocumentItem;
+            if (doc != null)
+            {
+                ContentViewModel model = doc.Model as ContentViewModel;
+                if (model != null && model != dockManager.ActiveContent)
+                {
+                    dockManager.ActiveContent = model;
+                }
+            }
+            e.Handled = false;
+        }
+
+        private void RefreshMenuBinding()
         {
             MultiBindingExpression b = BindingOperations.GetMultiBindingExpression(_docContextMenu, ContextMenu.ItemsSourceProperty);
             b.UpdateTarget();
@@ -124,6 +150,7 @@ namespace Wide.Shell
         
         private void ThemeChanged(ITheme theme)
         {
+            //HACK: Reset the context menu or else old menu status is retained and does not theme correctly
             dockManager.DocumentContextMenu = null;
             dockManager.DocumentContextMenu = _docContextMenu;
             _docContextMenu.Style = FindResource("MetroContextMenu") as Style;
@@ -151,12 +178,16 @@ namespace Wide.Shell
             _eventAggregator.GetEvent<WindowClosingEvent>().Publish(this);
         }
 
-        private void dockManager_ActiveContentChanged(object sender, EventArgs e)
+        private void ContentControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            DockingManager manager = sender as DockingManager;
-            ContentViewModel cvm = manager.ActiveContent as ContentViewModel;
-            _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(cvm);
-            if(cvm != null) Logger.Log("Active document changed to " + cvm.Title, LogCategory.Info, LogPriority.None);
+            //HACK: Refresh the content control because in AutoHide mode this disappears. Needs to be fixed in AvalonDock.
+            ContentControl c = sender as ContentControl;
+            if (c != null)
+            {
+                var backup = c.Content;
+                c.Content = null;
+                c.Content = backup;
+            }
         }
         #endregion
 

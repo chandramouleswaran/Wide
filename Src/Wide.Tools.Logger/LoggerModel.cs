@@ -23,7 +23,7 @@ namespace Wide.Tools.Logger
 
         public void AddLog(ILoggerService logger)
         {
-            _text += logger.Message + "\n";
+            _text = logger.Message + "\n" + _text;
             RaisePropertyChanged("Text");
         }
     }

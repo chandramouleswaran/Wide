@@ -256,7 +256,9 @@ namespace WideMD.Core
         private void SaveDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            ICommandManager manager = _container.Resolve<ICommandManager>();
             workspace.ActiveDocument.Handler.SaveContent(workspace.ActiveDocument);
+            manager.Refresh();
         }
 
         #endregion
