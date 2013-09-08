@@ -24,8 +24,9 @@ namespace Wide.Core.TextDocument
         /// <param name="workspace">The injected workspace.</param>
         /// <param name="commandManager">The injected command manager.</param>
         /// <param name="logger">The injected logger.</param>
-        public TextViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger)
-            : base(workspace, commandManager, logger)
+        /// <param name="menuService">The menu service.</param>
+        public TextViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger, IMenuService menuService)
+            : base(workspace, commandManager, logger, menuService)
         {
         }
 

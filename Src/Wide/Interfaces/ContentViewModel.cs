@@ -10,7 +10,6 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -31,10 +30,13 @@ namespace Wide.Interfaces
         protected static int Count = 1;
 
         /// <summary>
+        /// The model
+        /// </summary>
+        protected ContentModel _model;
+        /// <summary>
         /// The command manager
         /// </summary>
         protected ICommandManager _commandManager;
-
         /// <summary>
         /// The content id of the document
         /// </summary>
@@ -63,6 +65,10 @@ namespace Wide.Interfaces
         /// The workspace instance
         /// </summary>
         protected IWorkspace _workspace;
+        /// <summary>
+        /// The menu service
+        /// </summary>
+        protected IMenuService _menuService;
 
         #endregion
 
@@ -73,11 +79,12 @@ namespace Wide.Interfaces
         /// <param name="workspace">The injected workspace.</param>
         /// <param name="commandManager">The injected command manager.</param>
         /// <param name="logger">The injected logger.</param>
-        protected ContentViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger)
+        protected ContentViewModel(AbstractWorkspace workspace, ICommandManager commandManager, ILoggerService logger, IMenuService menuService)
         {
             _workspace = workspace;
             _commandManager = commandManager;
             _logger = logger;
+            _menuService = menuService;
             CloseCommand = new DelegateCommand<object>(Close, CanClose);
         }
         #endregion
@@ -93,7 +100,32 @@ namespace Wide.Interfaces
         /// The content model
         /// </summary>
         /// <value>The model.</value>
-        public virtual ContentModel Model { get; protected internal set; }
+        public virtual ContentModel Model
+        {
+            get { return _model; }
+            protected internal set
+            {
+                if(_model != null)
+                {
+                    _model.PropertyChanged -= Model_PropertyChanged;
+                }
+                if(value != null)
+                {
+                    _model = value;
+                    _model.PropertyChanged += Model_PropertyChanged;
+                }
+            }
+        }
+
+        protected virtual void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged("Model");
+            RaisePropertyChanged("Title");
+            RaisePropertyChanged("ContentId");
+            RaisePropertyChanged("Tooltip");
+            RaisePropertyChanged("IsSelected");
+            RaisePropertyChanged("IsActive");
+        }
 
         /// <summary>
         /// The content view
@@ -105,7 +137,16 @@ namespace Wide.Interfaces
         /// The content menu that should be available for the document pane
         /// </summary>
         /// <value>The view.</value>
-        public IReadOnlyList<AbstractMenuItem> Menus { get { return null; } }
+        public IReadOnlyCollection<AbstractMenuItem> Menus
+        {
+            get
+            {
+                AbstractMenuItem item = _menuService.Get("_File").Get("_Save") as AbstractMenuItem;
+                List<AbstractMenuItem> items = new List<AbstractMenuItem>();
+                items.Add(item);
+                return items.AsReadOnly(); 
+            }
+        }
 
         /// <summary>
         /// The title of the document
@@ -210,16 +251,6 @@ namespace Wide.Interfaces
         /// </summary>
         /// <value>The handler.</value>
         public IContentHandler Handler { get; protected internal set; }
-
-        /// <summary>
-        /// The property changed event of the Model.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="propertyChangedEventArgs">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-        public virtual void ModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
-        {
-            RaisePropertyChanged("Title");
-        }
 
         #endregion
 

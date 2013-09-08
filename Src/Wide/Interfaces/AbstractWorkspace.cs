@@ -8,14 +8,15 @@
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
+using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 
 namespace Wide.Interfaces
@@ -31,10 +32,17 @@ namespace Wide.Interfaces
         /// </summary>
         private readonly IUnityContainer _container;
         /// <summary>
+        /// The injected event aggregator
+        /// </summary>
+        private readonly IEventAggregator _eventAggregator;
+        /// <summary>
+        /// The injected container
+        /// </summary>
+        private readonly ILoggerService _logger;
+        /// <summary>
         /// The active document
         /// </summary>
         private ContentViewModel _activeDocument;
-
         /// <summary>
         /// The injected command manager
         /// </summary>
@@ -50,7 +58,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// The toolbar service
         /// </summary>
-        protected IToolbarService _toolbarService;
+        protected AbstractToolbar _toolbarService;
 
         /// <summary>
         /// The status bar service
@@ -65,18 +73,22 @@ namespace Wide.Interfaces
 
         #region CTOR
         /// <summary>
-        /// Initializes a new instance of the <see cref="AbstractWorkspace"/> class.
+        /// Initializes a new instance of the <see cref="AbstractWorkspace" /> class.
         /// </summary>
         /// <param name="container">The injected container.</param>
-        protected AbstractWorkspace(IUnityContainer container)
+        /// <param name="eventAggregator">The event aggregator.</param>
+        /// <param name="logger">The logger.</param>
+        protected AbstractWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
         {
             _container = container;
+            _eventAggregator = eventAggregator;
+            _logger = logger;
             _docs = new ObservableCollection<ContentViewModel>();
-            _docs.CollectionChanged += _docs_CollectionChanged;
+            _docs.CollectionChanged += Docs_CollectionChanged;
             _tools = new ObservableCollection<ToolViewModel>();
             _menus = _container.Resolve<IMenuService>() as MenuItemViewModel;
             _menus.PropertyChanged += _menus_PropertyChanged;
-            _toolbarService = _container.Resolve<IToolbarService>();
+            _toolbarService = _container.Resolve<IToolbarService>() as AbstractToolbar;
             _statusbarService = _container.Resolve<IStatusbarService>();
             _commandManager = _container.Resolve<ICommandManager>();
         }
@@ -98,7 +110,7 @@ namespace Wide.Interfaces
         /// <value>The tool bar tray.</value>
         public ToolBarTray ToolBarTray
         {
-            get { return _toolbarService.ToolBarTray; }
+            get { return (_toolbarService as IToolbarService).ToolBarTray; }
         }
 
         public IStatusbarService StatusBar
@@ -143,7 +155,8 @@ namespace Wide.Interfaces
                     RaisePropertyChanged("ActiveDocument");
                     _commandManager.Refresh();
                     _menus.Refresh();
-                    //TODO: Implement pub/sub Active document changed event
+                    _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(_activeDocument);
+                    _logger.Log("Active document changed to " + _activeDocument.Title, LogCategory.Info, LogPriority.None);
                 }
             }
         }
@@ -209,13 +222,37 @@ namespace Wide.Interfaces
         }
 
 
-        void _docs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        protected void Docs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+            if (e.OldItems != null)
+            {
+                foreach (INotifyPropertyChanged item in e.OldItems)
+                    item.PropertyChanged -= ModelChangedEventHandler;
+            }
+
+            if (e.NewItems != null)
+            {
+                foreach (INotifyPropertyChanged item in e.NewItems)
+                    item.PropertyChanged += ModelChangedEventHandler;
+            }
+
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 if (_docs.Count == 0)
                     _activeDocument = null;
             }
+        }
+
+        /// <summary>
+        /// The changed event handler when a property on the model changes.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected virtual void ModelChangedEventHandler(object sender, PropertyChangedEventArgs e)
+        {
+            _commandManager.Refresh();
+            _menus.Refresh();
+            _toolbarService.Refresh();
         }
     }
 }

@@ -54,7 +54,6 @@ namespace WideMD.Core
             var view = _container.Resolve<MDView>();
 
             //Model details
-            model.PropertyChanged += vm.ModelOnPropertyChanged;
             _loggerService.Log("Creating a new simple file using MDHandler", LogCategory.Info, LogPriority.Low);
 
             //Clear the undo stack
@@ -105,7 +104,6 @@ namespace WideMD.Core
                 var view = _container.Resolve<MDView>();
 
                 //Model details
-                model.PropertyChanged += vm.ModelOnPropertyChanged;
                 model.SetLocation(info);
                 try
                 {

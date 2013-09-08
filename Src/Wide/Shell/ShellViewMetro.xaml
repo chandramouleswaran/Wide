@@ -110,8 +110,7 @@
             <!--The magical avalon dock-->
             <avalonDock:DockingManager x:Name="dockManager" AnchorablesSource="{Binding Tools}"
                                        DocumentsSource="{Binding Documents}"
-                                       ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}" 
-                                       ActiveContentChanged="dockManager_ActiveContentChanged">
+                                       ActiveContent="{Binding ActiveDocument, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}">
                 <!--<avalonDock:DockingManager.Theme>
                     <avalonDock:VS2012Theme />
                 </avalonDock:DockingManager.Theme>-->
@@ -128,12 +127,12 @@
                     <local:PanesTemplateSelector>
                         <local:PanesTemplateSelector.ContentViewTemplate>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
+                                <ContentPresenter Content="{Binding Path=View, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                             </DataTemplate>
                         </local:PanesTemplateSelector.ContentViewTemplate>
                         <local:PanesTemplateSelector.ToolViewTemplate>
                             <DataTemplate>
-                                <ContentPresenter Content="{Binding View, UpdateSourceTrigger=PropertyChanged}" />
+                                <ContentControl Content="{Binding Path=View}" IsVisibleChanged="ContentControl_IsVisibleChanged" />
                             </DataTemplate>
                         </local:PanesTemplateSelector.ToolViewTemplate>
                     </local:PanesTemplateSelector>
@@ -145,8 +144,7 @@
                             <Style TargetType="{x:Type avalonDock:LayoutAnchorableItem}">
                                 <Setter Property="Title" Value="{Binding Model.Title, Mode=TwoWay}" />
                                 <Setter Property="IconSource" Value="{Binding Model.IconSource}" />
-                                <Setter Property="Visibility"
-                                        Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}" />
+                                <Setter Property="Visibility" Value="{Binding Model.IsVisible, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}" />
                                 <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                                 <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
                                 <Setter Property="IsActive" Value="{Binding Model.IsActive, Mode=TwoWay}" />
