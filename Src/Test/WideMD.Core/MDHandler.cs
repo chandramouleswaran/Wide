@@ -158,7 +158,8 @@ namespace WideMD.Core
 
             if (mdViewModel == null)
             {
-                _loggerService.Log("ContentViewModel needs to be a MDViewModel to save details", LogCategory.Exception, LogPriority.High);
+                _loggerService.Log("ContentViewModel needs to be a MDViewModel to save details", LogCategory.Exception,
+                                   LogPriority.High);
                 throw new ArgumentException("ContentViewModel needs to be a MDViewModel to save details");
             }
 
@@ -166,7 +167,8 @@ namespace WideMD.Core
 
             if (mdModel == null)
             {
-                _loggerService.Log("MDViewModel does not have a MDModel which should have the text", LogCategory.Exception, LogPriority.High);
+                _loggerService.Log("MDViewModel does not have a MDModel which should have the text",
+                                   LogCategory.Exception, LogPriority.High);
                 throw new ArgumentException("MDViewModel does not have a MDModel which should have the text");
             }
 

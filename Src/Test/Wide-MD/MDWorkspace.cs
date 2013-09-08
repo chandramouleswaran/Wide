@@ -27,7 +27,8 @@ namespace WideMD
         private string _document;
         private const string _title = "Wide MD";
 
-        public MDWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger) : base(container,eventAggregator,logger)
+        public MDWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
+            : base(container, eventAggregator, logger)
         {
             IEventAggregator aggregator = container.Resolve<IEventAggregator>();
             aggregator.GetEvent<ActiveContentChangedEvent>().Subscribe(ContentChanged);

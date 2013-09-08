@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -6,6 +7,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System.Collections.Generic;
@@ -27,34 +29,42 @@ namespace Wide.Interfaces
     public abstract class AbstractWorkspace : ViewModelBase, IWorkspace
     {
         #region Fields
+
         /// <summary>
         /// The injected container
         /// </summary>
         private readonly IUnityContainer _container;
+
         /// <summary>
         /// The injected event aggregator
         /// </summary>
         private readonly IEventAggregator _eventAggregator;
+
         /// <summary>
         /// The injected container
         /// </summary>
         private readonly ILoggerService _logger;
+
         /// <summary>
         /// The active document
         /// </summary>
         private ContentViewModel _activeDocument;
+
         /// <summary>
         /// The injected command manager
         /// </summary>
         protected ICommandManager _commandManager;
+
         /// <summary>
         /// The list of documents
         /// </summary>
         protected ObservableCollection<ContentViewModel> _docs = new ObservableCollection<ContentViewModel>();
+
         /// <summary>
         /// The menu service
         /// </summary>
         protected MenuItemViewModel _menus;
+
         /// <summary>
         /// The toolbar service
         /// </summary>
@@ -63,15 +73,17 @@ namespace Wide.Interfaces
         /// <summary>
         /// The status bar service
         /// </summary>
-        protected IStatusbarService _statusbarService; 
+        protected IStatusbarService _statusbarService;
 
         /// <summary>
         /// The list of tools
         /// </summary>
         protected ObservableCollection<ToolViewModel> _tools = new ObservableCollection<ToolViewModel>();
+
         #endregion
 
         #region CTOR
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractWorkspace" /> class.
         /// </summary>
@@ -92,9 +104,11 @@ namespace Wide.Interfaces
             _statusbarService = _container.Resolve<IStatusbarService>();
             _commandManager = _container.Resolve<ICommandManager>();
         }
+
         #endregion
 
         #region Properties
+
         /// <summary>
         /// Gets the menu.
         /// </summary>
@@ -117,9 +131,11 @@ namespace Wide.Interfaces
         {
             get { return _statusbarService; }
         }
+
         #endregion
 
         #region IWorkspace Members
+
         /// <summary>
         /// The list of documents which are open in the workspace
         /// </summary>
@@ -156,7 +172,8 @@ namespace Wide.Interfaces
                     _commandManager.Refresh();
                     _menus.Refresh();
                     _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(_activeDocument);
-                    _logger.Log("Active document changed to " + _activeDocument.Title, LogCategory.Info, LogPriority.None);
+                    _logger.Log("Active document changed to " + _activeDocument.Title, LogCategory.Info,
+                                LogPriority.None);
                 }
             }
         }
@@ -189,18 +206,18 @@ namespace Wide.Interfaces
                 if (vm.Model.IsDirty)
                 {
                     ActiveDocument = vm;
-                    
+
                     //Execute the close command
                     vm.CloseCommand.Execute(e);
-                    
+
                     //If canceled
                     if (e.Cancel == true)
                     {
                         return false;
                     }
-                    
+
                     // This can happen only when a view model with no location was closed
-                    if(Documents.Count > 0 && vm != Documents[i])
+                    if (Documents.Count > 0 && vm != Documents[i])
                     {
                         //Closed the document - now reduce the count as Documents.Count would have decreased.
                         i--;
@@ -209,6 +226,7 @@ namespace Wide.Interfaces
             }
             return true;
         }
+
         #endregion
 
         /// <summary>
@@ -222,7 +240,8 @@ namespace Wide.Interfaces
         }
 
 
-        protected void Docs_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        protected void Docs_CollectionChanged(object sender,
+                                              System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.OldItems != null)
             {
