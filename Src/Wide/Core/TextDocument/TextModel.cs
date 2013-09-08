@@ -66,11 +66,6 @@ namespace Wide.Core.TextDocument
                 {
                     OldText = Document.Text;
                 }
-                else
-                {
-                    _commandManager.Refresh();
-                    _menuService.Refresh();
-                }
             }
         }
 

@@ -33,17 +33,12 @@ namespace Wide.Interfaces
         /// <summary>
         /// The injected container
         /// </summary>
-        private readonly IUnityContainer _container;
+        protected readonly IUnityContainer _container;
 
         /// <summary>
         /// The injected event aggregator
         /// </summary>
-        private readonly IEventAggregator _eventAggregator;
-
-        /// <summary>
-        /// The injected container
-        /// </summary>
-        private readonly ILoggerService _logger;
+        protected readonly IEventAggregator _eventAggregator;
 
         /// <summary>
         /// The active document
@@ -89,12 +84,10 @@ namespace Wide.Interfaces
         /// </summary>
         /// <param name="container">The injected container.</param>
         /// <param name="eventAggregator">The event aggregator.</param>
-        /// <param name="logger">The logger.</param>
-        protected AbstractWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
+        protected AbstractWorkspace(IUnityContainer container, IEventAggregator eventAggregator)
         {
             _container = container;
             _eventAggregator = eventAggregator;
-            _logger = logger;
             _docs = new ObservableCollection<ContentViewModel>();
             _docs.CollectionChanged += Docs_CollectionChanged;
             _tools = new ObservableCollection<ToolViewModel>();
@@ -140,7 +133,7 @@ namespace Wide.Interfaces
         /// The list of documents which are open in the workspace
         /// </summary>
         /// <value>The documents.</value>
-        public ObservableCollection<ContentViewModel> Documents
+        public virtual ObservableCollection<ContentViewModel> Documents
         {
             get { return _docs; }
             set { _docs = value; }
@@ -150,7 +143,7 @@ namespace Wide.Interfaces
         /// The list of tools that are available in the workspace
         /// </summary>
         /// <value>The tools.</value>
-        public ObservableCollection<ToolViewModel> Tools
+        public virtual ObservableCollection<ToolViewModel> Tools
         {
             get { return _tools; }
             set { _tools = value; }
@@ -160,7 +153,7 @@ namespace Wide.Interfaces
         /// The current document which is active in the workspace
         /// </summary>
         /// <value>The active document.</value>
-        public ContentViewModel ActiveDocument
+        public virtual ContentViewModel ActiveDocument
         {
             get { return _activeDocument; }
             set
@@ -172,8 +165,6 @@ namespace Wide.Interfaces
                     _commandManager.Refresh();
                     _menus.Refresh();
                     _eventAggregator.GetEvent<ActiveContentChangedEvent>().Publish(_activeDocument);
-                    _logger.Log("Active document changed to " + _activeDocument.Title, LogCategory.Info,
-                                LogPriority.None);
                 }
             }
         }

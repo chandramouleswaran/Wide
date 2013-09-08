@@ -27,9 +27,8 @@ namespace Wide.Core
         /// </summary>
         /// <param name="container">The injected container - can be used by custom flavors of workspace</param>
         /// <param name="eventAggregator">The event aggregator.</param>
-        /// <param name="logger">The logger.</param>
-        public Workspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger)
-            : base(container, eventAggregator, logger)
+        public Workspace(IUnityContainer container, IEventAggregator eventAggregator)
+            : base(container, eventAggregator)
         {
         }
     }
