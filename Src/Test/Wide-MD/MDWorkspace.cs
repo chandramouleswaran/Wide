@@ -25,9 +25,11 @@ namespace WideMD
     internal class MDWorkspace : AbstractWorkspace
     {
         private string _document;
+        private ILoggerService _logger;
         private const string _title = "Wide MD";
 
-        public MDWorkspace(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger) : base(container,eventAggregator,logger)
+        public MDWorkspace(IUnityContainer container, IEventAggregator eventAggregator)
+            : base(container, eventAggregator)
         {
             IEventAggregator aggregator = container.Resolve<IEventAggregator>();
             aggregator.GetEvent<ActiveContentChangedEvent>().Subscribe(ContentChanged);
@@ -56,16 +58,35 @@ namespace WideMD
             }
         }
 
+        private ILoggerService Logger
+        {
+            get
+            {
+                if (_logger == null)
+                    _logger = _container.Resolve<ILoggerService>();
+                return _logger;
+            }
+        }
+
         private void ContentChanged(ContentViewModel model)
         {
             _document = model == null ? "" : model.Title;
             RaisePropertyChanged("Title");
+            if(model != null)
+            {
+                Logger.Log("Active document changed to " + model.Title, LogCategory.Info, LogPriority.None);
+            }
         }
 
         protected override void ModelChangedEventHandler(object sender, PropertyChangedEventArgs e)
         {
-            ContentChanged(this.ActiveDocument);
-            base.ModelChangedEventHandler(sender, e);
+            string newValue = ActiveDocument == null ? "" : ActiveDocument.Title;
+            if (_document != newValue)
+            {
+                _document = newValue;
+                RaisePropertyChanged("Title");
+                base.ModelChangedEventHandler(sender, e);
+            }
         }
     }
 }

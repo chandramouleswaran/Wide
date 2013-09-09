@@ -35,7 +35,7 @@ namespace WideMD.Core
             textEditor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
         }
 
-        void Caret_PositionChanged(object sender, EventArgs e)
+        private void Caret_PositionChanged(object sender, EventArgs e)
         {
             Update();
         }
@@ -43,7 +43,7 @@ namespace WideMD.Core
         private void textEditor_TextChanged(object sender, EventArgs e)
         {
             var model = this.DataContext as MDModel;
-            if(model != null)
+            if (model != null)
             {
                 model.SetHtml(_md.Transform(textEditor.Text));
             }
@@ -55,7 +55,7 @@ namespace WideMD.Core
             _statusbar.ColPosition = textEditor.TextArea.Caret.VisualColumn + 1;
             _statusbar.CharPosition = textEditor.CaretOffset;
             _statusbar.InsertMode = false;
-            if(t ==null || !t.IsAlive)
+            if (t == null || !t.IsAlive)
                 Run();
         }
 

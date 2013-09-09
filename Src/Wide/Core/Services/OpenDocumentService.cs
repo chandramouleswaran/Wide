@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -6,6 +7,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -32,10 +34,12 @@ namespace Wide.Core.Services
         /// The injected container
         /// </summary>
         private readonly IUnityContainer _container;
+
         /// <summary>
         /// The injected event aggregator
         /// </summary>
         private readonly IEventAggregator _eventAggregator;
+
         /// <summary>
         /// The injected logger
         /// </summary>
@@ -55,7 +59,9 @@ namespace Wide.Core.Services
         /// <param name="container">The injected container</param>
         /// <param name="eventAggregator">The injected event aggregator</param>
         /// <param name="logger">The injected logger</param>
-        public OpenDocumentService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger, AbstractWorkspace workspace, IContentHandlerRegistry handler, IRecentViewSettings recentSettings)
+        public OpenDocumentService(IUnityContainer container, IEventAggregator eventAggregator, ILoggerService logger,
+                                   AbstractWorkspace workspace, IContentHandlerRegistry handler,
+                                   IRecentViewSettings recentSettings)
         {
             _container = container;
             _eventAggregator = eventAggregator;
@@ -67,6 +73,7 @@ namespace Wide.Core.Services
         }
 
         #region IOpenDocumentService Members
+
         /// <summary>
         /// Opens the object - if object is null, show a open file dialog to select a file to open
         /// </summary>
@@ -80,11 +87,16 @@ namespace Wide.Core.Services
             {
                 _dialog.Filter = "";
                 string sep = "";
-                var attributes = _handler.ContentHandlers.SelectMany(handler => (FileContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (FileContentAttribute), true)).ToList();
+                var attributes =
+                    _handler.ContentHandlers.SelectMany(
+                        handler =>
+                        (FileContentAttribute[])
+                        (handler.GetType()).GetCustomAttributes(typeof (FileContentAttribute), true)).ToList();
                 attributes.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
                 foreach (var contentAttribute in attributes)
                 {
-                    _dialog.Filter = String.Format("{0}{1}{2} ({3})|{3}", _dialog.Filter, sep, contentAttribute.Display, contentAttribute.Extension);
+                    _dialog.Filter = String.Format("{0}{1}{2} ({3})|{3}", _dialog.Filter, sep, contentAttribute.Display,
+                                                   contentAttribute.Extension);
                     sep = "|";
                 }
 
@@ -166,10 +178,10 @@ namespace Wide.Core.Services
                     {
                         _logger.Log("Document " + contentViewModel.Model.Location + "already open.", LogCategory.Info,
                                     LogPriority.Low);
-                        
+
                         if (makeActive)
                             _workspace.ActiveDocument = contentViewModel;
-                        
+
                         return contentViewModel;
                     }
                 }
@@ -190,7 +202,8 @@ namespace Wide.Core.Services
                 return openValue;
             }
 
-            _logger.Log("Unable to find a IContentHandler to open content with ID = " + contentID, LogCategory.Error, LogPriority.High);
+            _logger.Log("Unable to find a IContentHandler to open content with ID = " + contentID, LogCategory.Error,
+                        LogPriority.High);
             return null;
         }
 

@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -6,6 +7,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
 
 using System;
@@ -40,28 +42,25 @@ namespace Wide.Core.Settings
         [UserScopedSetting()]
         public List<RecentViewItem> ActualRecentItems
         {
-            get 
+            get
             {
-                if((List<RecentViewItem>)this["ActualRecentItems"] == null)
-                    this["ActualRecentItems"] = new List<RecentViewItem>((int)TotalItems);
+                if ((List<RecentViewItem>) this["ActualRecentItems"] == null)
+                    this["ActualRecentItems"] = new List<RecentViewItem>((int) TotalItems);
                 return (List<RecentViewItem>) this["ActualRecentItems"];
             }
-            set
-            {
-                this["ActualRecentItems"] = value;
-            }
+            set { this["ActualRecentItems"] = value; }
         }
 
         [UserScopedSetting()]
         [DefaultSettingValue("10")]
-        public uint TotalItems 
+        public uint TotalItems
         {
-            get { return (uint)this["TotalItems"]; }
-            set 
-            { 
+            get { return (uint) this["TotalItems"]; }
+            set
+            {
                 this["TotalItems"] = value;
-                ActualRecentItems.Capacity = (int)value;
-                menuGuids.Capacity = (int)value;
+                ActualRecentItems.Capacity = (int) value;
+                menuGuids.Capacity = (int) value;
             }
         }
 
@@ -103,12 +102,12 @@ namespace Wide.Core.Settings
 
                 menuGuids.Clear();
 
-                for (i = RecentItems.Count; i > 0; i-- )
+                for (i = RecentItems.Count; i > 0; i--)
                 {
                     int priority = RecentItems.Count - i + 1;
                     string number = "_" + priority.ToString() + " " + RecentItems[i - 1].DisplayValue;
                     menuGuids.Add(recentMenu.Add(new MenuItemViewModel(number, priority, null, recentOpen, null)
-                                       {CommandParameter = RecentItems[i - 1].ContentID}));
+                                                     {CommandParameter = RecentItems[i - 1].ContentID}));
                 }
                 return recentMenu;
             }
@@ -117,10 +116,7 @@ namespace Wide.Core.Settings
         [XmlIgnore]
         public IReadOnlyList<IRecentViewItem> RecentItems
         {
-            get
-            {
-                return this.ActualRecentItems.AsReadOnly();
-            }
+            get { return this.ActualRecentItems.AsReadOnly(); }
         }
     }
 }

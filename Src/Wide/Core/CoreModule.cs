@@ -1,4 +1,5 @@
 ﻿#region License
+
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -6,7 +7,9 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // 
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 #endregion
+
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -46,6 +49,7 @@ namespace Wide.Core
         /// The container used in the application
         /// </summary>
         private readonly IUnityContainer _container;
+
         /// <summary>
         /// The event aggregator
         /// </summary>
@@ -71,6 +75,7 @@ namespace Wide.Core
         }
 
         #region IModule Members
+
         /// <summary>
         /// The initialize call of the module - this gets called when the container is trying to load the modules.
         /// Register your <see cref="Type"/>s and Commands here
@@ -85,28 +90,31 @@ namespace Wide.Core
             _container.RegisterType<AllFileHandler>();
             _container.RegisterType<IThemeSettings, ThemeSettings>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IRecentViewSettings, RecentViewSettings>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IWindowPositionSettings, WindowPositionSettings>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IToolbarPositionSettings, ToolbarPositionSettings>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IWindowPositionSettings, WindowPositionSettings>(
+                new ContainerControlledLifetimeManager());
+            _container.RegisterType<IToolbarPositionSettings, ToolbarPositionSettings>(
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<ICommandManager, CommandManager>(new ContainerControlledLifetimeManager());
-            _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(new ContainerControlledLifetimeManager());
+            _container.RegisterType<IContentHandlerRegistry, ContentHandlerRegistry>(
+                new ContainerControlledLifetimeManager());
             _container.RegisterType<IStatusbarService, WideStatusbar>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IToolbarService, ToolbarService>(new ContainerControlledLifetimeManager());
             _container.RegisterType<IMenuService, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
-                                                                         new InjectionConstructor(
-                                                                             new InjectionParameter(typeof (string),
-                                                                                                    "$MAIN$"),
-                                                                             new InjectionParameter(typeof (int), 1),
-                                                                             new InjectionParameter(
-                                                                                 typeof (ImageSource), null),
-                                                                             new InjectionParameter(typeof (ICommand),
-                                                                                                    null),
-                                                                             new InjectionParameter(
-                                                                                 typeof (KeyGesture), null),
-                                                                             new InjectionParameter(typeof (bool), false),
-                                                                             new InjectionParameter(typeof(bool), false),
-                                                                             new InjectionParameter(
-                                                                                 typeof (IUnityContainer), _container)));
+                                                                     new InjectionConstructor(
+                                                                         new InjectionParameter(typeof (string),
+                                                                                                "$MAIN$"),
+                                                                         new InjectionParameter(typeof (int), 1),
+                                                                         new InjectionParameter(
+                                                                             typeof (ImageSource), null),
+                                                                         new InjectionParameter(typeof (ICommand),
+                                                                                                null),
+                                                                         new InjectionParameter(
+                                                                             typeof (KeyGesture), null),
+                                                                         new InjectionParameter(typeof (bool), false),
+                                                                         new InjectionParameter(typeof (bool), false),
+                                                                         new InjectionParameter(
+                                                                             typeof (IUnityContainer), _container)));
             _container.RegisterType<ToolbarViewModel>(
                 new InjectionConstructor(new InjectionParameter(typeof (string), "$MAIN$"),
                                          new InjectionParameter(typeof (int), 1),
@@ -130,7 +138,7 @@ namespace Wide.Core
             {
                 _container.RegisterType<AbstractWorkspace, Workspace>(new ContainerControlledLifetimeManager());
             }
-            
+
             // Try resolving a logger service - if not found, then register the NLog service
             try
             {
@@ -174,10 +182,10 @@ namespace Wide.Core
             WindowPositionSettings position = _container.Resolve<IWindowPositionSettings>() as WindowPositionSettings;
 
             //Set the position of the window based on previous session values based on metro or regular
-            if(WideBootstrapper.IsMetro == true)
+            if (WideBootstrapper.IsMetro == true)
             {
                 metroView = shell as ShellViewMetro;
-                if(metroView != null)
+                if (metroView != null)
                 {
                     metroView.Top = position.Top;
                     metroView.Left = position.Left;
@@ -201,6 +209,7 @@ namespace Wide.Core
         }
 
         #region Commands
+
         /// <summary>
         /// Can the close command execute? Checks if there is an ActiveDocument - if present, returns true.
         /// </summary>
@@ -234,7 +243,8 @@ namespace Wide.Core
             if (activeDocument.Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
-                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", activeDocument.Title), "Are you sure?", MessageBoxButton.YesNoCancel);
+                var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", activeDocument.Title),
+                                          "Are you sure?", MessageBoxButton.YesNoCancel);
 
                 //Pressed Yes
                 if (res == MessageBoxResult.Yes)
@@ -243,7 +253,7 @@ namespace Wide.Core
                     {
                         //Failed to save - return cancel
                         res = MessageBoxResult.Cancel;
-                        
+
                         //Cancel was pressed - so, we cant close
                         if (e != null)
                         {
@@ -292,9 +302,9 @@ namespace Wide.Core
             var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
             var workspace = _container.Resolve<AbstractWorkspace>();
 
-            if(contentHandler != null)
+            if (contentHandler != null)
             {
-                if(contentHandler.ContentHandlers.Count != 1)
+                if (contentHandler.ContentHandlers.Count != 1)
                 {
                     foreach (var handler in contentHandler.ContentHandlers)
                     {
