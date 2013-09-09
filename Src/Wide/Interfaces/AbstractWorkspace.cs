@@ -249,7 +249,9 @@ namespace Wide.Interfaces
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 if (_docs.Count == 0)
-                    _activeDocument = null;
+                {
+                    this.ActiveDocument = null;
+                }
             }
         }
 
