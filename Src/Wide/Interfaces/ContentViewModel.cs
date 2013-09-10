@@ -133,16 +133,6 @@ namespace Wide.Interfaces
             }
         }
 
-        protected virtual void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            RaisePropertyChanged("Model");
-            RaisePropertyChanged("Title");
-            RaisePropertyChanged("ContentId");
-            RaisePropertyChanged("Tooltip");
-            RaisePropertyChanged("IsSelected");
-            RaisePropertyChanged("IsActive");
-        }
-
         /// <summary>
         /// The content view
         /// </summary>
@@ -300,6 +290,16 @@ namespace Wide.Interfaces
             }
         }
 
+
+        protected virtual void Model_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged("Model");
+            RaisePropertyChanged("Title");
+            RaisePropertyChanged("ContentId");
+            RaisePropertyChanged("Tooltip");
+            RaisePropertyChanged("IsSelected");
+            RaisePropertyChanged("IsActive");
+        }
         #endregion
     }
 }

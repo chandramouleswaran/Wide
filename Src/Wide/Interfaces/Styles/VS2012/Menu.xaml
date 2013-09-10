@@ -97,9 +97,9 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="35" Width="Auto" SharedSizeGroup="Icon" />
-                    <ColumnDefinition MinWidth="70" Width="Auto" />
+                    <ColumnDefinition MinWidth="90" Width="*" />
                     <ColumnDefinition MinWidth="50" Width="Auto" SharedSizeGroup="Shortcut" />
-                    <ColumnDefinition Width="13" />
+                    <ColumnDefinition MinWidth="13" Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="20" Height="Auto " />
@@ -167,9 +167,9 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="35" Width="Auto" SharedSizeGroup="Icon" />
-                    <ColumnDefinition MinWidth="70" Width="Auto" />
+                    <ColumnDefinition MinWidth="90" Width="*" />
                     <ColumnDefinition MinWidth="50" Width="Auto" SharedSizeGroup="Shortcut" />
-                    <ColumnDefinition Width="13" />
+                    <ColumnDefinition MinWidth="13" Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition MinHeight="20" Height="Auto " />

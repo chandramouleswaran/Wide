@@ -18,6 +18,7 @@ using Microsoft.Practices.Unity;
 using Wide.Core.Attributes;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
+using Microsoft.Win32;
 
 namespace WideMD.Core
 {
@@ -33,6 +34,8 @@ namespace WideMD.Core
         /// The injected logger service
         /// </summary>
         private readonly ILoggerService _loggerService;
+        
+        private SaveFileDialog _dialog;
 
         /// <summary>
         /// Constructor of MDHandler - all parameters are injected
@@ -43,6 +46,7 @@ namespace WideMD.Core
         {
             _container = container;
             _loggerService = loggerService;
+            _dialog = new SaveFileDialog();
         }
 
         #region IContentHandler Members
@@ -182,8 +186,31 @@ namespace WideMD.Core
 
             if (saveAs)
             {
-                //TODO: Save as...?
-                //contentViewModel.Model.Location = "tesT";
+                if (location != null)
+                    _dialog.InitialDirectory = Path.GetDirectoryName(location);
+
+                _dialog.CheckPathExists = true;
+                _dialog.DefaultExt = "md";
+                _dialog.Filter = "Markdown files (*.md)|*.md";
+                
+                if (_dialog.ShowDialog() == true)
+                {
+                    location = _dialog.FileName;
+                    mdModel.SetLocation(location);
+                    mdViewModel.Title = Path.GetFileName(location);
+                    try
+                    {
+                        File.WriteAllText(location, mdModel.Document.Text);
+                        mdModel.SetDirty(false);
+                        return true;
+                    }
+                    catch (Exception exception)
+                    {
+                        _loggerService.Log(exception.Message, LogCategory.Exception, LogPriority.High);
+                        _loggerService.Log(exception.StackTrace, LogCategory.Exception, LogPriority.High);
+                        return false;
+                    }
+                }
             }
             else
             {

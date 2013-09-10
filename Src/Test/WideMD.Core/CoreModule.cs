@@ -117,12 +117,14 @@ namespace WideMD.Core
             var openCommand = new DelegateCommand(OpenModule);
             var exitCommand = new DelegateCommand(CloseCommandExecute);
             var saveCommand = new DelegateCommand(SaveDocument, CanExecuteSaveDocument);
+            var saveAsCommand = new DelegateCommand(SaveAsDocument, CanExecuteSaveAsDocument);
             var themeCommand = new DelegateCommand<string>(ThemeChangeCommand);
             var loggerCommand = new DelegateCommand(ToggleLogger);
 
 
             manager.RegisterCommand("OPEN", openCommand);
             manager.RegisterCommand("SAVE", saveCommand);
+            manager.RegisterCommand("SAVEAS", saveAsCommand);
             manager.RegisterCommand("EXIT", exitCommand);
             manager.RegisterCommand("LOGSHOW", loggerCommand);
             manager.RegisterCommand("THEMECHANGE", themeCommand);
@@ -169,6 +171,12 @@ namespace WideMD.Core
                                                                        @"pack://application:,,,/WideMD.Core;component/Icons/Save_6530.png")),
                                                                manager.GetCommand("SAVE"),
                                                                new KeyGesture(Key.S, ModifierKeys.Control, "Ctrl + S")));
+            menuService.Get("_File").Add(new SaveAsMenuItemViewModel("Save As..", 6,
+                                                   new BitmapImage(
+                                                       new Uri(
+                                                           @"pack://application:,,,/WideMD.Core;component/Icons/Save_6530.png")),
+                                                   manager.GetCommand("SAVEAS"),null,false,false,_container));
+
             menuService.Get("_File").Add(new MenuItemViewModel("Close", 8, null, manager.GetCommand("CLOSE"),
                                                                new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4")));
 
@@ -264,6 +272,12 @@ namespace WideMD.Core
             return false;
         }
 
+        private bool CanExecuteSaveAsDocument()
+        {
+            IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            return (workspace.ActiveDocument != null) ;
+        }
+
         private void SaveDocument()
         {
             IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
@@ -272,6 +286,16 @@ namespace WideMD.Core
             manager.Refresh();
         }
 
+        private void SaveAsDocument()
+        {
+            IWorkspace workspace = _container.Resolve<AbstractWorkspace>();
+            ICommandManager manager = _container.Resolve<ICommandManager>();
+            if (workspace.ActiveDocument != null)
+            {
+                workspace.ActiveDocument.Handler.SaveContent(workspace.ActiveDocument, true);
+                manager.Refresh();
+            }
+        }
         #endregion
 
         #region Theme

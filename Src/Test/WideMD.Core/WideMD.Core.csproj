@@ -90,6 +90,7 @@
       <DependentUpon>MDView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MDViewModel.cs" />
+    <Compile Include="SaveAsMenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
