@@ -300,6 +300,7 @@ namespace Wide.Interfaces
             RaisePropertyChanged("IsSelected");
             RaisePropertyChanged("IsActive");
         }
+
         #endregion
     }
 }

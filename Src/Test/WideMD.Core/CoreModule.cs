@@ -18,14 +18,12 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
-using Wide.Core.Settings;
 using Wide.Interfaces;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
 using Wide.Interfaces.Themes;
 using WideMD.Core.Settings;
-using System.Windows.Threading;
 using System.Windows;
 
 namespace WideMD.Core

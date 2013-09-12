@@ -11,6 +11,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Practices.Prism.Modularity;
 
 namespace WideMD
@@ -38,8 +39,10 @@ namespace WideMD
         {
             foreach (string path in _pathsToProbe)
             {
-                ModulePath = path;
-                base.InnerLoad();
+                if (Directory.Exists(path))
+                {
+                    base.InnerLoad();
+                }
             }
         }
     }
