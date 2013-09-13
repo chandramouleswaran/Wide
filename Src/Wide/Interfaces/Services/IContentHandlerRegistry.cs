@@ -10,6 +10,7 @@
 
 #endregion
 
+using System.Windows.Input;
 namespace Wide.Interfaces.Services
 {
     /// <summary>
@@ -46,5 +47,11 @@ namespace Wide.Interfaces.Services
         /// <param name="contentId">The contentID which needs to be displayed as a document in Wide</param>
         /// <returns>The content view model for the given info</returns>
         ContentViewModel GetViewModelFromContentId(string contentId);
+
+        /// <summary>
+        /// Gets the command which provides the option to create a new document.
+        /// </summary>
+        /// <value>The new command.</value>
+        ICommand NewCommand { get; }
     }
 }

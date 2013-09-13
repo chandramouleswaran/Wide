@@ -41,6 +41,7 @@ namespace WideMD
             {
                 if (Directory.Exists(path))
                 {
+                    this.ModulePath = path;
                     base.InnerLoad();
                 }
             }

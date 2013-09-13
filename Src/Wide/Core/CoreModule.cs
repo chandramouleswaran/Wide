@@ -162,13 +162,14 @@ namespace Wide.Core
         private void AppCommands()
         {
             var manager = _container.Resolve<ICommandManager>();
+            var registry = _container.Resolve<IContentHandlerRegistry>();
 
             //TODO: Check if you can hook up to the Workspace.ActiveDocument.CloseCommand
             var closeCommand = new DelegateCommand<object>(CloseDocument, CanExecuteCloseDocument);
             manager.RegisterCommand("CLOSE", closeCommand);
 
-            var newCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
-            manager.RegisterCommand("NEW", newCommand);
+            
+            manager.RegisterCommand("NEW", registry.NewCommand);
         }
 
         private void LoadSettings()
@@ -291,38 +292,6 @@ namespace Wide.Core
                 }
             }
         }
-
-        private bool CanExecuteNewCommand()
-        {
-            return true;
-        }
-
-        private void NewDocument()
-        {
-            var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
-            var workspace = _container.Resolve<AbstractWorkspace>();
-
-            if (contentHandler != null)
-            {
-                if (contentHandler.ContentHandlers.Count != 1)
-                {
-                    foreach (var handler in contentHandler.ContentHandlers)
-                    {
-                        //TODO: This is the place where we want to show a window and make the end user select a type of file
-                        workspace.Documents.Add(handler.NewContent(null));
-                    }
-                }
-                else
-                {
-                    var openValue = contentHandler.ContentHandlers[0].NewContent(null);
-                    workspace.Documents.Add(openValue);
-
-                    //Make it the active document
-                    workspace.ActiveDocument = openValue;
-                }
-            }
-        }
-
         #endregion
     }
 }
