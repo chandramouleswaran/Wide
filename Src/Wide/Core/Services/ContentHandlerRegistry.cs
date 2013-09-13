@@ -11,9 +11,11 @@
 #endregion
 
 using System.Collections.Generic;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
+using System.Windows.Input;
 
 namespace Wide.Core.Services
 {
@@ -28,12 +30,24 @@ namespace Wide.Core.Services
         private readonly List<IContentHandler> _contentHandlers;
 
         /// <summary>
+        /// The container
+        /// </summary>
+        private readonly IUnityContainer _container;
+
+        /// <summary>
+        /// The new document command
+        /// </summary>
+        public ICommand NewCommand { get; protected set; }
+
+        /// <summary>
         /// Constructor of content handler registry
         /// </summary>
         /// <param name="container">The injected container of the application</param>
         public ContentHandlerRegistry(IUnityContainer container)
         {
             _contentHandlers = new List<IContentHandler>();
+            _container = container;
+             this.NewCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
         }
 
         /// <summary>
@@ -113,6 +127,39 @@ namespace Wide.Core.Services
             return null;
         }
 
+        #endregion
+
+        #region New Command
+        private bool CanExecuteNewCommand()
+        {
+            return true;
+        }
+
+        private void NewDocument()
+        {
+            var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
+            var workspace = _container.Resolve<AbstractWorkspace>();
+
+            if (contentHandler != null)
+            {
+                if (contentHandler.ContentHandlers.Count != 1)
+                {
+                    foreach (var handler in contentHandler.ContentHandlers)
+                    {
+                        //TODO: This is the place where we want to show a window and make the end user select a type of file
+                        workspace.Documents.Add(handler.NewContent(null));
+                    }
+                }
+                else
+                {
+                    var openValue = contentHandler.ContentHandlers[0].NewContent(null);
+                    workspace.Documents.Add(openValue);
+
+                    //Make it the active document
+                    workspace.ActiveDocument = openValue;
+                }
+            }
+        }
         #endregion
     }
 }
