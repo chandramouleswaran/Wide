@@ -11,22 +11,24 @@
 #endregion
 
 using System;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Wide.Core.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
-    public class FileContentAttribute : Attribute
+    public class NewContentAttribute : Attribute
     {
-        public FileContentAttribute(string display, string extension, int priority)
+        public NewContentAttribute(string display, string imageSource, int priority)
         {
             this.Display = display;
-            this.Extension = extension;
+            this.ImageSource = new BitmapImage(new Uri(imageSource));
             this.Priority = priority;
         }
 
         public string Display { get; private set; }
 
-        public string Extension { get; private set; }
+        public ImageSource ImageSource { get; private set; }
 
         public int Priority { get; private set; }
     }

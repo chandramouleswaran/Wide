@@ -11,8 +11,10 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Unity;
+using Wide.Core.Attributes;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 using System.Windows.Input;
@@ -139,24 +141,34 @@ namespace Wide.Core.Services
         {
             var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
             var workspace = _container.Resolve<AbstractWorkspace>();
+            Dictionary<NewContentAttribute,IContentHandler> _dictionary = new Dictionary<NewContentAttribute, IContentHandler>();
+            List<NewContentAttribute> attributes = new List<NewContentAttribute>();
 
             if (contentHandler != null)
             {
-                if (contentHandler.ContentHandlers.Count != 1)
+                foreach (IContentHandler handler in _contentHandlers)
                 {
-                    foreach (var handler in contentHandler.ContentHandlers)
+                    NewContentAttribute[] handlerAttributes = (NewContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (NewContentAttribute), true);
+                    attributes.AddRange(handlerAttributes);
+                    foreach (NewContentAttribute newContentAttribute in handlerAttributes)
                     {
-                        //TODO: This is the place where we want to show a window and make the end user select a type of file
-                        workspace.Documents.Add(handler.NewContent(null));
+                        _dictionary.Add(newContentAttribute, handler);
                     }
+                }
+                
+                attributes.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
+
+                if (attributes.Count == 1)
+                {
+                    IContentHandler handler = _dictionary[attributes[0]];
+                    var openValue = handler.NewContent(attributes[0]);
+                    workspace.Documents.Add(openValue);
+                    workspace.ActiveDocument = openValue;
                 }
                 else
                 {
-                    var openValue = contentHandler.ContentHandlers[0].NewContent(null);
-                    workspace.Documents.Add(openValue);
-
-                    //Make it the active document
-                    workspace.ActiveDocument = openValue;
+                    //TODO: This is where we need to show a new pop-up similar to VS and get the input from user
+                    
                 }
             }
         }

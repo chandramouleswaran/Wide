@@ -45,12 +45,24 @@ namespace Wide.Core.Services
         /// </summary>
         private readonly ILoggerService _logger;
 
+        /// <summary>
+        /// The Open file dialog
+        /// </summary>
         private OpenFileDialog _dialog;
 
+        /// <summary>
+        /// The workspace
+        /// </summary>
         private AbstractWorkspace _workspace;
 
+        /// <summary>
+        /// The content handler registry
+        /// </summary>
         private ContentHandlerRegistry _handler;
 
+        /// <summary>
+        /// The recent settings
+        /// </summary>
         private RecentViewSettings _recentSettings;
 
         /// <summary>
