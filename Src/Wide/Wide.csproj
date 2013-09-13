@@ -89,6 +89,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Attributes\NewContentAttribute.cs" />
     <Compile Include="Core\Attributes\FileContentAttribute.cs" />
     <Compile Include="Core\CoreModule.cs" />
     <Compile Include="Core\Services\CommandManager.cs" />

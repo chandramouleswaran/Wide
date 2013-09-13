@@ -23,6 +23,7 @@ using Microsoft.Win32;
 namespace WideMD.Core
 {
     [FileContent("Markdown files", "*.md", 1)]
+    [NewContent("Markdown files","pack://application:,,,/WideMD.Core;component/Icons/MDType.png", 1)]
     internal class MDHandler : IContentHandler
     {
         /// <summary>
@@ -35,6 +36,9 @@ namespace WideMD.Core
         /// </summary>
         private readonly ILoggerService _loggerService;
         
+        /// <summary>
+        /// The save file dialog
+        /// </summary>
         private SaveFileDialog _dialog;
 
         /// <summary>
