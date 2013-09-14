@@ -26,30 +26,46 @@ namespace Wide.Core.Services
     /// </summary>
     internal sealed class ContentHandlerRegistry : IContentHandlerRegistry
     {
+        #region Fields
         /// <summary>
         /// List of content handlers
         /// </summary>
         private readonly List<IContentHandler> _contentHandlers;
 
         /// <summary>
+        /// The _available new content
+        /// </summary>
+        private List<NewContentAttribute> _availableNewContent;
+
+        /// <summary>
+        /// The dictionary
+        /// </summary>
+        private Dictionary<NewContentAttribute, IContentHandler> _dictionary;
+
+        /// <summary>
+        /// The workspace - NEEDS to be resolved in function call. Else this leads to recursive resolution in constructor.
+        /// </summary>
+        private IWorkspace _workspace;
+
+        /// <summary>
         /// The container
         /// </summary>
         private readonly IUnityContainer _container;
+        #endregion
 
+        #region Properties
         /// <summary>
         /// The new document command
         /// </summary>
         public ICommand NewCommand { get; protected set; }
-
+        
         /// <summary>
-        /// Constructor of content handler registry
+        /// Gets the available contents which can be created.
         /// </summary>
-        /// <param name="container">The injected container of the application</param>
-        public ContentHandlerRegistry(IUnityContainer container)
+        /// <value>The new content of the available.</value>
+        public IReadOnlyCollection<NewContentAttribute> AvailableNewContent
         {
-            _contentHandlers = new List<IContentHandler>();
-            _container = container;
-             this.NewCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
+            get { return null; }
         }
 
         /// <summary>
@@ -59,6 +75,22 @@ namespace Wide.Core.Services
         {
             get { return _contentHandlers; }
         }
+        #endregion
+
+        #region CTOR
+        /// <summary>
+        /// Constructor of content handler registry
+        /// </summary>
+        /// <param name="container">The injected container of the application</param>
+        public ContentHandlerRegistry(IUnityContainer container)
+        {
+            _contentHandlers = new List<IContentHandler>();
+            _container = container;
+            _dictionary = new Dictionary<NewContentAttribute, IContentHandler>();
+            _availableNewContent = new List<NewContentAttribute>();
+            this.NewCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
+        }
+        #endregion
 
         #region IContentHandlerRegistry Members
 
@@ -70,6 +102,14 @@ namespace Wide.Core.Services
         public bool Register(IContentHandler handler)
         {
             ContentHandlers.Add(handler);
+            NewContentAttribute[] handlerAttributes = (NewContentAttribute[])(handler.GetType()).GetCustomAttributes(typeof(NewContentAttribute), true);
+            _availableNewContent.AddRange(handlerAttributes);
+            foreach (NewContentAttribute newContentAttribute in handlerAttributes)
+            {
+                _dictionary.Add(newContentAttribute, handler);
+            }
+
+            _availableNewContent.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
             return true;
         }
 
@@ -80,6 +120,14 @@ namespace Wide.Core.Services
         /// <returns></returns>
         public bool Unregister(IContentHandler handler)
         {
+            NewContentAttribute[] handlerAttributes = (NewContentAttribute[])(handler.GetType()).GetCustomAttributes(typeof(NewContentAttribute), true);
+            _availableNewContent.RemoveAll(handlerAttributes.Contains);
+            foreach (NewContentAttribute newContentAttribute in handlerAttributes)
+            {
+                _dictionary.Remove(newContentAttribute);
+            }
+
+            _availableNewContent.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
             return ContentHandlers.Remove(handler);
         }
 
@@ -139,37 +187,20 @@ namespace Wide.Core.Services
 
         private void NewDocument()
         {
-            var contentHandler = _container.Resolve<IContentHandlerRegistry>() as ContentHandlerRegistry;
-            var workspace = _container.Resolve<AbstractWorkspace>();
-            Dictionary<NewContentAttribute,IContentHandler> _dictionary = new Dictionary<NewContentAttribute, IContentHandler>();
-            List<NewContentAttribute> attributes = new List<NewContentAttribute>();
+            if (_workspace == null)
+                _workspace = _container.Resolve<AbstractWorkspace>();
 
-            if (contentHandler != null)
+            if (_availableNewContent.Count == 1)
             {
-                foreach (IContentHandler handler in _contentHandlers)
-                {
-                    NewContentAttribute[] handlerAttributes = (NewContentAttribute[]) (handler.GetType()).GetCustomAttributes(typeof (NewContentAttribute), true);
-                    attributes.AddRange(handlerAttributes);
-                    foreach (NewContentAttribute newContentAttribute in handlerAttributes)
-                    {
-                        _dictionary.Add(newContentAttribute, handler);
-                    }
-                }
-                
-                attributes.Sort((attribute, contentAttribute) => attribute.Priority - contentAttribute.Priority);
+                IContentHandler handler = _dictionary[_availableNewContent[0]];
+                var openValue = handler.NewContent(_availableNewContent[0]);
+                _workspace.Documents.Add(openValue);
+                _workspace.ActiveDocument = openValue;
+            }
+            else
+            {
+                //TODO: This is where we need to show a new pop-up similar to VS and get the input from user
 
-                if (attributes.Count == 1)
-                {
-                    IContentHandler handler = _dictionary[attributes[0]];
-                    var openValue = handler.NewContent(attributes[0]);
-                    workspace.Documents.Add(openValue);
-                    workspace.ActiveDocument = openValue;
-                }
-                else
-                {
-                    //TODO: This is where we need to show a new pop-up similar to VS and get the input from user
-                    
-                }
             }
         }
         #endregion
