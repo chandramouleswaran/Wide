@@ -47,7 +47,6 @@ For full details, look at the demo program.
  - **Controls**
       * AbstractMenuItem - Extend this class to create your own menu type.
       * MenuItemViewModel - A sample AbstractMenuItem - mostly useful for general text based menus.
-      * SaveAsMenuItemViewModel - Save As menu which is a sample to indicate how your menu can interact with events.
       * IToolbar - the interface for creating a toolbar.
       * AbstractToolbar - Extend this class to create toolbars.
       * ToolbarViewModel - A sample AbstractToolbar - mostly useful for creating simple toolbars.

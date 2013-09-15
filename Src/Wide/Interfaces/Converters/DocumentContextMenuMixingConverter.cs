@@ -30,20 +30,30 @@ namespace Wide.Interfaces.Converters
             LayoutDocumentItem doc = values[0] as LayoutDocumentItem;
             int i = 1;
             IReadOnlyCollection<AbstractMenuItem> menus = values[1] as IReadOnlyCollection<AbstractMenuItem>;
-            ContextMenu cm =
-                Application.Current.FindResource("AvalonDock_ThemeVS2012_DocumentContextMenu") as ContextMenu;
-            if (cm != null)
+            ContextMenu cm;
+            if (doc != null)
             {
-                foreach (MenuItem mi in cm.Items)
+                try
                 {
-                    root.Add(FromMenuItem(mi, doc, i++));
+                    cm = Application.Current.FindResource("AvalonDock_ThemeVS2012_DocumentContextMenu") as ContextMenu;
+                    if (cm != null)
+                    {
+                        foreach (MenuItem mi in cm.Items)
+                        {
+                            root.Add(FromMenuItem(mi, doc, i++));
+                        }
+                    }
                 }
-            }
-            if (menus != null)
-            {
-                foreach (AbstractMenuItem abstractMenuItem in menus)
+                catch
                 {
-                    root.Add(abstractMenuItem);
+                }
+
+                if (menus != null)
+                {
+                    foreach (AbstractMenuItem abstractMenuItem in menus)
+                    {
+                        root.Add(abstractMenuItem);
+                    }
                 }
             }
             return root.Children;
