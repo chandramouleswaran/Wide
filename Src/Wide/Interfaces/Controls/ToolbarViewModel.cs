@@ -13,8 +13,9 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Practices.Unity;
+using Wide.Interfaces.Controls;
 
-namespace Wide.Interfaces
+namespace Wide.Interfaces.Controls
 {
     /// <summary>
     /// Class ToolbarViewModel
