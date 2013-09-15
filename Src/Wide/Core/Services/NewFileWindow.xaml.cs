@@ -14,13 +14,14 @@ using System.Windows.Input;
 using MahApps.Metro.Controls;
 using Wide.Core.Attributes;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace Wide.Core.Services
 {
     /// <summary>
     /// Interaction logic for NewFileWindow.xaml
     /// </summary>
-    internal partial class NewFileWindow : MetroWindow
+    internal partial class NewFileWindow : Window
     {
         public NewFileWindow()
         {
