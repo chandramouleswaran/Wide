@@ -94,11 +94,15 @@
     <Compile Include="Core\CoreModule.cs" />
     <Compile Include="Core\Services\CommandManager.cs" />
     <Compile Include="Core\Services\ContentHandlerRegistry.cs" />
+    <Compile Include="Core\Services\NewFileWindow.xaml.cs">
+      <DependentUpon>NewFileWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Core\Services\NLogService.cs" />
     <Compile Include="Core\Services\OpenDocumentService.cs" />
     <Compile Include="Core\Services\ThemeManager.cs" />
     <Compile Include="Core\Services\ToolbarService.cs" />
     <Compile Include="Core\Services\AllFileHandler.cs" />
+    <Compile Include="Interfaces\Converters\NullToBooleanConverter.cs" />
     <Compile Include="Interfaces\Converters\DocumentContextMenuMixingConverter.cs" />
     <Compile Include="Interfaces\Settings\IRecentViewItem.cs" />
     <Compile Include="Interfaces\Settings\IToolbarPositionSettings.cs" />
@@ -214,6 +218,10 @@
     <None Include="Shell\app.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Core\Services\NewFileWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Core\TextDocument\TextView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -299,7 +307,9 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Core\Icons\Textfile.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

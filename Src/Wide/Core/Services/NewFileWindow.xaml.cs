@@ -10,22 +10,34 @@
 
 #endregion
 
-using System.Windows;
+using System.Windows.Input;
+using MahApps.Metro.Controls;
+using Wide.Core.Attributes;
+using System.Windows.Controls;
 
-namespace Wide.Core.Settings
+namespace Wide.Core.Services
 {
     /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
+    /// Interaction logic for NewFileWindow.xaml
     /// </summary>
-    internal partial class SettingsWindow : Window
+    internal partial class NewFileWindow : MetroWindow
     {
-        public SettingsWindow()
+        public NewFileWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void listBoxItem_DoubleClick(object sender, MouseButtonEventArgs e)
         {
+            this.NewContent = (sender as ListBoxItem).DataContext as NewContentAttribute;
+            this.DialogResult = true;
+        }
+
+        public NewContentAttribute NewContent { get; private set; }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.NewContent = this.listView.SelectedItem as NewContentAttribute;
             this.DialogResult = true;
         }
     }

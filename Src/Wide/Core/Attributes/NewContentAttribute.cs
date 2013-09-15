@@ -19,11 +19,15 @@ namespace Wide.Core.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public class NewContentAttribute : Attribute
     {
-        public NewContentAttribute(string display, string imageSource, int priority)
+        public NewContentAttribute(string display, int priority, string description = "", string imageSource = "")
         {
             this.Display = display;
-            this.ImageSource = new BitmapImage(new Uri(imageSource));
+            if(!string.IsNullOrEmpty(imageSource))
+            {
+                this.ImageSource = new BitmapImage(new Uri(imageSource));
+            }
             this.Priority = priority;
+            this.Description = description;
         }
 
         public string Display { get; private set; }
@@ -31,5 +35,7 @@ namespace Wide.Core.Attributes
         public ImageSource ImageSource { get; private set; }
 
         public int Priority { get; private set; }
+
+        public string Description { get; private set; }
     }
 }

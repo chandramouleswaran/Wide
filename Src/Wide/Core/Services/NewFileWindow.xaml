@@ -1,0 +1,58 @@
+﻿<Controls:MetroWindow x:Class="Wide.Core.Services.NewFileWindow" x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Converters="clr-namespace:Wide.Interfaces.Converters"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+        Title="New Object" Height="400" Width="700" TitleCaps="False"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="ToolWindow"
+        WindowTransitionsEnabled="False">
+    <Window.Resources>
+        <Converters:NullToBooleanConverter x:Key="nullToBooleanConverter" />
+        <Converters:NullObjectToVisibiltyConverter x:Key="nullToVisibilityConverter" />
+    </Window.Resources>
+    <Grid Background="{DynamicResource ControlHighlightedColorBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="55" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="55*" />
+                    <ColumnDefinition Width="45*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Background="White">
+                    <ListBox x:Name="listView" ItemsSource="{Binding}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Image Source="{Binding ImageSource}" DockPanel.Dock="Left" Height="64" Width="64" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Display}" FontSize="16" VerticalAlignment="Center" />
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <EventSetter Event="MouseDoubleClick" Handler="listBoxItem_DoubleClick" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+                </Border>
+                <StackPanel Grid.Column="1" Margin="10">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="{DynamicResource BlackBrush}" Text="Type: " FontWeight="Bold" FontSize="16" Padding="5" Visibility="{Binding ElementName=listView, Path=SelectedItem, Converter={StaticResource ResourceKey=nullToVisibilityConverter}}"/>
+                        <TextBlock Foreground="{DynamicResource BlackBrush}" Text="{Binding ElementName=listView, Path=SelectedItem.Display}" FontSize="16" Padding="0,5,0,0"/>
+                    </StackPanel>
+                    <TextBlock Foreground="{DynamicResource BlackBrush}" Text="{Binding ElementName=listView, Path=SelectedItem.Description}" FontSize="14" Padding="5" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                <Button Content="_Cancel" IsCancel="True" Width="85" Height="25" Margin="12" />
+                <Button Content="_New" IsDefault="True" Width="85" Height="25" IsEnabled="{Binding ElementName=listView, Path=SelectedItem, Converter={StaticResource ResourceKey=nullToBooleanConverter}}" Click="Button_Click" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

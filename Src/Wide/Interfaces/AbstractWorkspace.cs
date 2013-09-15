@@ -207,10 +207,9 @@ namespace Wide.Interfaces
                         return false;
                     }
 
-                    // This can happen only when a view model with no location was closed
-                    if (Documents.Count > 0 && vm != Documents[i])
+                    //If it was a new view model with no location to save, we have removed the view model from documents - so reduce the count
+                    if(vm.Model.Location == null)
                     {
-                        //Closed the document - now reduce the count as Documents.Count would have decreased.
                         i--;
                     }
                 }
