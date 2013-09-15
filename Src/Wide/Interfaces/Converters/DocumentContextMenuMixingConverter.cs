@@ -16,6 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Wide.Interfaces.Controls;
 using Xceed.Wpf.AvalonDock.Controls;
 
 namespace Wide.Interfaces.Converters

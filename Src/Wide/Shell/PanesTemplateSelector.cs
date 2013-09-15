@@ -16,7 +16,7 @@ using Wide.Interfaces;
 
 namespace Wide.Shell
 {
-    public class PanesTemplateSelector : DataTemplateSelector
+    internal class PanesTemplateSelector : DataTemplateSelector
     {
         public DataTemplate ContentViewTemplate { get; set; }
 

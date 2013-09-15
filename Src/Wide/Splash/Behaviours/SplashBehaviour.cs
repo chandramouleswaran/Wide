@@ -14,39 +14,42 @@ using System.Windows;
 
 namespace Wide.Splash.Behaviours
 {
-    public class SplashBehaviour
+    /// <summary>
+    /// Class SplashBehaviour - Add as an attached property on your splash view 
+    /// </summary>
+    public sealed class SplashBehaviour
     {
         #region Dependency Properties
 
         public static readonly DependencyProperty EnabledProperty = DependencyProperty.RegisterAttached(
             "Enabled", typeof (bool), typeof (SplashBehaviour), new PropertyMetadata(OnEnabledChanged));
 
-        public static bool GetEnabled(DependencyObject d_)
+        public static bool GetEnabled(DependencyObject d)
         {
-            return (bool) d_.GetValue(EnabledProperty);
+            return (bool) d.GetValue(EnabledProperty);
         }
 
-        public static void SetEnabled(DependencyObject d_, bool value_)
+        public static void SetEnabled(DependencyObject d, bool value)
         {
-            d_.SetValue(EnabledProperty, value_);
+            d.SetValue(EnabledProperty, value);
         }
 
         #endregion
 
         #region Event Handlers
 
-        private static void OnEnabledChanged(DependencyObject d_, DependencyPropertyChangedEventArgs arge_)
+        private static void OnEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
-            var splash = d_ as Window;
-            if (splash != null && arge_.NewValue is bool && (bool) arge_.NewValue)
+            var splash = d as Window;
+            if (splash != null && args.NewValue is bool && (bool) args.NewValue)
             {
-                splash.Closed += (s_, e_) =>
+                splash.Closed += (s, e) =>
                                      {
                                          splash.DataContext = null;
                                          splash.Dispatcher.InvokeShutdown();
                                      };
-                splash.MouseDoubleClick += (s_, e_) => splash.Close();
-                splash.MouseLeftButtonDown += (s_, e_) => splash.DragMove();
+                splash.MouseDoubleClick += (s, e) => splash.Close();
+                splash.MouseLeftButtonDown += (s, e) => splash.DragMove();
             }
         }
 

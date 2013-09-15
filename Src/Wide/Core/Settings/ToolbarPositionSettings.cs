@@ -18,7 +18,6 @@ using Wide.Interfaces.Settings;
 using Wide.Interfaces.Services;
 using Wide.Interfaces;
 using System.Collections.Generic;
-using Wide.Interfaces.Controls;
 
 namespace Wide.Core.Settings
 {

@@ -11,12 +11,13 @@
 #endregion
 
 using System;
-using System.Configuration;
+using System.ComponentModel;
 using Wide.Interfaces.Settings;
 
 namespace Wide.Core.Settings
 {
     [Serializable]
+    [Browsable(false)]
     public class RecentViewItem : IRecentViewItem
     {
         public RecentViewItem()

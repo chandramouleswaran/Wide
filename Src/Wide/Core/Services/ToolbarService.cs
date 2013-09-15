@@ -13,9 +13,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Markup;
 using Wide.Interfaces;
+using Wide.Interfaces.Controls;
 using Wide.Interfaces.Services;
 using Xceed.Wpf.AvalonDock.Converters;
 
@@ -104,7 +104,7 @@ namespace Wide.Core.Services
             }
         }
 
-        public AbstractMenuItem MenuItem
+        public AbstractMenuItem RightClickMenu
         {
             get
             {

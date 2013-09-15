@@ -16,7 +16,7 @@ using Wide.Interfaces;
 
 namespace Wide.Shell
 {
-    public class PanesStyleSelector : StyleSelector
+    internal class PanesStyleSelector : StyleSelector
     {
         public Style ToolStyle { get; set; }
 

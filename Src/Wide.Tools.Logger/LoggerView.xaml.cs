@@ -10,7 +10,6 @@
 
 #endregion
 
-using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Wide.Interfaces;
@@ -20,7 +19,7 @@ namespace Wide.Tools.Logger
     /// <summary>
     /// Interaction logic for LoggerView.xaml
     /// </summary>
-    public partial class LoggerView : UserControl, IContentView, INotifyPropertyChanged
+    internal partial class LoggerView : UserControl, IContentView, INotifyPropertyChanged
     {
         public LoggerView()
         {

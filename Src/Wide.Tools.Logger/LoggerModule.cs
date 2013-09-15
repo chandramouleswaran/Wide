@@ -19,7 +19,7 @@ using Wide.Interfaces.Events;
 namespace Wide.Tools.Logger
 {
     [Module(ModuleName = "Wide.Tools.Logger")]
-    public class LoggerModule : IModule
+    public sealed class LoggerModule : IModule
     {
         private readonly IUnityContainer _container;
 

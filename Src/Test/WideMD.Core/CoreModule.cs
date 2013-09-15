@@ -19,6 +19,7 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces;
+using Wide.Interfaces.Controls;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
@@ -71,7 +72,7 @@ namespace WideMD.Core
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Copy"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
 
-            menuService.Get("_Tools").Add(toolbarService.MenuItem);
+            menuService.Get("_Tools").Add(toolbarService.RightClickMenu);
 
             //Initiate the position settings changes for toolbar
             _container.Resolve<IToolbarPositionSettings>();

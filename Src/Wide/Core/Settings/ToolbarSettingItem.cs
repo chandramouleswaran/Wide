@@ -11,16 +11,13 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+using System.ComponentModel;
 using Wide.Interfaces.Controls;
 
 namespace Wide.Core.Settings
 {
     [Serializable]
+    [Browsable(false)]
     public sealed class ToolbarSettingItem : IToolbar
     {
         public ToolbarSettingItem()

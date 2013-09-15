@@ -14,12 +14,12 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace Wide.Interfaces
+namespace Wide.Interfaces.Controls
 {
     /// <summary>
     /// Class ToolBarItemTemplateSelector
     /// </summary>
-    public class ToolBarItemTemplateSelector : DataTemplateSelector
+    internal class ToolBarItemTemplateSelector : DataTemplateSelector
     {
         /// <summary>
         /// Gets or sets the button template.

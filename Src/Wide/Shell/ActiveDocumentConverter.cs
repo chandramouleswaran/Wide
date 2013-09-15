@@ -17,7 +17,7 @@ using Wide.Interfaces;
 
 namespace Wide.Shell
 {
-    public class ActiveDocumentConverter : IValueConverter
+    internal class ActiveDocumentConverter : IValueConverter
     {
         #region IValueConverter Members
 

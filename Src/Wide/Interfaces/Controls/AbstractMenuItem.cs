@@ -17,7 +17,7 @@ using System.Windows.Media;
 using Microsoft.Practices.Unity;
 using Wide.Interfaces.Services;
 
-namespace Wide.Interfaces
+namespace Wide.Interfaces.Controls
 {
     /// <summary>
     /// Class AbstractMenuItem - representation of a Menu

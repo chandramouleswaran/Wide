@@ -25,7 +25,7 @@ namespace Wide.Splash
 
         #endregion
 
-        #region ctor
+        #region CTOR
 
         public SplashViewModel(IEventAggregator eventAggregator_)
         {
@@ -57,7 +57,7 @@ namespace Wide.Splash
                 return;
             }
 
-            Status += string.Concat(Environment.NewLine, message, "...");
+            Status = string.Concat(Environment.NewLine, message, "...") + Status;
         }
 
         #endregion

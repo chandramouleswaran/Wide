@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Interfaces="clr-namespace:Wide.Interfaces"
-                    xmlns:conv="clr-namespace:Wide.Interfaces.Converters">
+                    xmlns:conv="clr-namespace:Wide.Interfaces.Converters"
+                    xmlns:Controls="clr-namespace:Wide.Interfaces.Controls">
 
     <conv:MenuVisibilityConverter x:Key="cvc" />
     
@@ -16,7 +17,7 @@
     </Style>
 
     <!--Toolbar binding-->
-    <DataTemplate x:Key="buttonTemplate" DataType="{x:Type Interfaces:MenuItemViewModel}">
+    <DataTemplate x:Key="buttonTemplate" DataType="{x:Type Controls:MenuItemViewModel}">
         <Button Command="{Binding Command}" Style="{DynamicResource ResourceKey={x:Static ToolBar.ButtonStyleKey}}"
                 ToolTip="{Binding ToolTip}" Visibility="{Binding ., Converter={StaticResource ResourceKey=cvc}}">
             <Image Source="{Binding Icon}" Style="{StaticResource toolbarImageStyle}" Height="16" Width="16" />
@@ -31,7 +32,7 @@
         <ComboBox ItemsSource="{Binding Children}" Style="{DynamicResource ToolbarComboStyle}" SelectedIndex="0" />
     </DataTemplate>
 
-    <Interfaces:ToolBarItemTemplateSelector ButtonTemplate="{StaticResource buttonTemplate}"
+    <Controls:ToolBarItemTemplateSelector ButtonTemplate="{StaticResource buttonTemplate}"
                                             SeparatorTemplate="{StaticResource separatorTemplate}" 
                                             ComboBoxTemplate="{StaticResource comboboxTemplate}" x:Key="toolBarItemTemplateSelector" />
 

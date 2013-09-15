@@ -47,7 +47,7 @@ namespace Wide.Core.Services
         public bool RegisterCommand(string name, ICommand command)
         {
             if (_commands.ContainsKey(name))
-                throw new Exception("Commmand " + name + " already exists !");
+                throw new Exception("Command " + name + " already exists !");
 
             _commands.Add(name, command);
             return true;
