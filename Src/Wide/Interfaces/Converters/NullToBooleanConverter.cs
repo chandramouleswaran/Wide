@@ -10,23 +10,23 @@
 
 #endregion
 
+using System;
+using System.Globalization;
 using System.Windows;
+using System.Windows.Data;
 
-namespace Wide.Core.Settings
+namespace Wide.Interfaces.Converters
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
-    internal partial class SettingsWindow : Window
+    public class NullToBooleanConverter : IValueConverter
     {
-        public SettingsWindow()
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            InitializeComponent();
+            return (value != null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            this.DialogResult = true;
+            return null;
         }
     }
 }

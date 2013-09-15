@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Practices.Unity;
+using Microsoft.Win32;
 using Wide.Core.Attributes;
 using Wide.Core.TextDocument;
 using Wide.Interfaces;
@@ -26,6 +27,7 @@ namespace Wide.Core.Services
     /// AllFileHandler class that supports opening of any file on the computer
     /// </summary>
     [FileContent("All files", "*.*", 10000)]
+    [NewContent("Text file", 10000, "Creates a basic text file", "pack://application:,,,/Wide;component/Core/Icons/Textfile.png")]
     internal class AllFileHandler : IContentHandler
     {
         /// <summary>
@@ -37,6 +39,11 @@ namespace Wide.Core.Services
         /// The injected logger service
         /// </summary>
         private readonly ILoggerService _loggerService;
+        
+        /// <summary>
+        /// The save file dialog
+        /// </summary>
+        private SaveFileDialog _dialog;
 
         /// <summary>
         /// Constructor of AllFileHandler - all parameters are injected
@@ -47,6 +54,7 @@ namespace Wide.Core.Services
         {
             _container = container;
             _loggerService = loggerService;
+            _dialog = new SaveFileDialog();
         }
 
         #region IContentHandler Members
@@ -206,8 +214,31 @@ namespace Wide.Core.Services
 
             if (saveAs)
             {
-                //TODO: Save as...?
-                //contentViewModel.Model.Location = "tesT";
+                if (location != null)
+                    _dialog.InitialDirectory = Path.GetDirectoryName(location);
+
+                _dialog.CheckPathExists = true;
+                _dialog.DefaultExt = "txt";
+                _dialog.Filter = "All files (*.*)|*.*";
+
+                if (_dialog.ShowDialog() == true)
+                {
+                    location = _dialog.FileName;
+                    textModel.SetLocation(location);
+                    textViewModel.Title = Path.GetFileName(location);
+                    try
+                    {
+                        File.WriteAllText(location, textModel.Document.Text);
+                        textModel.IsDirty = false;
+                        return true;
+                    }
+                    catch (Exception exception)
+                    {
+                        _loggerService.Log(exception.Message, LogCategory.Exception, LogPriority.High);
+                        _loggerService.Log(exception.StackTrace, LogCategory.Exception, LogPriority.High);
+                        return false;
+                    }
+                }
             }
             else
             {

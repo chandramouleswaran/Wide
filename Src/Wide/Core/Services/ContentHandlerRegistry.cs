@@ -12,12 +12,15 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Media;
+using MahApps.Metro.Controls;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Unity;
 using Wide.Core.Attributes;
 using Wide.Interfaces;
 using Wide.Interfaces.Services;
 using System.Windows.Input;
+using System.Windows;
 
 namespace Wide.Core.Services
 {
@@ -51,6 +54,16 @@ namespace Wide.Core.Services
         /// The container
         /// </summary>
         private readonly IUnityContainer _container;
+
+        /// <summary>
+        /// The status bar service
+        /// </summary>
+        private readonly IStatusbarService _statusBar;
+
+        /// <summary>
+        /// The new glow background brush
+        /// </summary>
+        private readonly SolidColorBrush _newBackground = new SolidColorBrush(Color.FromRgb(104,33,122));
         #endregion
 
         #region Properties
@@ -82,10 +95,11 @@ namespace Wide.Core.Services
         /// Constructor of content handler registry
         /// </summary>
         /// <param name="container">The injected container of the application</param>
-        public ContentHandlerRegistry(IUnityContainer container)
+        public ContentHandlerRegistry(IUnityContainer container, IStatusbarService statusBar)
         {
             _contentHandlers = new List<IContentHandler>();
             _container = container;
+            _statusBar = statusBar;
             _dictionary = new Dictionary<NewContentAttribute, IContentHandler>();
             _availableNewContent = new List<NewContentAttribute>();
             this.NewCommand = new DelegateCommand(NewDocument, CanExecuteNewCommand);
@@ -199,8 +213,32 @@ namespace Wide.Core.Services
             }
             else
             {
-                //TODO: This is where we need to show a new pop-up similar to VS and get the input from user
-
+                NewFileWindow window = new NewFileWindow();
+                Brush backup = _statusBar.Background;
+                _statusBar.Background = _newBackground;
+                _statusBar.Text = "Select a new file";
+                if(Application.Current.MainWindow is MetroWindow)
+                {
+                    window.Resources = Application.Current.MainWindow.Resources;
+                    MetroWindow win = Application.Current.MainWindow as MetroWindow;
+                    window.Resources = win.Resources;
+                    window.GlowBrush = win.GlowBrush;
+                    window.TitleForeground = win.TitleForeground;
+                }
+                window.DataContext = _availableNewContent;
+                if(window.ShowDialog() == true)
+                {
+                    NewContentAttribute newContent = window.NewContent;
+                    if(newContent != null)
+                    {
+                        IContentHandler handler = _dictionary[newContent];
+                        var openValue = handler.NewContent(newContent);
+                        _workspace.Documents.Add(openValue);
+                        _workspace.ActiveDocument = openValue;
+                    }
+                }
+                _statusBar.Background = backup;
+                _statusBar.Clear();
             }
         }
         #endregion

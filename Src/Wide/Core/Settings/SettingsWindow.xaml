@@ -1,4 +1,4 @@
-﻿<Window x:Class="Wide.Core.Settings.SettingsWindow"
+﻿<Window x:Class="Wide.Core.Settings.SettingsWindow" x:ClassModifier="internal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Settings" Height="500" Width="700" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" ShowInTaskbar="False" WindowStyle="ToolWindow" Topmost="True">

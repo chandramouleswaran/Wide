@@ -23,7 +23,7 @@ using Microsoft.Win32;
 namespace WideMD.Core
 {
     [FileContent("Markdown files", "*.md", 1)]
-    [NewContent("Markdown files","pack://application:,,,/WideMD.Core;component/Icons/MDType.png", 1)]
+    [NewContent("Markdown files", 1, "Creates a new Markdown file", "pack://application:,,,/WideMD.Core;component/Icons/MDType.png")]
     internal class MDHandler : IContentHandler
     {
         /// <summary>
