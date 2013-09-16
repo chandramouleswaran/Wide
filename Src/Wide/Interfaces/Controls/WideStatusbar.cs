@@ -1,17 +1,4 @@
-﻿// ***********************************************************************
-// Assembly         : Wide
-// Author           : Chandramouleswaran
-// Created          : 08-22-2013
-//
-// Last Modified By : Chandramouleswaran
-// Last Modified On : 09-14-2013
-// ***********************************************************************
-// <copyright file="WideStatusbar.cs" company="">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
-#region License
+﻿#region License
 
 // Copyright (c) 2013 Chandramouleswaran Ravichandran
 // 

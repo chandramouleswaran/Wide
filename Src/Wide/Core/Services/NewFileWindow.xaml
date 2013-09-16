@@ -1,12 +1,11 @@
-﻿<Controls:MetroWindow x:Class="Wide.Core.Services.NewFileWindow" x:ClassModifier="internal"
+﻿<Window x:Class="Wide.Core.Services.NewFileWindow" x:ClassModifier="internal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Converters="clr-namespace:Wide.Interfaces.Converters"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
-        Title="New Object" Height="400" Width="700" TitleCaps="False"
+        Title="New Object" Height="400" Width="700"
         WindowStartupLocation="CenterScreen" 
-        ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="ToolWindow"
-        WindowTransitionsEnabled="False">
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStyle="ToolWindow">
     <Window.Resources>
         <Converters:NullToBooleanConverter x:Key="nullToBooleanConverter" />
         <Converters:NullObjectToVisibiltyConverter x:Key="nullToVisibilityConverter" />
@@ -55,4 +54,4 @@
             </StackPanel>
         </Grid>
     </Grid>
-</Controls:MetroWindow>
+</Window>

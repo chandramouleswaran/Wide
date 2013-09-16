@@ -10,13 +10,12 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Configuration;
 using System.Xml.Serialization;
 using Microsoft.Practices.Prism.Commands;
 using Wide.Interfaces;
+using Wide.Interfaces.Controls;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
 using Microsoft.Practices.Unity;

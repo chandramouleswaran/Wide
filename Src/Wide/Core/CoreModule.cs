@@ -22,6 +22,7 @@ using Wide.Core.Services;
 using Wide.Core.Settings;
 using Wide.Core.TextDocument;
 using Wide.Interfaces;
+using Wide.Interfaces.Controls;
 using Wide.Interfaces.Events;
 using Wide.Interfaces.Services;
 using Wide.Interfaces.Settings;
@@ -32,18 +33,20 @@ using System.ComponentModel;
 namespace Wide.Core
 {
     /// <summary>
-    /// The Wide Core module - this module does the following things:
-    /// 1. Registers <see cref="IOpenDocumentService" /> - The file service can be used to open a file from a location or from a content ID
+    /// The Wide Core module which does the following things:
+    /// 1. Registers <see cref="IOpenDocumentService" /> - The file service can be used to open a file/object from a location or from a content ID
     /// 2. Registers <see cref="ICommandManager" /> - The command manager can be used to register commands and reuse the commands in different locations
     /// 3. Registers <see cref="IContentHandlerRegistry" /> - A registry to maintain different content handlers. Each content handler should be able to open a different kind of file/object.
     /// 4. Registers <see cref="IThemeManager" /> - A registry for themes
     /// 5. Registers <see cref="ILoggerService" /> - If not registered already, registers the NLogService which can be used anywhere in the application
-    /// 6. Registers <see cref="IToolbarService" /> - The toolbar service used to register multiple toolbars
-    /// 7. Registers <see cref="AbstractMenuItem" /> - This acts as the menu service for the application - menus can be added/removed.
-    /// 8. Adds an AllFileHandler which can open any file from the system - to override this handler, participating modules can add more handlers to the <see cref="IContentHandlerRegistry" />
+    /// 6. Registers <see cref="IMenuService"/> - The menu service used in the Wide application
+    /// 7. Registers <see cref="IStatusbarService"/> - The status bar service used in the Wide application
+    /// 8. Registers <see cref="IToolbarService" /> - The toolbar service used to register multiple toolbar's
+    /// 9. Registers <see cref="AbstractMenuItem" /> - This acts as the menu service for the application - menus can be added/removed.
+    /// 10. Adds an AllFileHandler which can open any file from the system - to override this handler, participating modules can add more handlers to the <see cref="IContentHandlerRegistry" />
     /// </summary>
     [Module(ModuleName = "Wide.Core")]
-    internal class CoreModule : IModule
+    public sealed class CoreModule : IModule
     {
         /// <summary>
         /// The container used in the application

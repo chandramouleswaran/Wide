@@ -15,7 +15,7 @@ namespace Wide.Splash
     /// <summary>
     /// Interaction logic for SplashView.xaml
     /// </summary>
-    public partial class SplashView : ISplashView
+    internal partial class SplashView : ISplashView
     {
         public SplashView(SplashViewModel model)
         {

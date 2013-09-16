@@ -13,6 +13,7 @@
 using System;
 using System.Windows;
 using System.Windows.Data;
+using Wide.Interfaces.Controls;
 
 namespace Wide.Interfaces.Converters
 {

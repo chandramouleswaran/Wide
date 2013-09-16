@@ -49,4 +49,5 @@ _ReSharper*/
 *.ncrunch*
 
 packages
-Wide.sln.GhostDoc.xml
+*sln.*.xml
+*.dic

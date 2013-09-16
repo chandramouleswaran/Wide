@@ -12,7 +12,7 @@
 
 using System.Collections.Generic;
 using System.Xml.Serialization;
-using Wide.Core.Settings;
+using Wide.Interfaces.Controls;
 
 namespace Wide.Interfaces.Settings
 {

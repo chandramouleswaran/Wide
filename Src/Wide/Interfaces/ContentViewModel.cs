@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Practices.Prism.Commands;
+using Wide.Interfaces.Controls;
 using Wide.Interfaces.Services;
 
 namespace Wide.Interfaces

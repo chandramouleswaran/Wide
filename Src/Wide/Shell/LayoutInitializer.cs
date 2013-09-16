@@ -16,7 +16,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 
 namespace Wide.Shell
 {
-    public class LayoutInitializer : ILayoutUpdateStrategy
+    internal class LayoutInitializer : ILayoutUpdateStrategy
     {
         #region ILayoutUpdateStrategy Members
 

@@ -11,6 +11,7 @@
 #endregion
 
 using System.Windows.Controls;
+using Wide.Interfaces.Controls;
 
 namespace Wide.Interfaces.Services
 {
@@ -46,6 +47,10 @@ namespace Wide.Interfaces.Services
         /// <returns>AbstractCommandable.</returns>
         AbstractCommandable Get(string key);
 
-        AbstractMenuItem MenuItem { get; }
+        /// <summary>
+        /// Gets the right click menu.
+        /// </summary>
+        /// <value>The right click menu.</value>
+        AbstractMenuItem RightClickMenu { get; }
     }
 }

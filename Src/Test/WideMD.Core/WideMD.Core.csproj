@@ -132,13 +132,6 @@
     <Resource Include="Icons\Undo_16x.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Wide.Tools.Logger\Wide.Tools.Logger.csproj">
-      <Project>{982d3282-82a0-4586-99ed-f60d2fd67517}</Project>
-      <Name>Wide.Tools.Logger</Name>
-      <Private>False</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\NewRequest_8796.png" />
   </ItemGroup>
   <ItemGroup>

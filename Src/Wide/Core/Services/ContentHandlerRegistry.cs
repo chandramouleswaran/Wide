@@ -220,10 +220,10 @@ namespace Wide.Core.Services
                 if(Application.Current.MainWindow is MetroWindow)
                 {
                     window.Resources = Application.Current.MainWindow.Resources;
-                    MetroWindow win = Application.Current.MainWindow as MetroWindow;
+                    Window win = Application.Current.MainWindow as MetroWindow;
                     window.Resources = win.Resources;
-                    window.GlowBrush = win.GlowBrush;
-                    window.TitleForeground = win.TitleForeground;
+                    //window.GlowBrush = win.GlowBrush;
+                    //window.TitleForeground = win.TitleForeground;
                 }
                 window.DataContext = _availableNewContent;
                 if(window.ShowDialog() == true)
