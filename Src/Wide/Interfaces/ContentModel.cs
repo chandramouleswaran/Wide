@@ -10,16 +10,26 @@
 
 #endregion
 
+using System;
+using System.Runtime.Serialization;
+
 namespace Wide.Interfaces
 {
+    [DataContract]
+    [Serializable]
     public abstract class ContentModel : ViewModelBase
     {
         protected bool _isDirty;
+        protected object _location;
 
         /// <summary>
         /// The document location - could be a file location/server object etc.
         /// </summary>
-        public virtual object Location { get; protected set; }
+        public virtual object Location 
+        { 
+            get { return _location; }
+            protected set { _location = value; RaisePropertyChanged("Location"); }
+        }
 
         /// <summary>
         /// Is the document dirty - does it need to be saved?
