@@ -283,6 +283,7 @@ namespace Wide.Core
             {
                 logger.Log("Closing document " + activeDocument.Model.Location, LogCategory.Info, LogPriority.None);
                 workspace.Documents.Remove(activeDocument);
+                _eventAggregator.GetEvent<ClosedContentEvent>().Publish(activeDocument);
                 menuService.Refresh();
             }
             else
@@ -292,6 +293,7 @@ namespace Wide.Core
                 if (activeDocument.Model.Location == null)
                 {
                     workspace.Documents.Remove(activeDocument);
+                    _eventAggregator.GetEvent<ClosedContentEvent>().Publish(activeDocument);
                 }
             }
         }
