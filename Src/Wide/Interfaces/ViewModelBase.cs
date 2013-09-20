@@ -11,6 +11,7 @@
 #endregion
 
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Wide.Interfaces
 {
@@ -24,7 +25,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// Event handler that gets triggered when a property changes
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public virtual event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -32,7 +33,7 @@ namespace Wide.Interfaces
         /// Should be called when a property value has changed
         /// </summary>
         /// <param name="propertyName">The property name</param>
-        protected virtual void RaisePropertyChanged(string propertyName)
+        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName="")
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
