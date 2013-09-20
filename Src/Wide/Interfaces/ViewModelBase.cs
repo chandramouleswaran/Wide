@@ -10,14 +10,19 @@
 
 #endregion
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using Wide.Utils;
 
 namespace Wide.Interfaces
 {
     /// <summary>
     /// The view model base class
     /// </summary>
+    [DataContract]
+    [Serializable]
     public class ViewModelBase : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged Members
@@ -38,5 +43,22 @@ namespace Wide.Interfaces
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+        /// <summary>
+        /// Raises the property changed with undo.
+        /// </summary>
+        /// <param name="oldValue">The old value.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        protected virtual void RaisePropertyChangedWithValues(object oldValue, object newValue, string description, [CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedExtendedEventArgs(propertyName, oldValue, newValue, description));
+            }
+        }
+
     }
 }
