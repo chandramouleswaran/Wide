@@ -11,6 +11,7 @@
 #endregion
 
 using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Wide.Interfaces
@@ -25,6 +26,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// The document location - could be a file location/server object etc.
         /// </summary>
+        [Browsable(false)]
         public virtual object Location 
         { 
             get { return _location; }
@@ -34,6 +36,7 @@ namespace Wide.Interfaces
         /// <summary>
         /// Is the document dirty - does it need to be saved?
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsDirty
         {
             get { return _isDirty; }

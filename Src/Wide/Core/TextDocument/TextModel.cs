@@ -56,6 +56,7 @@ namespace Wide.Core.TextDocument
         /// Is the document dirty - does it need to be saved?
         /// </summary>
         /// <value><c>true</c> if this instance is dirty; otherwise, <c>false</c>.</value>
+        [Browsable(false)]
         public override bool IsDirty
         {
             get { return base.IsDirty; }
@@ -73,6 +74,7 @@ namespace Wide.Core.TextDocument
         /// Gets or sets the AvalonEdit's text document.
         /// </summary>
         /// <value>The document.</value>
+        [Browsable(false)]
         public ICSharpCode.AvalonEdit.Document.TextDocument Document { get; protected set; }
 
         /// <summary>
