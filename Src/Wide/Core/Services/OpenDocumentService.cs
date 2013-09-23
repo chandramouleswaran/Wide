@@ -190,15 +190,19 @@ namespace Wide.Core.Services
                 //Check if the document is already open
                 foreach (ContentViewModel contentViewModel in _workspace.Documents)
                 {
-                    if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
+                    if (contentViewModel.Model.Location != null)
                     {
-                        _logger.Log("Document " + contentViewModel.Model.Location + "already open.", LogCategory.Info,
-                                    LogPriority.Low);
+                        if (contentViewModel.Model.Location.Equals(openValue.Model.Location))
+                        {
+                            _logger.Log("Document " + contentViewModel.Model.Location + "already open.",
+                                        LogCategory.Info,
+                                        LogPriority.Low);
 
-                        if (makeActive)
-                            _workspace.ActiveDocument = contentViewModel;
+                            if (makeActive)
+                                _workspace.ActiveDocument = contentViewModel;
 
-                        return contentViewModel;
+                            return contentViewModel;
+                        }
                     }
                 }
 
