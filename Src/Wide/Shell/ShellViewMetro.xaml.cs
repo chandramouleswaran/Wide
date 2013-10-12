@@ -88,6 +88,10 @@ namespace Wide.Shell
                                                                             model.IsActive = anchorable.IsActive;
                                                                             model.IsSelected = anchorable.IsSelected;
                                                                         }
+                                                                        else
+                                                                        {
+                                                                            e.Cancel = true;
+                                                                        }
                                                                     }
                                                                     if (document != null)
                                                                     {
@@ -100,6 +104,10 @@ namespace Wide.Shell
                                                                             e.Content = model;
                                                                             model.IsActive = document.IsActive;
                                                                             model.IsSelected = document.IsSelected;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            e.Cancel = true;
                                                                         }
                                                                     }
                                                                 };
