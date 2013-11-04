@@ -244,7 +244,7 @@ namespace Wide.Core
             if (activeDocument == null)
                 activeDocument = workspace.ActiveDocument;
 
-            if (activeDocument.Model.IsDirty)
+            if (activeDocument.Handler != null && activeDocument.Model.IsDirty)
             {
                 //means the document is dirty - show a message box and then handle based on the user's selection
                 var res = MessageBox.Show(string.Format("Save changes for document '{0}'?", activeDocument.Title),
