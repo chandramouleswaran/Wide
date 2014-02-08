@@ -40,8 +40,6 @@ namespace Wide.Shell
             InitializeComponent();
             _container = container;
             _eventAggregator = eventAggregator;
-            Loaded += MainWindow_Loaded;
-            Unloaded += MainWindow_Unloaded;
         }
 
         #region IShell Members
@@ -107,16 +105,6 @@ namespace Wide.Shell
         }
 
         #endregion
-
-        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-            SaveLayout();
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadLayout();
-        }
 
         private void Window_Closing_1(object sender, CancelEventArgs e)
         {
