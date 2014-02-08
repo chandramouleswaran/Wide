@@ -12,6 +12,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -45,8 +46,6 @@ namespace Wide.Shell
             InitializeComponent();
             _container = container;
             _eventAggregator = eventAggregator;
-            Loaded += MainWindow_Loaded;
-            Unloaded += MainWindow_Unloaded;
             _eventAggregator.GetEvent<ThemeChangeEvent>().Subscribe(ThemeChanged);
             _docContextMenu = new ContextMenu();
             dockManager.DocumentContextMenu = _docContextMenu;
@@ -113,7 +112,7 @@ namespace Wide.Shell
                                                                 };
             try
             {
-                layoutSerializer.Deserialize(@".\AvalonDock.Layout.config");
+                layoutSerializer.Deserialize(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "AvalonDock.Layout.config");
             }
             catch (Exception)
             {
@@ -123,7 +122,7 @@ namespace Wide.Shell
         public void SaveLayout()
         {
             var layoutSerializer = new XmlLayoutSerializer(dockManager);
-            layoutSerializer.Serialize(@".\AvalonDock.Layout.config");
+            layoutSerializer.Serialize(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "AvalonDock.Layout.config");
         }
 
         #endregion
@@ -166,16 +165,6 @@ namespace Wide.Shell
             dockManager.DocumentContextMenu = _docContextMenu;
             _docContextMenu.Style = FindResource("MetroContextMenu") as Style;
             _docContextMenu.ItemContainerStyle = FindResource("MetroMenuStyle") as Style;
-        }
-
-        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-            SaveLayout();
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadLayout();
         }
 
         private void Window_Closing_1(object sender, CancelEventArgs e)

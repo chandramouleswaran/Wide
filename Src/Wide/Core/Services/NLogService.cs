@@ -61,7 +61,7 @@ namespace Wide.Core.Services
             StackFrame frame = trace.GetFrame(1); // 0 will be the inner-most method
             MethodBase method = frame.GetMethod();
 
-            Logger.Log(LogLevel.Error, method.DeclaringType + ": " + message);
+            Logger.Log(LogLevel.Info, method.DeclaringType + ": " + message);
 
             _aggregator.GetEvent<LogEvent>().Publish(new NLogService
                                                          {Message = Message, Category = Category, Priority = Priority});
