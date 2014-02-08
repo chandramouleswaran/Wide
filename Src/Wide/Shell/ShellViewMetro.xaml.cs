@@ -12,6 +12,7 @@
 
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -111,7 +112,7 @@ namespace Wide.Shell
                                                                 };
             try
             {
-                layoutSerializer.Deserialize(@".\AvalonDock.Layout.config");
+                layoutSerializer.Deserialize(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "AvalonDock.Layout.config");
             }
             catch (Exception)
             {
@@ -121,7 +122,7 @@ namespace Wide.Shell
         public void SaveLayout()
         {
             var layoutSerializer = new XmlLayoutSerializer(dockManager);
-            layoutSerializer.Serialize(@".\AvalonDock.Layout.config");
+            layoutSerializer.Serialize(AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar + "AvalonDock.Layout.config");
         }
 
         #endregion
