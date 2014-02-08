@@ -94,6 +94,7 @@ namespace Wide.Core.Services
         public ContentViewModel Open(object location = null)
         {
             bool? result;
+            ContentViewModel returnValue = null;
 
             if (location == null)
             {
@@ -159,6 +160,8 @@ namespace Wide.Core.Services
 
                         //Add it to the recent documents opened
                         _recentSettings.Update(openValue);
+
+                        returnValue = openValue;
                     }
                     else
                     {
@@ -171,7 +174,7 @@ namespace Wide.Core.Services
             {
                 _logger.Log("Canceled out of open file dialog", LogCategory.Info, LogPriority.Low);
             }
-            return null;
+            return returnValue;
         }
 
         /// <summary>
