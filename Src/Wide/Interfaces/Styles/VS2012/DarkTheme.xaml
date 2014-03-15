@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/SplitButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/ControlsMetro.xaml" />
     </ResourceDictionary.MergedDictionaries>

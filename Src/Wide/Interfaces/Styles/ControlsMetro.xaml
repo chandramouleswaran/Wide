@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="VS2012/Toolbar.xaml" />
         <ResourceDictionary Source="VS2012/Menu.xaml" />
+        <ResourceDictionary Source="VS2012/Tooltip.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
     <!--Menu Item Binding with Icon-->

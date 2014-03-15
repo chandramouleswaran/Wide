@@ -27,9 +27,9 @@ namespace Wide.Interfaces.Themes
         {
             UriList = new List<Uri>
                           {
-                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml"),
-                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"),
                               new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"),
+                              new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml"),
                               new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"),
                               new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"),
                               new Uri("pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/LightColors.xaml"),
