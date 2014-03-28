@@ -49,5 +49,10 @@ namespace Wide.Tools.Logger
         {
             _model.AddLog(logger);
         }
+
+        public override PaneLocation PreferredLocation
+        {
+            get { return PaneLocation.Bottom; }
+        }
     }
 }

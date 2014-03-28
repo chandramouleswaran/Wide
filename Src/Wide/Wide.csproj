@@ -107,6 +107,8 @@
     <Compile Include="Interfaces\Converters\NullToBooleanConverter.cs" />
     <Compile Include="Interfaces\Converters\DocumentContextMenuMixingConverter.cs" />
     <Compile Include="Interfaces\Events\ClosedContentEvent.cs" />
+    <Compile Include="Interfaces\ITool.cs" />
+    <Compile Include="Interfaces\Services\PaneLocation.cs" />
     <Compile Include="Interfaces\Settings\IRecentViewItem.cs" />
     <Compile Include="Interfaces\Settings\IToolbarPositionSettings.cs" />
     <Compile Include="Core\Settings\ToolbarSettingItem.cs" />
