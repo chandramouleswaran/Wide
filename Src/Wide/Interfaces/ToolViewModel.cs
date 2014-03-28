@@ -13,13 +13,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Media;
+using Wide.Interfaces.Services;
 
 namespace Wide.Interfaces
 {
     /// <summary>
     /// The abstract class which has to be inherited if you want to create a tool
     /// </summary>
-    public abstract class ToolViewModel : ViewModelBase
+    public abstract class ToolViewModel : ViewModelBase, ITool
     {
         #region Members
 
@@ -54,6 +55,29 @@ namespace Wide.Interfaces
                 }
             }
         }
+
+
+        /// <summary>
+        /// pane location
+        /// </summary>
+        public abstract PaneLocation PreferredLocation { get; }
+
+        /// <summary>
+        /// Prefered width
+        /// </summary>
+        public virtual double PreferredWidth
+        {
+            get { return 200; }
+        }
+
+        /// <summary>
+        /// prefered height
+        /// </summary>
+        public virtual double PreferredHeight
+        {
+            get { return 200; }
+        }
+
 
         /// <summary>
         /// The content model
