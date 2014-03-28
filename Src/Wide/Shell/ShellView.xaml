@@ -137,9 +137,10 @@
                 </avalonDock:DockingManager.LayoutUpdateStrategy>
 
                 <avalonDock:LayoutRoot>
-                    <avalonDock:LayoutPanel Orientation="Vertical">
-                        <avalonDock:LayoutDocumentPane />
-                        <avalonDock:LayoutAnchorablePane Name="ToolServicePane" DockHeight="150"></avalonDock:LayoutAnchorablePane>
+                    <avalonDock:LayoutPanel x:Name="VerticalPanel" Orientation="Vertical">
+                        <avalonDock:LayoutPanel x:Name="HorizontalPanel" Orientation="Horizontal">
+                            <avalonDock:LayoutDocumentPane />
+                        </avalonDock:LayoutPanel>
                     </avalonDock:LayoutPanel>
                 </avalonDock:LayoutRoot>
             </avalonDock:DockingManager>
