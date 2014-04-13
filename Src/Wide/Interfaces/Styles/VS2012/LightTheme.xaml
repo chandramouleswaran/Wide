@@ -3,5 +3,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/WindowCommands.xaml" />
         <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/ControlsMetro.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Wide;component/Interfaces/Styles/VS2012/SplitButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -1,10 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Interfaces="clr-namespace:Wide.Interfaces"
                     xmlns:conv="clr-namespace:Wide.Interfaces.Converters"
-                    xmlns:Controls="clr-namespace:Wide.Interfaces.Controls">
+                    xmlns:Controls="clr-namespace:Wide.Interfaces.Controls"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit">
 
     <conv:MenuVisibilityConverter x:Key="cvc" />
-    
+
     <!--Toolbar image icon disabled style-->
     <Style TargetType="{x:Type Image}" x:Key="toolbarImageStyle">
         <Style.Triggers>
@@ -27,14 +28,40 @@
     <DataTemplate x:Key="separatorTemplate">
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
     </DataTemplate>
-    
-    <DataTemplate x:Key="comboboxTemplate">
-        <ComboBox ItemsSource="{Binding Children}" Style="{DynamicResource ToolbarComboStyle}" SelectedIndex="0" />
+
+    <DataTemplate x:Key="comboboxTemplate" DataType="{x:Type Controls:MenuItemViewModel}">
+        <xctk:SplitButton Background="{DynamicResource WindowTitleColorBrush}" IsEnabled="True" Command="{Binding Command}" ToolTip="{Binding ToolTip}" Visibility="{Binding ., Converter={StaticResource ResourceKey=cvc}}">
+            <xctk:SplitButton.Content>
+                <StackPanel Orientation="Horizontal" IsEnabled="False">
+                    <Image Source="{Binding Icon}" Style="{StaticResource toolbarImageStyle}" Height="16" Width="16" />
+                    <TextBlock Text="{Binding Header}" Margin="5 0 0 0" />
+                </StackPanel>
+            </xctk:SplitButton.Content>
+            <xctk:SplitButton.DropDownContent>
+                <ItemsControl x:Name="MenuList" ItemsSource="{Binding Children}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Header}" IsCheckable="{Binding IsCheckable}" 
+                                      IsChecked="{Binding IsChecked}" Command="{Binding Command}" CommandParameter="{Binding CommandParameter}" 
+                                      ItemsSource="{Binding Children}" Visibility="{Binding ., Converter={StaticResource ResourceKey=cvc}}">
+                                <MenuItem.Icon>
+                                    <Image Source="{Binding Path=Icon}" Height="16px" Width="16px" Stretch="UniformToFill" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </xctk:SplitButton.DropDownContent>
+        </xctk:SplitButton>
     </DataTemplate>
 
     <Controls:ToolBarItemTemplateSelector ButtonTemplate="{StaticResource buttonTemplate}"
                                             SeparatorTemplate="{StaticResource separatorTemplate}" 
                                             ComboBoxTemplate="{StaticResource comboboxTemplate}" x:Key="toolBarItemTemplateSelector" />
-
 
 </ResourceDictionary>
