@@ -60,6 +60,7 @@ namespace WideMD.Core
                                                                               {Message = "Toolbar.."});
             var toolbarService = _container.Resolve<IToolbarService>();
             var menuService = _container.Resolve<IMenuService>();
+            var manager = _container.Resolve<ICommandManager>();
 
             toolbarService.Add(new ToolbarViewModel("Standard", 1) {Band = 1, BandIndex = 1});
             toolbarService.Get("Standard").Add(menuService.Get("_File").Get("_New"));
@@ -71,6 +72,12 @@ namespace WideMD.Core
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Cut"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("Copy"));
             toolbarService.Get("Edit").Add(menuService.Get("_Edit").Get("_Paste"));
+
+            toolbarService.Add(new ToolbarViewModel("Debug", 1) { Band = 1, BandIndex = 3 });
+            toolbarService.Get("Debug").Add(new MenuItemViewModel("Debug", 1, new BitmapImage(new Uri(@"pack://application:,,,/WideMD.Core;component/Icons/Play.png"))));
+            toolbarService.Get("Debug").Get("Debug").Add(new MenuItemViewModel("Debug with Chrome", 1, new BitmapImage(new Uri(@"pack://application:,,,/WideMD.Core;component/Icons/Play.png")), manager.GetCommand("OPEN")));
+            toolbarService.Get("Debug").Get("Debug").Add(new MenuItemViewModel("Debug with FireFox", 2, new BitmapImage(new Uri(@"pack://application:,,,/WideMD.Core;component/Icons/Play.png")), manager.GetCommand("OPEN")));
+            toolbarService.Get("Debug").Get("Debug").Add(new MenuItemViewModel("Debug with Explorer", 3, new BitmapImage(new Uri(@"pack://application:,,,/WideMD.Core;component/Icons/Play.png")), manager.GetCommand("OPEN")));
 
             menuService.Get("_Tools").Add(toolbarService.RightClickMenu);
 
