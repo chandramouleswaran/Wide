@@ -29,7 +29,7 @@
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
     </DataTemplate>
 
-    <DataTemplate x:Key="comboboxTemplate" DataType="{x:Type Controls:MenuItemViewModel}">
+    <DataTemplate x:Key="comboboxTemplate" DataType="{x:Type Controls:AbstractMenuItem}">
         <xctk:SplitButton Background="{DynamicResource WindowTitleColorBrush}" IsEnabled="True" Command="{Binding Command}" ToolTip="{Binding ToolTip}" Visibility="{Binding ., Converter={StaticResource ResourceKey=cvc}}">
             <xctk:SplitButton.Content>
                 <StackPanel Orientation="Horizontal" IsEnabled="False">
