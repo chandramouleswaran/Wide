@@ -48,7 +48,7 @@ namespace Wide.Interfaces.Controls
         /// <returns>Returns a <see cref="T:System.Windows.DataTemplate" /> or null. The default value is null.</returns>
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var toolBarItem = item as MenuItemViewModel;
+            var toolBarItem = item as AbstractMenuItem;
             if (toolBarItem != null && !toolBarItem.IsSeparator)
             {
                 if (toolBarItem.Children.Count > 0)
