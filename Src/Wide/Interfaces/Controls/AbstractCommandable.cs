@@ -36,7 +36,7 @@ namespace Wide.Interfaces
         /// Gets the command.
         /// </summary>
         /// <value>The command.</value>
-        public virtual ICommand Command { get; internal set; }
+        public virtual ICommand Command { get; protected internal set; }
 
         /// <summary>
         /// Gets or sets the command parameter.
